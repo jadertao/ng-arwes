@@ -1,3 +1,4 @@
+import { FooLibModule } from './../../projects/foo-lib/src/lib/foo-lib.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -10,7 +11,8 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FooLibModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
