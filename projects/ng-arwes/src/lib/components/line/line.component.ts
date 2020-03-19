@@ -10,7 +10,14 @@ export interface ArwesLineClasses {
 
 @Component({
   selector: 'arwes-line',
-  templateUrl: './line.component.html',
+  template: `
+<div>
+  line
+  <div class="{{ classes.line }}"></div>
+  <div class="{{ classes.left }}"></div>
+  <div class="{{ classes.right }}"></div>
+</div>
+  `,
   styleUrls: ['./line.component.less']
 })
 export class LineComponent implements OnInit {
