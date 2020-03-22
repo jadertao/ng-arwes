@@ -19,6 +19,28 @@ function generateBackground(color: string): NgArwesThemeBackgroundLevel {
   };
 }
 
+function isPlainObject(item: any): boolean {
+  return Object.prototype.toString.call(item) === '[object Object]';
+}
+
+export function mergeTheme(target: NgArwesTheme, source: Partial<NgArwesTheme>): NgArwesTheme {
+  const output = Object.assign({}, target);
+  if (isPlainObject(target) && isPlainObject(source)) {
+    Object.keys(source).forEach(key => {
+      if (isPlainObject(source[key])) {
+        if (!(key in target)) {
+          Object.assign(output, { [key]: source[key] });
+        } else {
+          output[key] = mergeTheme(target[key], source[key]);
+        }
+      } else {
+        Object.assign(output, { [key]: source[key] });
+      }
+    });
+  }
+  return output;
+}
+
 export const DEFAULT_THEME: NgArwesTheme = {
   margin: 20,
   padding: 20,
