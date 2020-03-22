@@ -1,21 +1,16 @@
+import { DEFAULT_THEME } from './../../tools/theme';
+import { NgArwesTheme } from './../../types/theme';
 import { NgArwesLayerStatusEnum } from '../../types/theme';
 import { Component, OnInit, Input } from '@angular/core';
-
-export interface ArwesLineClasses {
-  left?: string;
-  right?: string;
-  line?: string;
-}
 
 
 @Component({
   selector: 'arwes-line',
   template: `
-<div>
-  line
-  <div class="{{ classes.line }}"></div>
-  <div class="{{ classes.left }}"></div>
-  <div class="{{ classes.right }}"></div>
+<div class="arwes-line">
+  <div class="arwes-line-body"></div>
+  <div class="arwes-line-left"></div>
+  <div class="arwes-line-right"></div>
 </div>
   `,
   styleUrls: ['./line.component.less']
@@ -28,7 +23,7 @@ export class LineComponent implements OnInit {
   layer = NgArwesLayerStatusEnum.Primary;
 
   @Input()
-  classes: ArwesLineClasses = {};
+  theme = DEFAULT_THEME;
 
   constructor() { }
 
