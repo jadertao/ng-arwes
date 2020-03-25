@@ -1,5 +1,5 @@
 import { LineComponent } from './../../projects/ng-arwes/src/lib/components/line/line.component';
-import { ComponentsModule } from './../../projects/ng-arwes/src/lib/components/components.module';
+import { NgArwesModule } from './../../projects/ng-arwes/src/lib/ng-arwes.module';
 
 import { addDecorator, moduleMetadata } from '@storybook/angular';
 import { Button } from '@storybook/angular/demo';
@@ -10,7 +10,7 @@ export default {
 };
 
 addDecorator(moduleMetadata({
-  imports: [ComponentsModule],
+  imports: [NgArwesModule],
   schemas: [],
   declarations: [],
   providers: [],
