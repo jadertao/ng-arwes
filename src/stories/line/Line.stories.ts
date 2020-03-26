@@ -1,12 +1,13 @@
-import { LineComponent } from './../../projects/ng-arwes/src/lib/components/line/line.component';
-import { NgArwesModule } from './../../projects/ng-arwes/src/lib/ng-arwes.module';
-
+import { LineComponent } from '../../../projects/ng-arwes/src/lib/components/line/line.component';
+import { NgArwesModule } from ';./../../projects/ng-arwes/src/lib/ng-arwes.module';
+import note from './line.note.md';
 import { addDecorator, moduleMetadata } from '@storybook/angular';
 import { Button } from '@storybook/angular/demo';
 
 export default {
   title: 'Button2',
   component: Button,
+  notes: { note },
 };
 
 addDecorator(moduleMetadata({
