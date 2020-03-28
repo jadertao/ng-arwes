@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ThemeService } from './services/theme.service';
 import { LineComponent } from './components/line/line.component';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -14,6 +15,7 @@ import { NgModule } from '@angular/core';
   ],
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
   ],
   exports: [
     LineComponent,
