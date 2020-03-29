@@ -1,5 +1,5 @@
 import { NG_ARWES_THEME_TOKEN, DEFAULT_THEME } from './tools/theme';
-import { NgArwesTheme } from './types/theme';
+import { NgArwesTheme } from './types/theme.interfaces';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from './services/theme.service';
 import { LineComponent } from './components/line/line.component';

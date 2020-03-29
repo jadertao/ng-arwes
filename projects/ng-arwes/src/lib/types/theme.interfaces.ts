@@ -1,13 +1,5 @@
+import { NgArwesLayerStatusEnum } from './theme.enums';
 
-export enum NgArwesLayerStatusEnum {
-  Primary = 'primary',
-  Secondary = 'secondary',
-  Header = 'header',
-  Control = 'control',
-  Success = 'success',
-  Alert = 'alert',
-  Disabled = 'disabled',
-}
 
 export interface NgArwesThemeColor {
   dark: string;

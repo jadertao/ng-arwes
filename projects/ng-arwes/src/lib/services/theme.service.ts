@@ -1,6 +1,6 @@
 import { NgArwesModule } from './../ng-arwes.module';
 import { DEFAULT_THEME, NG_ARWES_THEME_TOKEN } from './../tools/theme';
-import { NgArwesTheme } from './../types/theme';
+import { NgArwesTheme } from '../types/theme.interfaces';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { mergeDeep } from '../tools/merge';

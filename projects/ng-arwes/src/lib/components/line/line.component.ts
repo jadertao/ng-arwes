@@ -1,8 +1,8 @@
 import { lineDotMotion, lineBodyMotion } from './line.animations';
 import { ThemeService } from '../../services/theme.service';
 import { DEFAULT_THEME } from './../../tools/theme';
-import { NgArwesTheme } from './../../types/theme';
-import { NgArwesLayerStatusEnum } from '../../types/theme';
+import { NgArwesTheme } from '../../types/theme.interfaces';
+import { NgArwesLayerStatusEnum } from '../../types/theme.enums';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 

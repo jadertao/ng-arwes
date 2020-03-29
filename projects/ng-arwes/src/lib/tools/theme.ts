@@ -1,4 +1,4 @@
-import { NgArwesTheme, NgArwesThemeColor, NgArwesThemeBackgroundLevel } from '../types/theme';
+import { NgArwesTheme, NgArwesThemeColor, NgArwesThemeBackgroundLevel } from '../types/theme.interfaces';
 import { darken, lighten } from 'polished';
 
 import { InjectionToken } from '@angular/core';
