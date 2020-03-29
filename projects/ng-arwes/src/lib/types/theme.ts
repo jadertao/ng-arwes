@@ -9,16 +9,6 @@ export enum NgArwesLayerStatusEnum {
   Disabled = 'disabled',
 }
 
-export interface NgArwesLayerStatus {
-  primary: string;
-  secondary: string;
-  header: string;
-  control: string;
-  success: string;
-  alert: string;
-  disabled: string;
-}
-
 export interface NgArwesThemeColor {
   dark: string;
   light: string;
@@ -34,17 +24,17 @@ export interface NgArwesThemeBackgroundLevel {
 }
 
 export interface NgArwesThemeTypographyHeader {
-  h1: string;
-  h2: string;
-  h3: string;
-  h4: string;
-  h5: string;
-  h6: string;
+  h1: number;
+  h2: number;
+  h3: number;
+  h4: number;
+  h5: number;
+  h6: number;
 }
 
 export interface NgArwesThemeTypography {
   fontSize: number;
-  headerSizes: Record<keyof NgArwesThemeTypographyHeader, number>;
+  headerSizes: Partial<NgArwesThemeTypographyHeader>;
   headerFontFamily: string;
   fontFamily: string;
   lineHeight: number;
@@ -74,14 +64,14 @@ export interface NgArwesThemeReponsiveProps {
 export interface NgArwesTheme {
   margin: number;
   padding: number;
-  color: Record<keyof NgArwesLayerStatus, NgArwesThemeColor>;
+  color: Partial<Record<NgArwesLayerStatusEnum, NgArwesThemeColor>>;
   animTime: number;
   alpha: number;
   shadowLength: number;
   accent: number;
   columns: number;
-  typography: NgArwesThemeTypography;
+  typography: Partial<NgArwesThemeTypography>;
   code: NgArwesThemeCode;
-  background: Record<keyof NgArwesLayerStatus, NgArwesThemeBackgroundLevel>;
-  responsive: NgArwesThemeReponsiveProps;
+  background: Partial<Record<NgArwesLayerStatusEnum, NgArwesThemeBackgroundLevel>>;
+  responsive: Partial<NgArwesThemeReponsiveProps>;
 }
