@@ -61,7 +61,7 @@ export class LineComponent implements OnInit, OnDestroy {
   constructor(public ThemeSvc: ThemeService) { }
 
   ngOnInit(): void {
-    this.sub = this.ThemeSvc.theme.subscribe(theme => {
+    this.sub = this.ThemeSvc.theme$.subscribe(theme => {
       this.theme = theme;
     });
   }

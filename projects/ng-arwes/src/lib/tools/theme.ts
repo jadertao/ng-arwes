@@ -1,6 +1,10 @@
 import { NgArwesTheme, NgArwesThemeColor, NgArwesThemeBackgroundLevel } from '../types/theme';
 import { darken, lighten } from 'polished';
 
+import { InjectionToken } from '@angular/core';
+
+export const NG_ARWES_THEME_TOKEN = new InjectionToken<NgArwesTheme>('NG_ARWES_THEME_TOKEN');
+
 const accent = 0.2;
 function generateColor(color: string): NgArwesThemeColor {
   return {
