@@ -1,3 +1,6 @@
+import { SafeStylePipe } from './pipes/safe.style.pipe';
+import { RgbaPipe } from './pipes/rgba.pipe';
+import { LinkComponent } from './components/link/link.component';
 import { NG_ARWES_THEME_TOKEN, DEFAULT_THEME } from './tools/theme';
 import { NgArwesTheme } from './types/theme.interfaces';
 import { CommonModule } from '@angular/common';
@@ -19,6 +22,9 @@ const providers: Provider[] = [
 @NgModule({
   declarations: [
     LineComponent,
+    LinkComponent,
+    RgbaPipe,
+    SafeStylePipe,
   ],
   providers: [
     ...providers,
@@ -33,6 +39,7 @@ const providers: Provider[] = [
   ],
   exports: [
     LineComponent,
+    LinkComponent,
   ]
 })
 export class NgArwesModule {
