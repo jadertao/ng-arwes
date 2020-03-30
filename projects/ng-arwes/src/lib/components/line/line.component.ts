@@ -8,49 +8,49 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'arwes-line',
+  animations: [lineDotMotion, lineBodyMotion],
+  styleUrls: ['./line.component.less'],
   template: `
     <div *ngIf="show" class="arwes-line" [style.margin-bottom.px]="theme.margin">
       <div
-        *ngIf="show"
-        class="arwes-line-body"
-        [style.border-color]="theme.color[layer].dark"
-        [@lineBodyMotion]="{
-          value: null,
-          params: { animTime: theme.animTime }
-        }"
+      *ngIf="show"
+      class="arwes-line-body"
+      [style.border-color]="theme.color[layer].dark"
+      [@lineBodyMotion]="{
+        value: null,
+        params: { animTime: theme.animTime }
+      }"
       ></div>
       <div
-        *ngIf="show"
-        class="arwes-line-left"
-        [style.background-color]="theme.color[layer].dark"
-        [@lineDotMotion]="{
-          value: null,
-          params: {
-            animTime: (theme.animTime / 4) * 3,
-            animDelay: theme.animTime / 4
-          }
-        }"
+      *ngIf="show"
+      class="arwes-line-left"
+      [style.background-color]="theme.color[layer].dark"
+      [@lineDotMotion]="{
+        value: null,
+        params: {
+          animTime: (theme.animTime / 4) * 3,
+          animDelay: theme.animTime / 4
+        }
+      }"
       ></div>
       <div
-        *ngIf="show"
-        class="arwes-line-right"
-        [style.background-color]="theme.color[layer].dark"
-        [@lineDotMotion]="{
-          value: null,
-          params: {
-            animTime: (theme.animTime / 4) * 3,
-            animDelay: theme.animTime / 4
-          }
-        }"
+      *ngIf="show"
+      class="arwes-line-right"
+      [style.background-color]="theme.color[layer].dark"
+      [@lineDotMotion]="{
+        value: null,
+        params: {
+          animTime: (theme.animTime / 4) * 3,
+          animDelay: theme.animTime / 4
+        }
+      }"
       ></div>
     </div>
-  `,
-  styleUrls: ['./line.component.less'],
-  animations: [lineDotMotion, lineBodyMotion]
+    `,
 })
 export class LineComponent implements OnInit, OnDestroy {
   public theme: NgArwesTheme = DEFAULT_THEME;
-  private sub: Subscription;
+  private themeSub: Subscription;
 
   @Input()
   show = true;
@@ -58,14 +58,14 @@ export class LineComponent implements OnInit, OnDestroy {
   @Input()
   layer = NgArwesLayerStatusEnum.Primary;
 
-  constructor(public ThemeSvc: ThemeService) { }
+  constructor(public themeSvc: ThemeService) { }
 
   ngOnInit(): void {
-    this.sub = this.ThemeSvc.theme$.subscribe(theme => {
+    this.themeSub = this.themeSvc.theme$.subscribe(theme => {
       this.theme = theme;
     });
   }
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.themeSub.unsubscribe();
   }
 }
