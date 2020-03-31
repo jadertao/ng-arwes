@@ -1,10 +1,11 @@
+import { takeUntil } from 'rxjs/operators';
 import { lineDotMotion, lineBodyMotion } from './line.animations';
 import { ThemeService } from '../../services/theme.service';
 import { DEFAULT_THEME } from './../../tools/theme';
 import { NgArwesTheme } from '../../types/theme.interfaces';
 import { NgArwesLayerStatusEnum } from '../../types/theme.enums';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 
 @Component({
   selector: 'arwes-line',
@@ -51,7 +52,7 @@ import { Subscription } from 'rxjs';
 export class LineComponent implements OnInit, OnDestroy {
   public theme: NgArwesTheme = DEFAULT_THEME;
   private themeSub: Subscription;
-
+  private destroy$ = new Subject<void>();
   @Input()
   show = true;
 
@@ -61,11 +62,16 @@ export class LineComponent implements OnInit, OnDestroy {
   constructor(public themeSvc: ThemeService) { }
 
   ngOnInit(): void {
-    this.themeSub = this.themeSvc.theme$.subscribe(theme => {
-      this.theme = theme;
-    });
+    this.themeSvc.theme$
+      .pipe(
+        takeUntil(this.destroy$)
+      ).subscribe(theme => {
+        this.theme = theme;
+      });
   }
+
   ngOnDestroy(): void {
-    this.themeSub.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
