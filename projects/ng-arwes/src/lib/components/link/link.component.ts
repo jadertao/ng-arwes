@@ -21,13 +21,11 @@ export class LinkComponent implements OnDestroy {
   public hover = false;
   private destroy$ = new Subject<void>();
   private theme: NgArwesTheme = DEFAULT_THEME;
-  private _color: SafeStyle;
+
+  @HostBinding('style.color') color: SafeStyle;
 
   @HostBinding('class.arwes-link') className = true;
-  @HostBinding('style') staticStyle: SafeStyle = '';
-  @HostBinding('style.color') get color() {
-    return this._color;
-  }
+  @HostBinding('style') staticStyle: SafeStyle;
 
   constructor(
     public themeSvc: ThemeService,
@@ -38,6 +36,7 @@ export class LinkComponent implements OnDestroy {
         takeUntil(this.destroy$)
       ).subscribe(theme => {
         this.deriveStyleFromTheme(theme);
+        Promise.resolve().then(() => this.deriveColorFromTheme(theme));
       });
   }
 
@@ -51,7 +50,6 @@ export class LinkComponent implements OnDestroy {
   }
 
   deriveStyleFromTheme(theme: NgArwesTheme = this.theme) {
-    this.deriveColorFromTheme(theme);
     this.staticStyle = this.sanitizer.bypassSecurityTrustStyle(styleObject2String({
       'text-shadow': `0px 0px ${theme.shadowLength}px ${rgba(theme.color.control.base, theme.alpha)}`,
       transition: `color ${theme.animTime}ms ease-out`,
@@ -60,7 +58,7 @@ export class LinkComponent implements OnDestroy {
   }
 
   deriveColorFromTheme(theme: NgArwesTheme = this.theme) {
-    this._color = this.sanitizer.bypassSecurityTrustStyle(this.hover ? theme.color.control.light : theme.color.control.base);
+    this.color = this.sanitizer.bypassSecurityTrustStyle(this.hover ? theme.color.control.light : theme.color.control.base);
   }
 
   ngOnDestroy(): void {
