@@ -19,5 +19,5 @@ addDecorator(moduleMetadata({
 }));
 
 export const Text = () => ({
-  template: `<arwes-link href="https://www.angular.io" target="_blank"> Put your content here </arwes-link>`,
+  template: `<a arwes-link href="https://www.angular.io" target="_blank"> Put your content here </a>`,
 });

@@ -1,64 +1,70 @@
-import { Subscription } from 'rxjs';
 import { DEFAULT_THEME } from './../../tools/theme';
+import type { SafeStyle } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
+import { rgba } from 'polished';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { styleObject2String } from './../../tools/style';
 import { NgArwesTheme } from './../../types/theme.interfaces';
 import { ThemeService } from './../../services/theme.service';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnDestroy, HostBinding, ViewEncapsulation, HostListener } from '@angular/core';
+
+const LinkSelector = 'a[arwes-link]';
 
 @Component({
-  selector: 'arwes-link',
+  selector: LinkSelector,
   styleUrls: ['./link.component.less'],
-  template: `
-    <a
-      class="arwes-link"
-      (mouseover)="hover=true"
-      (mouseleave)="hover=false"
-      [href]="href"
-      [target]="target"
-      [style.color]="hover ? theme.color.control.light : theme.color.control.base"
-      [style.text-shadow]="'0px 0px ' + theme.shadowLength + 'px ' + (theme.color.control.base | rgba: theme.alpha) | safestyle"
-      [style.transition]="'color ' + theme.animTime + 'ms ease-out'"
-      [target]="'0 0 ' + theme.shadowLength + 'px ' + (theme.color.control.base | rgba: theme.alpha)"
-    >
-      <ng-content></ng-content>
-    </a>
-  `
+  template: '<ng-content></ng-content>',
+  encapsulation: ViewEncapsulation.None,
 })
-export class LinkComponent implements OnInit, OnDestroy {
-  public theme: NgArwesTheme = DEFAULT_THEME;
-  private themeSub: Subscription;
+export class LinkComponent implements OnDestroy {
+  public hover = false;
+  private destroy$ = new Subject<void>();
+  private theme: NgArwesTheme = DEFAULT_THEME;
+  private _color: SafeStyle;
 
-  @Input()
-  public href: string;
-
-  @Input()
-  public target: string;
-
-  get textShadow(): string {
-    return `0 0 ${this.theme.shadowLength}px`;
+  @HostBinding('class.arwes-link') className = true;
+  @HostBinding('style') staticStyle: SafeStyle = '';
+  @HostBinding('style.color') get color() {
+    return this._color;
   }
 
-  constructor(public themeSvc: ThemeService) { }
-
-  ngOnInit(): void {
-    this.themeSub = this.themeSvc.theme$.subscribe(theme => {
-      this.theme = theme;
-    });
+  constructor(
+    public themeSvc: ThemeService,
+    private sanitizer: DomSanitizer,
+  ) {
+    this.themeSvc.theme$
+      .pipe(
+        takeUntil(this.destroy$)
+      ).subscribe(theme => {
+        this.deriveStyleFromTheme(theme);
+      });
   }
-  /* .arwes-link {
-  // color: theme.color.control.base,
-  // textShadow:
-  //   `0 0 ${ theme.shadowLength }px` +
-  //   rgba(theme.color.control.base, theme.alpha),
-  // transition: `color ${ theme.animTime }ms ease - out`,
-  text-decoration: none;
-  cursor: pointer;
 
-  // '&:hover': {
-  //   color: theme.color.control.light
-  // }
-} */
+  @HostListener('mouseover') over() {
+    this.hover = true;
+    this.deriveColorFromTheme();
+  }
+  @HostListener('mouseleave') leave() {
+    this.hover = false;
+    this.deriveColorFromTheme();
+  }
+
+  deriveStyleFromTheme(theme: NgArwesTheme = this.theme) {
+    this.deriveColorFromTheme(theme);
+    this.staticStyle = this.sanitizer.bypassSecurityTrustStyle(styleObject2String({
+      'text-shadow': `0px 0px ${theme.shadowLength}px ${rgba(theme.color.control.base, theme.alpha)}`,
+      transition: `color ${theme.animTime}ms ease-out`,
+    }));
+    this.theme = theme;
+  }
+
+  deriveColorFromTheme(theme: NgArwesTheme = this.theme) {
+    this._color = this.sanitizer.bypassSecurityTrustStyle(this.hover ? theme.color.control.light : theme.color.control.base);
+  }
 
   ngOnDestroy(): void {
-    this.themeSub.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
