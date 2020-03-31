@@ -74,6 +74,30 @@
     "template-banana-in-box": true,
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true
+    "use-pipe-transform-interface": true,
+    "directive-selector": [
+      true,
+      "attribute",
+      [
+        "arwes"
+      ],
+      [
+        "camelCase",
+        "kebab-case"
+      ]
+    ],
+    "component-selector": [
+      true,
+      [
+        "element",
+        "attribute"
+      ],
+      [
+        "arwes",
+        "test"
+      ],
+      "kebab-case"
+    ],
+    "variable-name": [true, "ban-keywords", "allow-leading-underscore"]
   }
 }
