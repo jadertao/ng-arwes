@@ -20,8 +20,10 @@
     ],
     "paths": {
       "ng-arwes": [
-        "dist/ng-arwes/ng-arwes",
-        "dist/ng-arwes"
+        "./projects/ng-arwes/src/lib/ng-arwes.module"
+      ],
+      "ng-arwes/*": [
+        "./projects/ng-arwes/src/lib/*"
       ]
     }
   },
