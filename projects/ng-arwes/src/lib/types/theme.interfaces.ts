@@ -26,7 +26,7 @@ export interface NgArwesThemeTypographyHeader {
 
 export interface NgArwesThemeTypography {
   fontSize: number;
-  headerSizes: Partial<NgArwesThemeTypographyHeader>;
+  headerSizes: NgArwesThemeTypographyHeader;
   headerFontFamily: string;
   fontFamily: string;
   lineHeight: number;
@@ -56,14 +56,20 @@ export interface NgArwesThemeReponsiveProps {
 export interface NgArwesTheme {
   margin: number;
   padding: number;
-  color: Partial<Record<NgArwesLayerStatusEnum, NgArwesThemeColor>>;
+  color: Record<NgArwesLayerStatusEnum, NgArwesThemeColor>;
   animTime: number;
   alpha: number;
   shadowLength: number;
   accent: number;
   columns: number;
-  typography: Partial<NgArwesThemeTypography>;
+  typography: NgArwesThemeTypography;
   code: NgArwesThemeCode;
-  background: Partial<Record<NgArwesLayerStatusEnum, NgArwesThemeBackgroundLevel>>;
+  background: Record<NgArwesLayerStatusEnum, NgArwesThemeBackgroundLevel>;
   responsive: Partial<NgArwesThemeReponsiveProps>;
 }
+
+// exclude string&number
+type DeepPartial<T> = { [K in keyof T]?: T[K] extends number ? number : T[K] extends string ? string : DeepPartial<T[K]> };
+
+const v: DeepPartial<NgArwesTheme> = {};
+
