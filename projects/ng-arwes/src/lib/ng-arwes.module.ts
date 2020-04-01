@@ -1,3 +1,4 @@
+import { BlockquoteComponent } from './components/blockquote/blockquote.component';
 import { SafeStylePipe } from './pipes/safe.style.pipe';
 import { RgbaPipe } from './pipes/rgba.pipe';
 import { LinkComponent } from './components/link/link.component';
@@ -12,17 +13,22 @@ import { mergeDeep } from './tools/merge';
 
 
 export interface NgArwesModuleOptions {
-  theme?: Partial<NgArwesTheme>;
+  theme?: DeepPartial<NgArwesTheme>;
 }
 
 const providers: Provider[] = [
   ThemeService,
 ];
 
+const components = [
+  LineComponent,
+  LinkComponent,
+  BlockquoteComponent,
+];
+
 @NgModule({
   declarations: [
-    LineComponent,
-    LinkComponent,
+    ...components,
     RgbaPipe,
     SafeStylePipe,
   ],
@@ -38,8 +44,7 @@ const providers: Provider[] = [
     BrowserAnimationsModule,
   ],
   exports: [
-    LineComponent,
-    LinkComponent,
+    ...components,
   ]
 })
 export class NgArwesModule {
