@@ -1,15 +1,12 @@
-import { DEFAULT_THEME } from './../../tools/theme';
-import type { SafeStyle } from '@angular/platform-browser';
-import { DomSanitizer } from '@angular/platform-browser';
-import { rgba } from 'polished';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { NgArwesTheme } from './../../types/theme.interfaces';
-import { ThemeService } from './../../services/theme.service';
 import {
   Component, OnDestroy, HostBinding, ViewEncapsulation, HostListener,
   Renderer2, ElementRef, ChangeDetectionStrategy
 } from '@angular/core';
+import { rgba } from 'polished';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
+import { ThemeService } from 'ng-arwes/services/theme.service';
 
 const LinkSelector = 'a[arwes-link]';
 
@@ -24,7 +21,7 @@ export class LinkComponent implements OnDestroy {
   public hover = false;
 
   private destroy$ = new Subject<void>();
-  private theme: NgArwesTheme = DEFAULT_THEME;
+  private theme: NgArwesTheme | null = null;
   private el: HTMLElement = this.elementRef.nativeElement;
 
   @HostBinding('class.arwes-link') className = true;
@@ -39,6 +36,7 @@ export class LinkComponent implements OnDestroy {
         takeUntil(this.destroy$)
       ).subscribe(theme => {
         this.deriveStyleFromTheme(theme);
+        this.theme = theme;
       });
   }
 
@@ -52,11 +50,10 @@ export class LinkComponent implements OnDestroy {
   }
 
   deriveStyleFromTheme(theme: NgArwesTheme = this.theme, withColor: boolean = true) {
-    this.theme = theme;
     this.renderer.setStyle(this.el, 'text-shadow', `0px 0px ${theme.shadowLength}px ${rgba(theme.color.control.base, theme.alpha)}`);
     this.renderer.setStyle(this.el, 'transition', `color ${theme.animTime}ms ease-out`);
     if (withColor) {
-      this.renderer.setStyle(this.el, 'color', this.hover ? theme.color.control.light : theme.color.control.base);
+      this.deriveColorFromTheme(theme);
     }
   }
 
