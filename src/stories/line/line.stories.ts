@@ -19,8 +19,10 @@ addDecorator(moduleMetadata({
 }));
 
 export const Text = () => ({
-  component: LineComponent,
-  props: {
-    text: 'Hello Button',
-  },
+  template: `
+<arwes-line></arwes-line>
+<arwes-line layer="success"></arwes-line>
+<arwes-line layer="disabled"></arwes-line>
+<arwes-line layer="alert"></arwes-line>
+  `
 });

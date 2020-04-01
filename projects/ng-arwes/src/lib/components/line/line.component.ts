@@ -1,11 +1,10 @@
-import { takeUntil } from 'rxjs/operators';
-import { lineDotMotion, lineBodyMotion } from './line.animations';
-import { ThemeService } from '../../services/theme.service';
-import { DEFAULT_THEME } from './../../tools/theme';
-import { NgArwesTheme } from '../../types/theme.interfaces';
-import { NgArwesLayerStatusEnum } from '../../types/theme.enums';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Subscription, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ThemeService } from 'ng-arwes/services/theme.service';
+import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
+import { NgArwesLayerStatusEnum } from 'ng-arwes/types/theme.enums';
+import { lineDotMotion, lineBodyMotion } from './line.animations';
 
 @Component({
   selector: 'arwes-line',
@@ -49,19 +48,18 @@ import { Subscription, Subject } from 'rxjs';
     </div>
     `,
 })
-export class LineComponent implements OnInit, OnDestroy {
-  public theme: NgArwesTheme = DEFAULT_THEME;
+export class LineComponent implements OnDestroy {
+  public theme: NgArwesTheme | null = null;
   private themeSub: Subscription;
   private destroy$ = new Subject<void>();
+
   @Input()
   show = true;
 
   @Input()
   layer = NgArwesLayerStatusEnum.Primary;
 
-  constructor(public themeSvc: ThemeService) { }
-
-  ngOnInit(): void {
+  constructor(public themeSvc: ThemeService) {
     this.themeSvc.theme$
       .pipe(
         takeUntil(this.destroy$)
