@@ -18,11 +18,12 @@ jobs:
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1.1.0
       with:
-        node-version: '12.x'
-    # Runs a single command using the runners shell
+        version: 12.x
     - name: deploy
-      run: npm ci && npm run deploy-sb
-
+      run: |
+        npm ci
+        npm run deploy-sb
