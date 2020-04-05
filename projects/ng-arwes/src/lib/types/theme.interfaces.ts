@@ -1,4 +1,4 @@
-import { NgArwesLayerStatusEnum } from './theme.enums';
+import { NgArwesLayerStatusEnum, NgArwesThemeTypographyHeaderEnum } from './theme.enums';
 
 
 export interface NgArwesThemeColor {
@@ -26,7 +26,7 @@ export interface NgArwesThemeTypographyHeader {
 
 export interface NgArwesThemeTypography {
   fontSize: number;
-  headerSizes: NgArwesThemeTypographyHeader;
+  headerSizes: Record<NgArwesThemeTypographyHeaderEnum, number>;
   headerFontFamily: string;
   fontFamily: string;
   lineHeight: number;
