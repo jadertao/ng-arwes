@@ -1,3 +1,4 @@
+import { HeadingComponent } from './components/heading/heading.component';
 import { BlockquoteComponent } from './components/blockquote/blockquote.component';
 import { SafeStylePipe } from './pipes/safe.style.pipe';
 import { RgbaPipe } from './pipes/rgba.pipe';
@@ -24,6 +25,7 @@ const components = [
   LineComponent,
   LinkComponent,
   BlockquoteComponent,
+  HeadingComponent,
 ];
 
 @NgModule({

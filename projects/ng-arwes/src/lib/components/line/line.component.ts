@@ -50,7 +50,6 @@ import { lineDotMotion, lineBodyMotion } from './line.animations';
 })
 export class LineComponent implements OnDestroy {
   public theme: NgArwesTheme | null = null;
-  private themeSub: Subscription;
   private destroy$ = new Subject<void>();
 
   @Input()
