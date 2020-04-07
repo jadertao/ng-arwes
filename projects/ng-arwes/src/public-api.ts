@@ -3,3 +3,5 @@
  */
 
 export * from './lib/ng-arwes.module';
+
+export * from './lib/public-api';

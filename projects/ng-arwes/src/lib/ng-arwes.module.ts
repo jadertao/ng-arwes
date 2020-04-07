@@ -12,6 +12,7 @@ import { LineComponent } from './components/line/line.component';
 import { NgModule, ModuleWithProviders, Provider } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { mergeDeep } from './tools/merge';
+import { DeepPartial } from './types';
 
 
 export interface NgArwesModuleOptions {
