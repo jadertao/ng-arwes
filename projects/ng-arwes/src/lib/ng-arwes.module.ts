@@ -1,3 +1,4 @@
+import { FooterComponent } from './components/footer/footer.component';
 import { HeadingComponent } from './components/heading/heading.component';
 import { BlockquoteComponent } from './components/blockquote/blockquote.component';
 import { SafeStylePipe } from './pipes/safe.style.pipe';
@@ -26,6 +27,7 @@ const components = [
   LinkComponent,
   BlockquoteComponent,
   HeadingComponent,
+  FooterComponent,
 ];
 
 @NgModule({
