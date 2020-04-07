@@ -1,9 +1,9 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ThemeService } from 'ng-arwes/services/theme.service';
-import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
-import { NgArwesLayerStatusEnum } from 'ng-arwes/types/theme.enums';
+import { ThemeService } from '../../services/theme.service';
+import { NgArwesTheme } from '../../types/theme.interfaces';
+import { NgArwesLayerStatusEnum } from '../../types/theme.enums';
 import { lineDotMotion, lineBodyMotion } from './line.animations';
 
 @Component({
