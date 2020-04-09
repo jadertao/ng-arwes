@@ -23,7 +23,6 @@ export class BlockquoteComponent implements OnInit, OnDestroy {
 
   @Input() set layer(value: NgArwesLayerStatusEnum) {
     this._layer = value;
-    console.log('set here', this.layer, value, this.theme);
     this.deriveLayerStyleFromTheme();
   }
   get layer() {
@@ -52,7 +51,6 @@ export class BlockquoteComponent implements OnInit, OnDestroy {
     this.renderer.setStyle(this.el, 'margin', `0 0 ${theme.margin}px ${theme.margin}px`);
     this.renderer.setStyle(this.el, 'padding', `0 0 0 ${theme.padding / 2}px`);
     if (withLayer) {
-      console.log('set there');
       this.deriveLayerStyleFromTheme(theme);
     }
   }
@@ -60,7 +58,6 @@ export class BlockquoteComponent implements OnInit, OnDestroy {
   deriveLayerStyleFromTheme(theme: NgArwesTheme = this.theme) {
     if (theme.color[this.layer]) {
       const color = theme.color[this.layer].light;
-      console.log(this.layer, theme.color[this.layer], color);
       this.renderer.setStyle(this.el, 'color', color);
       this.renderer.setStyle(this.el, 'border-color', color);
     } else {

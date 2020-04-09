@@ -7,7 +7,6 @@ import { rgba } from 'polished';
 export class RgbaPipe implements PipeTransform {
 
   transform(value: any, args?: any) {
-    console.log(rgba(value, args));
     return rgba(value, args);
   }
 

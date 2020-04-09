@@ -20,9 +20,9 @@ addDecorator(moduleMetadata({
 
 export const Text = () => ({
   template: `
-<arwes-line></arwes-line>
-<arwes-line layer="success"></arwes-line>
-<arwes-line layer="disabled"></arwes-line>
-<arwes-line layer="alert"></arwes-line>
+<arwes-line animate></arwes-line>
+<arwes-line animate layer="success"></arwes-line>
+<arwes-line animate layer="disabled"></arwes-line>
+<arwes-line animate layer="alert"></arwes-line>
   `
 });

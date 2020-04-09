@@ -5,45 +5,46 @@ import { ThemeService } from '../../services/theme.service';
 import { NgArwesTheme } from '../../types/theme.interfaces';
 import { NgArwesLayerStatusEnum } from '../../types/theme.enums';
 import { lineDotMotion, lineBodyMotion } from './line.animations';
+import { InputBoolean } from '../../tools';
 
 @Component({
   selector: 'arwes-line',
   animations: [lineDotMotion, lineBodyMotion],
   styleUrls: ['./line.component.less'],
   template: `
-    <div *ngIf="show" class="arwes-line" [style.margin-bottom.px]="theme.margin">
+    <div *ngIf="show" class="arwes-line" [style.margin-bottom.px]="theme.margin" [@.disabled]="!animate">
       <div
-      *ngIf="show"
-      class="arwes-line-body"
-      [style.border-color]="theme.color[layer].dark"
-      [@lineBodyMotion]="{
-        value: null,
-        params: { animTime: theme.animTime }
-      }"
+        *ngIf="show"
+        class="arwes-line-body"
+        [style.border-color]="theme.color[layer].dark"
+        [@lineBodyMotion]="{
+          value: null,
+          params: { animTime: theme.animTime }
+        }"
+      ></div>
+        <div
+        *ngIf="show"
+        class="arwes-line-left"
+        [style.background-color]="theme.color[layer].dark"
+        [@lineDotMotion]="{
+          value: null,
+          params: {
+            animTime: (theme.animTime / 4) * 3,
+            animDelay: theme.animTime / 4
+          }
+        }"
       ></div>
       <div
-      *ngIf="show"
-      class="arwes-line-left"
-      [style.background-color]="theme.color[layer].dark"
-      [@lineDotMotion]="{
-        value: null,
-        params: {
-          animTime: (theme.animTime / 4) * 3,
-          animDelay: theme.animTime / 4
-        }
-      }"
-      ></div>
-      <div
-      *ngIf="show"
-      class="arwes-line-right"
-      [style.background-color]="theme.color[layer].dark"
-      [@lineDotMotion]="{
-        value: null,
-        params: {
-          animTime: (theme.animTime / 4) * 3,
-          animDelay: theme.animTime / 4
-        }
-      }"
+        *ngIf="show"
+        class="arwes-line-right"
+        [style.background-color]="theme.color[layer].dark"
+        [@lineDotMotion]="{
+          value: null,
+          params: {
+            animTime: (theme.animTime / 4) * 3,
+            animDelay: theme.animTime / 4
+          }
+        }"
       ></div>
     </div>
     `,
@@ -52,11 +53,14 @@ export class LineComponent implements OnDestroy {
   public theme: NgArwesTheme | null = null;
   private destroy$ = new Subject<void>();
 
-  @Input()
+  @Input() @InputBoolean()
   show = true;
 
   @Input()
   layer = NgArwesLayerStatusEnum.Primary;
+
+  @Input() @InputBoolean()
+  animate = false;
 
   constructor(public themeSvc: ThemeService) {
     this.themeSvc.theme$

@@ -1,3 +1,5 @@
+import { Howl } from 'howler';
+import { NG_ARWES_SOUND_TOKEN, NgArwesSound, NgArwesSoundOptions } from './tools/sound';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeadingComponent } from './components/heading/heading.component';
 import { BlockquoteComponent } from './components/blockquote/blockquote.component';
@@ -17,6 +19,7 @@ import { DeepPartial } from './types';
 
 export interface NgArwesModuleOptions {
   theme?: DeepPartial<NgArwesTheme>;
+  sound?: Partial<NgArwesSoundOptions>;
 }
 
 const providers: Provider[] = [
@@ -59,9 +62,17 @@ export class NgArwesModule {
       provide: NG_ARWES_THEME_TOKEN,
       useValue: options.theme ? mergeDeep(DEFAULT_THEME, options.theme) : DEFAULT_THEME,
     });
+    forRootProviders.push({
+      provide: NG_ARWES_SOUND_TOKEN,
+      useValue: Object.keys(options.sound || {})
+        .reduce((result, type: keyof NgArwesSoundOptions) => {
+          result[type] = new Howl({ src: options.sound[type] });
+          return result;
+        }, {} as NgArwesSound),
+    });
     return {
       ngModule: NgArwesModule,
-      providers
+      providers: forRootProviders,
     };
   }
 }

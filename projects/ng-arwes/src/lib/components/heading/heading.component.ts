@@ -11,7 +11,7 @@ const HeadingSelector = 'h1[arwes-heading], h2[arwes-heading], h3[arwes-heading]
 @Component({
   selector: HeadingSelector,
   styleUrls: ['./heading.component.less'],
-  template: `<ng-content *ngIf="type"></ng-content>`,
+  template: `<ng-container *ngIf="type"><ng-content></ng-content></ng-container>`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
