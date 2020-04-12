@@ -91,7 +91,6 @@ export class WordsComponent
   @ViewChild('children') _children: ElementRef;
 
   public get children(): string {
-    console.log(this._children);
     return this._children ? this._children.nativeElement.textContent || '' : '';
   }
 
@@ -103,7 +102,6 @@ export class WordsComponent
     this.themeSvc.theme$.pipe(takeUntil(this.destroy$)).subscribe((theme) => {
       this.theme = theme;
     });
-    console.log(this);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -127,7 +125,6 @@ export class WordsComponent
 
     // Not animated anymore
     if (!animate && animateChanged) {
-      console.log('changes stop');
       this.stopAnimation();
     }
   }
@@ -141,9 +138,7 @@ export class WordsComponent
   }
 
   ngAfterViewInit() {
-    console.log(this._children);
     if (this.animate && this.show) {
-      console.log('ngAfterContentInit call animateIn');
       this.animateIn();
     }
   }
@@ -156,7 +151,6 @@ export class WordsComponent
    * Stop current animation and sounds.
    */
   stopAnimation() {
-    console.log('stop');
     this.cancelNextAnimation();
     this.animating = false;
 
@@ -182,7 +176,7 @@ export class WordsComponent
     const realDuration = interval * children.length;
 
     const duration = Math.min(realDuration, theme.animTime);
-    console.log('duration', duration);
+
     this.cancelNextAnimation();
     this.animating = true;
     this.text = isIn ? '' : children;
@@ -196,7 +190,7 @@ export class WordsComponent
       }
 
       progress = Math.max(timestamp - start, 0);
-      console.log('progress', progress);
+
       if (!isIn) {
         progress = duration - progress;
       }
@@ -204,18 +198,16 @@ export class WordsComponent
       // partialLength(n) = animationProgressDuration(ms)
       // textTotalLength(n) = totalDuration(ms)
       const newLength = Math.round((progress * length) / duration);
-      console.log('newLength', newLength);
       const text = children.substring(0, newLength);
 
       this.text = text;
+
       const continueAnimation = isIn ? newLength <= length : newLength > 0;
-      console.log('continueAnimation', continueAnimation);
       if (continueAnimation) {
         this.currentAnimationFrame = window.requestAnimationFrame(
           nextAnimation
         );
       } else {
-        console.log('nextAnimation stop');
         this.stopAnimation();
       }
     };
@@ -224,7 +216,6 @@ export class WordsComponent
   }
 
   animateIn() {
-    console.log('call animateIn');
     this.cancelNextAnimation();
     this.startAnimation(true);
   }
