@@ -6,7 +6,7 @@ export interface NgArwesSoundOptions {
   warning: string;
   error: string;
   click: string;
-  type: string;
+  typing: string;
   deploy: string;
 }
 

@@ -78,13 +78,17 @@ export class FooterComponent implements OnDestroy, AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
+    console.log(this);
     if (this.animate && this.show && this.sounds.deploy) {
       this.sounds.deploy.play();
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.animate && (changes.show ? changes.show.previousValue : true) && this.sounds.deploy) {
+    if (changes.animate && changes.animate.isFirstChange()) {
+      return;
+    }
+    if (this.animate && changes.show && changes.show.previousValue !== this.show && this.sounds.deploy) {
       this.sounds.deploy.play();
     }
   }

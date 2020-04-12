@@ -16,7 +16,7 @@ addDecorator(moduleMetadata({
     sound: {
       click: 'sounds/click.mp3',
       deploy: 'sounds/deploy.mp3',
-      type: 'sounds/typing.mp3',
+      typing: 'sounds/typing.mp3',
       warning: 'sounds/warning.mp3',
       ask: 'sounds/ask.mp3',
       error: 'sounds/error.mp3',
