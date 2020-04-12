@@ -1,14 +1,24 @@
 import { NgArwesTheme } from './../../types/theme.interfaces';
 import { takeUntil } from 'rxjs/operators';
-import { NG_ARWES_SOUND_TOKEN, } from './../../tools/sound';
+import { NG_ARWES_SOUND_TOKEN } from './../../tools/sound';
 import type { NgArwesSound } from './../../tools/sound';
 import { ThemeService } from './../../services/theme.service';
 import { NgArwesLayerStatusEnum } from './../../types/theme.enums';
 import {
-  Component, OnInit, Input, Inject,
-  OnDestroy, ContentChildren, ViewChild,
-  ElementRef, AfterContentInit, AfterViewChecked,
-  OnChanges, SimpleChanges, AfterViewInit
+  Component,
+  OnInit,
+  Input,
+  Inject,
+  OnDestroy,
+  ContentChildren,
+  ViewChild,
+  ElementRef,
+  AfterContentInit,
+  AfterViewChecked,
+  OnChanges,
+  SimpleChanges,
+  AfterViewInit,
+  NgZone,
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { InputBoolean } from './../../tools';
@@ -18,23 +28,37 @@ import '../../polyfills/requestAnimationFrame.js';
   selector: 'arwes-words',
   styleUrls: ['./words.component.less'],
   template: `
-<span
-  class="arwes-words"
-  [@.disabled]="!animate"
->
-  <span class="arwes-words-children" #children>
-    <ng-content></ng-content>
-  </span>
-  <span class="arwes-words-text">
-    {{ text }}
-    <span class="arwes-words-blink" [innerHTML]='blinkText'></span>
-  </span>
-</span>
-`,
+    <span
+      class="arwes-words"
+      [@.disabled]="!animate"
+      [style.color]="theme.color[layer].base"
+      >
+      <span
+        class="arwes-words-children"
+        #children
+        [style.opacity]="animating ? 0 : 1"
+        >
+        <ng-content></ng-content>
+      </span>
+      <span
+        *ngIf="animating"
+        class="arwes-words-text"
+        [style.opacity]="animating ? 1 : 0"
+        >
+        {{ text }}
+        <span
+          class="arwes-words-blink"
+          [innerHTML]="blinkText"
+          [style.animation]="
+            'arwes-words-blink ' + theme.animTime + 'ms step-end infinite'
+          "
+        ></span>
+      </span>
+    </span>
+  `,
 })
-export class WordsComponent implements
-  OnInit, OnDestroy, OnChanges, AfterViewInit {
-
+export class WordsComponent
+  implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   private destroy$ = new Subject<void>();
 
   public _text = '';
@@ -52,11 +76,16 @@ export class WordsComponent implements
 
   @Input()
   blinkText = '&#9611;';
+
   @Input()
   layer = NgArwesLayerStatusEnum.Primary;
-  @Input() @InputBoolean()
+
+  @Input()
+  @InputBoolean()
   show = true;
-  @Input() @InputBoolean()
+
+  @Input()
+  @InputBoolean()
   animate = false;
 
   @ViewChild('children') _children: ElementRef;
@@ -67,15 +96,13 @@ export class WordsComponent implements
   }
 
   constructor(
+    private zone: NgZone,
     public themeSvc: ThemeService,
-    @Inject(NG_ARWES_SOUND_TOKEN) private sounds: NgArwesSound,
+    @Inject(NG_ARWES_SOUND_TOKEN) private sounds: NgArwesSound
   ) {
-    this.themeSvc.theme$
-      .pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(theme => {
-        this.theme = theme;
-      });
+    this.themeSvc.theme$.pipe(takeUntil(this.destroy$)).subscribe((theme) => {
+      this.theme = theme;
+    });
     console.log(this);
   }
 
@@ -105,8 +132,7 @@ export class WordsComponent implements
     }
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ngOnDestroy() {
     this.stopAnimation();
@@ -126,7 +152,6 @@ export class WordsComponent implements
     window.cancelAnimationFrame(this.currentAnimationFrame);
   }
 
-
   /**
    * Stop current animation and sounds.
    */
@@ -140,7 +165,6 @@ export class WordsComponent implements
       sounds.typing.stop();
     }
   }
-
 
   startAnimation(isIn: boolean) {
     const { theme, animate, sounds, children } = this;
@@ -158,7 +182,7 @@ export class WordsComponent implements
     const realDuration = interval * children.length;
 
     const duration = Math.min(realDuration, theme.animTime);
-    console.log(duration);
+    console.log('duration', duration);
     this.cancelNextAnimation();
     this.animating = true;
     this.text = isIn ? '' : children;
@@ -172,6 +196,7 @@ export class WordsComponent implements
       }
 
       progress = Math.max(timestamp - start, 0);
+      console.log('progress', progress);
       if (!isIn) {
         progress = duration - progress;
       }
@@ -179,12 +204,12 @@ export class WordsComponent implements
       // partialLength(n) = animationProgressDuration(ms)
       // textTotalLength(n) = totalDuration(ms)
       const newLength = Math.round((progress * length) / duration);
+      console.log('newLength', newLength);
       const text = children.substring(0, newLength);
 
       this.text = text;
-      console.log(this.text);
       const continueAnimation = isIn ? newLength <= length : newLength > 0;
-
+      console.log('continueAnimation', continueAnimation);
       if (continueAnimation) {
         this.currentAnimationFrame = window.requestAnimationFrame(
           nextAnimation
@@ -199,6 +224,7 @@ export class WordsComponent implements
   }
 
   animateIn() {
+    console.log('call animateIn');
     this.cancelNextAnimation();
     this.startAnimation(true);
   }
