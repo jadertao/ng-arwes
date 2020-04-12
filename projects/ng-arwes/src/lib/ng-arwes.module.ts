@@ -1,3 +1,4 @@
+import { WordsComponent } from './components/words/words.component';
 import { Howl } from 'howler';
 import { NG_ARWES_SOUND_TOKEN, NgArwesSound, NgArwesSoundOptions } from './tools/sound';
 import { FooterComponent } from './components/footer/footer.component';
@@ -32,6 +33,7 @@ const components = [
   BlockquoteComponent,
   HeadingComponent,
   FooterComponent,
+  WordsComponent,
 ];
 
 @NgModule({
