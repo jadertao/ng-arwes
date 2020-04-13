@@ -27,9 +27,7 @@ addDecorator(moduleMetadata({
   declarations: [],
   providers: [],
 }));
-export const Text = () => ({
-  template: `
-<arwes-words animate>
+const artical = `
 To be, or not to be- that is the question:
 Whether 'tis nobler in the mind to sufferThe
 slings and arrows of outrageous fortune
@@ -63,6 +61,11 @@ Is sicklied o'er with the pale cast of thought,
 And enterprises of great pith and moment
 With this regard their currents turn awry
 And lose the name of action.
-</arwes-words>
+`;
+export const Text = () => ({
+  template: `
+<arwes-words animate>${artical}</arwes-words>
+<arwes-words animate layer="success">${artical}</arwes-words>
+<arwes-words animate layer="alert">${artical}</arwes-words>
 `
 });

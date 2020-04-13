@@ -182,11 +182,11 @@ export class WordsComponent
     this.text = isIn ? '' : children;
 
     const length = children.length;
-    let start = performance.now();
+    let start = null;
     let progress = null;
     const nextAnimation = (timestamp: number) => {
       if (!start) {
-        start = timestamp;
+        start = performance.now();
       }
 
       progress = Math.max(timestamp - start, 0);
@@ -194,7 +194,6 @@ export class WordsComponent
       if (!isIn) {
         progress = duration - progress;
       }
-
       // partialLength(n) = animationProgressDuration(ms)
       // textTotalLength(n) = totalDuration(ms)
       const newLength = Math.round((progress * length) / duration);
