@@ -1,9 +1,10 @@
+import { rgba } from 'polished';
+import { SafeStyle, DomSanitizer } from '@angular/platform-browser';
 import { NG_ARWES_SOUND_TOKEN } from './../../tools/sound';
 import type { NgArwesSound } from './../../tools/sound';
 import { NgArwesTheme } from './../../types/theme.interfaces';
 import { ThemeService } from './../../services/theme.service';
 import { footerSeparatorMotion } from './footer.animation';
-import { NgArwesLayerStatusEnum } from '../../types/theme.enums';
 import {
   Component,
   OnInit,
@@ -21,7 +22,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { InputBoolean } from '../../tools';
 
-const FooterSelector = 'footer[arwes-footer]';
+const FooterSelector = 'arwes-footer';
 
 @Component({
   selector: FooterSelector,
@@ -30,10 +31,11 @@ const FooterSelector = 'footer[arwes-footer]';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <div
+    <footer
       *ngIf="show"
-      class="arwes-footer"
       [@.disabled]="!animate"
+      [style.background-color]="bgColor"
+      class="arwes-footer"
     >
       <div
         *ngIf="show"
@@ -42,8 +44,6 @@ const FooterSelector = 'footer[arwes-footer]';
         [@footerSeparatorMotion]="{
           value: null,
           params: {
-            backgroundColor: theme.background.primary.level0,
-            alpha: theme.alpha,
             animTime: theme.animTime
           }
         }"
@@ -52,12 +52,13 @@ const FooterSelector = 'footer[arwes-footer]';
       <div *ngIf="show" class="arwes-footer-children">
         <ng-content></ng-content>
       </div>
-    </div>
+    </footer>
   `,
 })
 export class FooterComponent implements OnDestroy, AfterViewInit, OnChanges {
   public theme: NgArwesTheme | null = null;
   private destroy$ = new Subject<void>();
+  public bgColor: SafeStyle = 'transparent';
 
   @Input() @InputBoolean()
   show = true;
@@ -67,13 +68,15 @@ export class FooterComponent implements OnDestroy, AfterViewInit, OnChanges {
 
   constructor(
     public themeSvc: ThemeService,
-    @Optional() @Inject(NG_ARWES_SOUND_TOKEN) private sounds: NgArwesSound,
+    public sanitizer: DomSanitizer,
+    @Inject(NG_ARWES_SOUND_TOKEN) private sounds: NgArwesSound,
   ) {
     this.themeSvc.theme$
       .pipe(
         takeUntil(this.destroy$)
       ).subscribe(theme => {
         this.theme = theme;
+        this.bgColor = sanitizer.bypassSecurityTrustStyle(rgba(theme.background.primary.level0, theme.alpha));
       });
   }
 

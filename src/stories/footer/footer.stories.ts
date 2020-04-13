@@ -30,8 +30,8 @@ addDecorator(moduleMetadata({
 
 export const Text = () => ({
   template: `
-<footer arwes-footer animate>arwes footer component</footer>
-<footer arwes-footer animate>arwes footer component</footer>
-<footer arwes-footer animate>arwes footer component</footer>
+<arwes-footer animate>arwes footer component</arwes-footer>
+<arwes-footer animate>arwes footer component</arwes-footer>
+<arwes-footer animate>arwes footer component</arwes-footer>
   `
 });

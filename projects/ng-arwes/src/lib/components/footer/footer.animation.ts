@@ -4,17 +4,15 @@ export const footerSeparatorMotion = trigger('footerSeparatorMotion', [
   transition(':enter', [
     style({
       width: '0%',
-      'background-color': 'transparent',
     }),
     animate(`{{ animTime }}ms ease-in`, style({
       width: '100%',
-      backgroundColor: 'rgba({{ backgroundColor }}, {{ alpha }})'
+      // backgroundColor: 'rgba({{ backgroundColor }}, {{ alpha }})'
     }))
   ]),
   transition(':leave', [
     animate(`{{ animTime }}ms ease-out`, style({
       width: '0%',
-      backgroundColor: 'transparent',
     }))
   ])
 ]);
