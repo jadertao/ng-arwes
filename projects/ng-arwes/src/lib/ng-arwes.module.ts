@@ -1,3 +1,4 @@
+import { HeaderComponent } from './components/header/header.component';
 import { WordsComponent } from './components/words/words.component';
 import { Howl } from 'howler';
 import { NG_ARWES_SOUND_TOKEN, NgArwesSound, NgArwesSoundOptions } from './tools/sound';
@@ -34,6 +35,7 @@ const components = [
   HeadingComponent,
   FooterComponent,
   WordsComponent,
+  HeaderComponent,
 ];
 
 @NgModule({
