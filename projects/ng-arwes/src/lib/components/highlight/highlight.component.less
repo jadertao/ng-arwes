@@ -1,0 +1,28 @@
+@keyframes arwes-highlight-click {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    background-color: transparent;
+  }
+}
+.arwes-highlight {
+  display: block;
+  position: relative;
+
+  &-children {
+    z-index: 2;
+    position: relative;
+    display: block;
+  }
+
+  &-clicking {
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}

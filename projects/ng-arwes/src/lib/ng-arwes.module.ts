@@ -1,3 +1,4 @@
+import { HighlightComponent } from './components/highlight/highlight.component';
 import { HeaderComponent } from './components/header/header.component';
 import { WordsComponent } from './components/words/words.component';
 import { Howl } from 'howler';
@@ -36,6 +37,7 @@ const components = [
   FooterComponent,
   WordsComponent,
   HeaderComponent,
+  HighlightComponent,
 ];
 
 @NgModule({
