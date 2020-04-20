@@ -9,11 +9,14 @@ import { takeUntil } from 'rxjs/operators';
 import * as Prism from 'prismjs';
 import { DOCUMENT } from '@angular/common';
 import { genStyle } from './code.style';
+import { codeMotion } from './code.animation';
+import { DEFAULT_THEME } from './../../tools/theme';
 
 const CodeSelector = 'code[arwes-code], pre[arwes-code]';
 
 @Component({
   selector: CodeSelector,
+  animations: [codeMotion],
   template: `
 <ng-content></ng-content>
 `,
@@ -23,13 +26,17 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
   private destroy$ = new Subject<void>();
   private el: HTMLElement = this.elementRef.nativeElement;
   private _lang = 'javascript';
+  private _animate = false;
   private style: HTMLStyleElement | null = null;
 
   @Input() @InputBoolean()
-  show = true;
-
-  @Input() @InputBoolean()
-  animate = false;
+  set animate(v: boolean) {
+    this._animate = v;
+    this.disabled = !v;
+  }
+  get animate() {
+    return this._animate;
+  }
 
   /**
    * The programming language. Supported by [Prism](http://prismjs.com/).
@@ -41,6 +48,13 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   @HostBinding('class') classes = `arwes-code`;
+  @HostBinding('@.disabled') disabled = !this.animate;
+  @HostBinding('@codeMotion') motion = {
+    value: null,
+    params: {
+      animTime: DEFAULT_THEME.animTime,
+    }
+  };
 
   constructor(
     public themeSvc: ThemeService,
@@ -53,6 +67,12 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
       ).subscribe(theme => {
         this.theme = theme;
         this.applyTheme(theme);
+        this.motion = {
+          value: null,
+          params: {
+            animTime: theme?.animTime
+          }
+        };
       });
     this.initTag();
   }
@@ -69,8 +89,9 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.style = null;
   }
   highlight() {
-    console.log(Prism);
-    Prism.highlightElement(this.el, false, () => this.applyTheme()); // eslint-disable-line no-undef
+    if (this.el) {
+      Prism.highlightElement(this.el, false, () => this.applyTheme()); // eslint-disable-line no-undef
+    }
   }
   initTag() {
     const el = this.doc.querySelector<HTMLStyleElement>('head .arwes-code-theme');

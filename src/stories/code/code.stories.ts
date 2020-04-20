@@ -21,7 +21,18 @@ addDecorator(moduleMetadata({
 export const Text = () => ({
   template: `
 <div style="background-color: #021114; padding: 20px 20px">
-  <pre arwes-code language="javascript" layer="success">
+  <pre arwes-code show language="javascript">
+const foo = 'hello';
+console.log(foo + ' world');
+  </pre>
+
+  <pre arwes-code *ngIf="false" language="javascript">
+const foo = 'hello';
+console.log(foo + ' world');
+  </pre>
+
+
+  <pre arwes-code animate language="javascript">
 const foo = 'hello';
 console.log(foo + ' world');
   </pre>
