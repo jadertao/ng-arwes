@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { mergeDeep } from './tools/merge';
 import { DeepPartial } from './types';
 import { CodeComponent } from './components/code/code.component';
+import { ParagraphComponent } from './components/paragraph/paragraph.component';
 
 
 export interface NgArwesModuleOptions {
@@ -42,6 +43,7 @@ const components = [
   HighlightComponent,
   AppearComponent,
   CodeComponent,
+  ParagraphComponent,
 ];
 
 @NgModule({
