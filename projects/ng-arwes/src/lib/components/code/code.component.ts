@@ -8,7 +8,7 @@ import type { NgArwesSound } from './../../tools/sound';
 import { takeUntil } from 'rxjs/operators';
 import * as Prism from 'prismjs';
 import { DOCUMENT } from '@angular/common';
-import { genStyle } from './code.style';
+import { genCodeStyle } from './code.style';
 import { codeMotion } from './code.animation';
 import { DEFAULT_THEME } from './../../tools/theme';
 
@@ -111,7 +111,7 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!theme || !this.style) {
       return;
     }
-    str = genStyle(theme);
+    str = genCodeStyle(theme);
     this.style.innerHTML = str;
   }
 }
