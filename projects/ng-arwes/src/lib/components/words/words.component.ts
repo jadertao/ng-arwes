@@ -10,15 +10,11 @@ import {
   Input,
   Inject,
   OnDestroy,
-  ContentChildren,
   ViewChild,
   ElementRef,
-  AfterContentInit,
-  AfterViewChecked,
   OnChanges,
   SimpleChanges,
   AfterViewInit,
-  NgZone,
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { InputBoolean } from './../../tools';
@@ -95,7 +91,6 @@ export class WordsComponent
   }
 
   constructor(
-    private zone: NgZone,
     public themeSvc: ThemeService,
     @Inject(NG_ARWES_SOUND_TOKEN) private sounds: NgArwesSound
   ) {
