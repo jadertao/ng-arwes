@@ -54,8 +54,8 @@ And lose the name of action.
 `;
 export const Text = () => ({
   template: `
-<div arwes-appear animate>with appear animation ${artical}</div>
+<arwes-appear animate>with appear animation ${artical}</arwes-appear>
 <br>
-<div arwes-appear>without appear animation ${artical}</div>
+<arwes-appear>without appear animation ${artical}</arwes-appear>
 `
 });

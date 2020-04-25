@@ -8,7 +8,7 @@ import { NgArwesTheme } from './../../types/theme.interfaces';
 import {
   Component, OnInit,
   Input, OnDestroy, HostBinding, ViewEncapsulation,
-  ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2
+  ChangeDetectionStrategy, ViewChild, ElementRef, Renderer2, HostListener
 } from '@angular/core';
 
 
@@ -29,11 +29,7 @@ const HightlightSelector = '[arwes-highlight]';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-<div class="arwes-highlight" #root>
-  <div class="arwes-highlight-children" (click)="onClick()">
-    <ng-content></ng-content>
-  </div>
-</div>
+<ng-content></ng-content>
 `,
 })
 export class HighlightComponent implements OnInit, OnDestroy {
@@ -42,9 +38,6 @@ export class HighlightComponent implements OnInit, OnDestroy {
 
   private cover: HTMLDivElement | null;
 
-  @ViewChild('root')
-  root: ElementRef;
-
   @Input()
   @InputBoolean()
   animate = false;
@@ -52,9 +45,12 @@ export class HighlightComponent implements OnInit, OnDestroy {
   @Input()
   layer = NgArwesLayerStatusEnum.Primary;
 
+  @HostBinding('class.arwes-highlight') classes = true;
+
   constructor(
     public themeSvc: ThemeService,
     public renderer: Renderer2,
+    private elementRef: ElementRef,
   ) {
     this.themeSvc.theme$
       .pipe(
@@ -64,20 +60,23 @@ export class HighlightComponent implements OnInit, OnDestroy {
       });
   }
 
+  @HostListener('click')
   onClick() {
     if (this.animate) {
-      this.cover = this.renderer.createElement('div');
-      this.cover.setAttribute('class', 'arwes-highlight-clicking');
-      this.cover.style['background-color'] = darken(0.3, this.theme.color[this.layer].base);
-      this.cover.style.animation = `arwes-highlight-click ${this.theme.animTime}ms ease-out 0ms 1`;
-      if (this.cover) {
-        ON_ANIMATION_END.forEach(event => {
-          this.cover.addEventListener(event, () =>
-            this.cover.remove()
-          );
-        });
-        this.root.nativeElement.appendChild(this.cover);
+      let cover = this.cover;
+      if (!cover) {
+        this.cover = this.renderer.createElement('div');
+        this.cover.setAttribute('class', 'arwes-highlight-clicking');
+        this.cover.style['background-color'] = darken(0.3, this.theme.color[this.layer].base);
+        this.cover.style.animation = `arwes-highlight-click ${this.theme.animTime}ms ease-out 0ms 1`;
+        cover = this.cover;
       }
+      ON_ANIMATION_END.forEach(event => {
+        this.cover.addEventListener(event, () =>
+          this.cover.remove()
+        );
+      });
+      this.elementRef.nativeElement.appendChild(this.cover);
     }
   }
 

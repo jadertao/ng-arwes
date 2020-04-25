@@ -14,7 +14,7 @@ import { ThemeService } from './../../services/public-api';
 import { NgArwesTheme } from './../../types/theme.interfaces';
 import { InputBoolean } from './../../tools';
 
-const AppearSelector = '[arwes-appear]';
+const AppearSelector = 'arwes-appear';
 
 @Component({
   selector: AppearSelector,
