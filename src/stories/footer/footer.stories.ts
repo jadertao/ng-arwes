@@ -1,11 +1,9 @@
-import { FooterComponent } from 'ng-arwes/components/footer/footer.component';
 import { NgArwesModule } from 'ng-arwes';
 import note from './footer.note.md';
 import { addDecorator, moduleMetadata } from '@storybook/angular';
 
 export default {
   title: 'Footer',
-  component: FooterComponent,
   parameters: {
     notes: { note },
   },

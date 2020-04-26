@@ -1,11 +1,9 @@
 import { addDecorator, moduleMetadata } from '@storybook/angular';
 import { NgArwesModule } from 'ng-arwes';
 import note from './code.note.md';
-import { CodeComponent } from 'ng-arwes/components/code/code.component';
 
 export default {
   title: 'Code',
-  component: CodeComponent,
   parameters: {
     notes: { note },
   },

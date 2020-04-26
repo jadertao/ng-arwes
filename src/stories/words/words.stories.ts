@@ -1,11 +1,9 @@
-import { WordsComponent } from 'ng-arwes/components/words/words.component';
 import { NgArwesModule } from 'ng-arwes';
 import note from './words.note.md';
 import { addDecorator, moduleMetadata } from '@storybook/angular';
 
 export default {
   title: 'Words',
-  component: WordsComponent,
   parameters: {
     notes: { note },
   },

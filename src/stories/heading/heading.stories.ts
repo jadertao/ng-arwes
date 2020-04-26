@@ -1,11 +1,9 @@
 import { addDecorator, moduleMetadata } from '@storybook/angular';
 import { NgArwesModule } from 'ng-arwes';
 import note from './heading.note.md';
-import { HeadingComponent } from 'ng-arwes/components/heading/heading.component';
 
 export default {
   title: 'Heading',
-  component: HeadingComponent,
   parameters: {
     notes: { note },
   },

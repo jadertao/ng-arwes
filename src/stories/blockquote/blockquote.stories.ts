@@ -1,11 +1,9 @@
 import { addDecorator, moduleMetadata } from '@storybook/angular';
 import { NgArwesModule } from 'ng-arwes';
 import note from './blockquote.note.md';
-import { BlockquoteComponent } from 'ng-arwes/components/blockquote/blockquote.component';
 
 export default {
   title: 'Blockquote',
-  component: BlockquoteComponent,
   parameters: {
     notes: { note },
   },

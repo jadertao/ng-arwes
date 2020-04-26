@@ -1,11 +1,9 @@
 import { addDecorator, moduleMetadata } from '@storybook/angular';
 import { NgArwesModule } from 'ng-arwes';
 import note from './frame.note.md';
-import { FrameComponent } from 'ng-arwes/components/frame/frame.component';
 
 export default {
   title: 'Frame',
-  component: FrameComponent,
   parameters: {
     notes: { note },
   },
@@ -20,9 +18,18 @@ addDecorator(moduleMetadata({
 
 export const Text = () => ({
   template: `
-<div arwes-frame show animate [level]=3 [corners]=4 layer="success" style="padding:20px 40px; font-size:32px">
-  Cyberpunk
+<div>
+  <arwes-frame
+    show animate
+    [level]="3"
+    [corners]="4"
+    layer="primary"
+    style="display: inline-block;"
+  >
+    <div style="height: 100px; width: 200px; line-height: 100px; text-align: center;">
+      Cyberpunk
+    </div>
+  </arwes-frame>
 </div>
-
-`,
+  `,
 });

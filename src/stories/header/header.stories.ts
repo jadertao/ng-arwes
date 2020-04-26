@@ -1,11 +1,9 @@
-import { HeaderComponent } from 'ng-arwes/components/header/header.component';
 import { NgArwesModule } from 'ng-arwes';
 import note from './header.note.md';
 import { addDecorator, moduleMetadata } from '@storybook/angular';
 
 export default {
   title: 'Header',
-  component: HeaderComponent,
   parameters: {
     notes: { note },
   },

@@ -1,11 +1,9 @@
-import { HighlightComponent } from '../../../projects/ng-arwes/src/lib/components/highlight/highlight.component';
 import { NgArwesModule } from '../../../projects/ng-arwes/src/lib/ng-arwes.module';
 import note from './highlight.note.md';
 import { addDecorator, moduleMetadata } from '@storybook/angular';
 
 export default {
   title: 'Highlight',
-  component: HighlightComponent,
   parameters: {
     notes: { note },
   },

@@ -1,11 +1,9 @@
-import { AppearComponent } from 'ng-arwes/components/appear/appear.component';
 import { NgArwesModule } from 'ng-arwes';
 import note from './appear.note.md';
 import { addDecorator, moduleMetadata } from '@storybook/angular';
 
 export default {
   title: 'Appear',
-  component: AppearComponent,
   parameters: {
     notes: { note },
   },
