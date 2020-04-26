@@ -97,7 +97,7 @@ export class FooterComponent implements OnDestroy, AfterViewInit, OnChanges {
 
   ngOnDestroy(): void {
     if (this.animate && this.sounds.deploy) {
-      this.sounds.deploy.play();
+      this.sounds.deploy.stop();
     }
     this.destroy$.next();
     this.destroy$.complete();
