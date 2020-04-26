@@ -21,6 +21,7 @@ import { mergeDeep } from './tools/merge';
 import { DeepPartial } from './types';
 import { CodeComponent } from './components/code/code.component';
 import { ParagraphComponent } from './components/paragraph/paragraph.component';
+import { FrameComponent } from './components/frame/frame.component';
 
 
 export interface NgArwesModuleOptions {
@@ -44,6 +45,7 @@ const components = [
   AppearComponent,
   CodeComponent,
   ParagraphComponent,
+  FrameComponent,
 ];
 
 @NgModule({
