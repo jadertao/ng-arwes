@@ -1,0 +1,76 @@
+@keyframes arwes-loading-circle1 {
+  0% {
+    transform: rotate(160deg);
+    opacity: 0;
+  }
+  50% {
+    transform: rotate(145deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(-320deg);
+    opacity: 0;
+  }
+}
+@keyframes arwes-loading-circle2 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.arwes-loading {
+  z-index: 1000;
+  position: relative;
+  display: block;
+  opacity: 1;
+
+  .circle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: block;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-radius: 50%;
+    background-color: transparent;
+  }
+  .circle1 {
+    margin-left: -25;
+    margin-top: -25;
+    width: 50;
+    height: 50;
+    animation-name: arwes-loading-circle1;
+  }
+  .circle2 {
+    margin-left: -15;
+    margin-top: -15;
+    width: 30;
+    height: 30;
+    animation-name: arwes-loading-circle2;
+  }
+  &.small {
+    display: inline-block;
+    min-width: 16;
+    min-height: 16;
+    vertical-align: middle;
+
+    .circle2 {
+      margin-left: -8;
+      margin-top: -8;
+      width: 16;
+      height: 16;
+      border-left: 3px solid transparent;
+      border-right: 3px solid transparent;
+    }
+  }
+
+  &.full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
