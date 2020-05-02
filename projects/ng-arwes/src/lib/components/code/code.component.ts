@@ -78,7 +78,6 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log(this);
   }
   ngAfterViewInit() {
     this.highlight();

@@ -67,7 +67,7 @@ export class HighlightComponent implements OnInit, OnDestroy {
       if (!cover) {
         this.cover = this.renderer.createElement('div');
         this.cover.setAttribute('class', 'arwes-highlight-clicking');
-        this.cover.style['background-color'] = darken(0.3, this.theme.color[this.layer].base);
+        this.cover.style.backgroundColor = darken(0.3, this.theme.color[this.layer].base);
         this.cover.style.animation = `arwes-highlight-click ${this.theme.animTime}ms ease-out 0ms 1`;
         cover = this.cover;
       }
