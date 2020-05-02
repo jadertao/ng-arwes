@@ -4,6 +4,9 @@ import {
   OnDestroy,
   Input,
   ViewChildren,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
 } from '@angular/core';
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
 import { Subject } from 'rxjs';
@@ -21,22 +24,22 @@ import { loadingBodyMotion } from './loading.animation';
     <div
       #root
       class="arwes-loading"
-      [ngClass]="{ full: full, small: small }"
+      [ngClass]="{ full: full, small: small, full: full }"
       *ngIf="show"
       [@.disabled]="!animate"
-      [@appearMotion]="{
+      [@loadingBodyMotion]="{
         value: null,
         params: {
           animTime: theme.animTime
         }
       }"
     >
-      <div #circle #circle1 class="circle circle1"></div>
+      <div *ngIf="!small" #circle #circle1 class="circle circle1"></div>
       <div #circle #circle2 class="circle circle2"></div>
     </div>
   `,
 })
-export class LoadingComponent implements OnInit, OnDestroy {
+export class LoadingComponent implements OnInit, OnDestroy, AfterViewInit {
   public theme: NgArwesTheme | null = null;
   private destroy$ = new Subject<void>();
 
@@ -59,25 +62,25 @@ export class LoadingComponent implements OnInit, OnDestroy {
   @InputBoolean()
   full = false;
 
-  @ViewChildren('root')
-  root: HTMLDivElement;
+  @ViewChild('root')
+  root: ElementRef<HTMLDivElement>;
 
   @ViewChildren('circle')
-  circles: Array<HTMLDivElement>;
+  circles: Array<ElementRef<HTMLDivElement>>;
 
-  @ViewChildren('circle1')
-  circle1: HTMLDivElement;
+  @ViewChild('circle1')
+  circle1: ElementRef<HTMLDivElement>;
 
-  @ViewChildren('circle2')
-  circle2: HTMLDivElement;
+  @ViewChild('circle2')
+  circle2: ElementRef<HTMLDivElement>;
 
-  constructor(public themeSvc: ThemeService) { }
-
-  ngOnInit() {
+  constructor(public themeSvc: ThemeService) {
     this.themeSvc.theme$.pipe(takeUntil(this.destroy$)).subscribe((theme) => {
       this.theme = theme;
-      this.applyTheme(theme);
     });
+  }
+
+  ngOnInit() {
   }
 
   ngOnDestroy(): void {
@@ -85,34 +88,42 @@ export class LoadingComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  ngAfterViewInit(): void {
+    this.applyTheme();
+  }
+
   applyTheme(theme = this.theme) {
+    if (!this.theme) {
+      return;
+    }
     if (this.root) {
-      this.root.style.transition = `all ${theme.animTime}ms ease-out`;
+      this.root.nativeElement.style.transition = `all ${theme.animTime}ms ease-out`;
+      this.root.nativeElement.style.minHeight = `${50 + theme.padding * 2}px`;
     }
     if (this.circles) {
       this.circles.forEach((circle) => {
         const border = `5px solid ${theme.color[this.layer].base}`;
-        circle.style['border-top'] = border;
-        circle.style['border-bottom'] = border;
-        circle.style['box-shadow'] = `0 0 ${theme.shadowLength * 2}px ${
+        circle.nativeElement.style.borderTop = border;
+        circle.nativeElement.style.borderBottom = border;
+        circle.nativeElement.style.boxShadow = `0 0 ${theme.shadowLength * 2}px ${
           theme.color[this.layer].base
           }`;
-        circle.style.transition = `all ${theme.animTime}ms ease-out`;
+        circle.nativeElement.style.transition = `all ${theme.animTime}ms ease-out`;
       });
     }
     if (this.circle1) {
-      this.circle1.style.animation = `arwes-loading-circle1 ${
+      this.circle1.nativeElement.style.animation = `arwes-loading-circle1 ${
         theme.animTime * 3
         }ms infinite linear`;
     }
     if (this.circle2) {
-      this.circle2.style.animation = `arwes-loading-circle2 ${
+      this.circle2.nativeElement.style.animation = `arwes-loading-circle2 ${
         theme.animTime * 3
         }ms infinite linear`;
       if (this.small) {
         const border = `3px solid ${theme.color[this.layer].base}`;
-        this.circle2.style['border-bottom'] = border;
-        this.circle2.style['border-top'] = border;
+        this.circle2.nativeElement.style.borderBottom = border;
+        this.circle2.nativeElement.style.borderTop = border;
       }
     }
   }

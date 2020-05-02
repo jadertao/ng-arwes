@@ -22,6 +22,7 @@ import { DeepPartial } from './types';
 import { CodeComponent } from './components/code/code.component';
 import { ParagraphComponent } from './components/paragraph/paragraph.component';
 import { FrameComponent } from './components/frame/frame.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 
 export interface NgArwesModuleOptions {
@@ -46,6 +47,7 @@ const components = [
   CodeComponent,
   ParagraphComponent,
   FrameComponent,
+  LoadingComponent,
 ];
 
 @NgModule({
@@ -71,6 +73,7 @@ const components = [
 })
 export class NgArwesModule {
   static forRoot(options: NgArwesModuleOptions): ModuleWithProviders {
+    console.log(options);
     const forRootProviders = [...providers];
     forRootProviders.push({
       provide: NG_ARWES_THEME_TOKEN,
