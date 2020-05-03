@@ -1,5 +1,3 @@
-import { addDecorator, moduleMetadata } from '@storybook/angular';
-import { NgArwesModule } from 'ng-arwes';
 import note from './blockquote.note.md';
 
 export default {
@@ -8,13 +6,6 @@ export default {
     notes: { note },
   },
 };
-
-addDecorator(moduleMetadata({
-  imports: [NgArwesModule],
-  schemas: [],
-  declarations: [],
-  providers: [],
-}));
 
 export const Text = () => ({
   template: `

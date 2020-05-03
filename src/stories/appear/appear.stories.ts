@@ -1,6 +1,4 @@
-import { NgArwesModule } from 'ng-arwes';
 import note from './appear.note.md';
-import { addDecorator, moduleMetadata } from '@storybook/angular';
 
 export default {
   title: 'Appear',
@@ -9,12 +7,6 @@ export default {
   },
 };
 
-addDecorator(moduleMetadata({
-  imports: [NgArwesModule],
-  schemas: [],
-  declarations: [],
-  providers: [],
-}));
 const artical = `
 To be, or not to be- that is the question:
 Whether 'tis nobler in the mind to sufferThe

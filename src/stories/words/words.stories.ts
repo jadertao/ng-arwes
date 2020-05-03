@@ -1,6 +1,4 @@
-import { NgArwesModule } from 'ng-arwes';
 import note from './words.note.md';
-import { addDecorator, moduleMetadata } from '@storybook/angular';
 
 export default {
   title: 'Words',
@@ -9,22 +7,6 @@ export default {
   },
 };
 
-addDecorator(moduleMetadata({
-  imports: [NgArwesModule.forRoot({
-    sound: {
-      click: 'sounds/click.mp3',
-      deploy: 'sounds/deploy.mp3',
-      typing: 'sounds/typing.mp3',
-      warning: 'sounds/warning.mp3',
-      ask: 'sounds/ask.mp3',
-      error: 'sounds/error.mp3',
-      information: 'sounds/information.mp3',
-    }
-  })],
-  schemas: [],
-  declarations: [],
-  providers: [],
-}));
 const artical = `
 To be, or not to be- that is the question:
 Whether 'tis nobler in the mind to sufferThe
