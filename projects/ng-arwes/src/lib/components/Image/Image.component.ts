@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'arwes-Image',
+  selector: 'arwes-image',
   templateUrl: './Image.component.html',
   styleUrls: ['./Image.component.css']
 })
