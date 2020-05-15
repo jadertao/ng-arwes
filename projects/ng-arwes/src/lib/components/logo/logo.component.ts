@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'arwes-logo',
-  templateUrl: './logo.component.html',
-  styleUrls: ['./logo.component.less']
+  styleUrls: ['./logo.component.less'],
+  template: ``,
 })
 export class LogoComponent implements OnInit {
 
