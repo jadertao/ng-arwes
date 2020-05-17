@@ -9,6 +9,9 @@ export default {
 
 export const Text = () => ({
   template: `
-  <arwes-logo> Put your content here Put your content here</arwes-logo>
+  <div style="background-color: black; height: 100%">
+    <arwes-logo [width]="300" [height]="300"></arwes-logo>
+    <arwes-logo animate [width]="300" [height]="300"></arwes-logo>
+  </div>
 `,
 });
