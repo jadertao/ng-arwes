@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+const ListSelector = 'dl[arwes-list], ol[arwes-list], ul[arwes-list]';
+
 @Component({
-  selector: 'arwes-list',
+  selector: ListSelector,
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
