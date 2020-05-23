@@ -9,7 +9,7 @@ export class StyleService {
 
   constructor() { }
 
-  getTag(name: string) {
+  getTag(name: string): HTMLStyleElement {
     let tag = this.cache[name];
     if (tag) {
       return tag;
