@@ -33,4 +33,8 @@ export class StyleService {
     this.cache.name = tag;
     return tag;
   }
+  updateContent(name: string, content: string): void {
+    const tag = this.getTag(name);
+    tag.innerHTML = content;
+  }
 }

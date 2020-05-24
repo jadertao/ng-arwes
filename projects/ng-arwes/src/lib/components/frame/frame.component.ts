@@ -28,6 +28,7 @@ import {
   cornerMotion,
   boxMotion,
 } from './frame.animation';
+import { StyleService } from 'ng-arwes/services/style.service';
 
 const FrameSelector = 'arwes-frame';
 
@@ -102,7 +103,7 @@ export interface FrameInput {
 export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
   public theme: NgArwesTheme | null = null;
   private destroy$ = new Subject<void>();
-  private style: HTMLStyleElement | null = null;
+  private name: 'arwes-frame';
 
   @Input()
   @InputBoolean()
@@ -159,10 +160,10 @@ export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
     private elementRef: ElementRef,
     private themeSvc: ThemeService,
     private renderer: Renderer2,
+    private style: StyleService,
     @Inject(NG_ARWES_SOUND_TOKEN) private sounds: NgArwesSound,
     @Inject(DOCUMENT) private doc: Document
   ) {
-    this.initTag();
     this.themeSvc.theme$.pipe(takeUntil(this.destroy$)).subscribe((theme) => {
       this.theme = theme;
     });
@@ -194,27 +195,10 @@ export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
     this.destroy$.complete();
   }
 
-  initTag() {
-    const el = this.doc.querySelector<HTMLStyleElement>(
-      'head .arwes-frame-theme'
-    );
-    if (el) {
-      this.style = el;
-    } else {
-      const style: HTMLStyleElement = this.doc.createElement('style');
-      style.type = 'text/css';
-      style.className = 'arwes-frame-theme';
-      style.appendChild(this.doc.createTextNode(''));
-      this.doc.head.appendChild(style);
-      this.style = style;
-    }
-  }
   applyTheme(theme: NgArwesTheme = this.theme) {
-    let str = '';
     if (!theme || !this.style) {
       return;
     }
-    str = genFrameStyle(theme, this.input);
-    this.style.innerHTML = str;
+    this.style.updateContent(this.name, genFrameStyle(theme, this.input));
   }
 }

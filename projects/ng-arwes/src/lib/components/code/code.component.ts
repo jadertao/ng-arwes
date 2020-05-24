@@ -11,6 +11,7 @@ import { DOCUMENT } from '@angular/common';
 import { genCodeStyle } from './code.style';
 import { codeMotion } from './code.animation';
 import { DEFAULT_THEME } from './../../tools/theme';
+import { StyleService } from 'ng-arwes/services/style.service';
 
 const CodeSelector = 'code[arwes-code], pre[arwes-code]';
 
@@ -27,7 +28,7 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
   private el: HTMLElement = this.elementRef.nativeElement;
   private _lang = 'javascript';
   private _animate = false;
-  private style: HTMLStyleElement | null = null;
+  private name = 'arwes-code';
 
   @Input() @InputBoolean()
   set animate(v: boolean) {
@@ -59,6 +60,7 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     public themeSvc: ThemeService,
     private elementRef: ElementRef,
+    private style: StyleService,
     @Inject(DOCUMENT) private doc: Document,
   ) {
     this.themeSvc.theme$
@@ -74,7 +76,6 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         };
       });
-    this.initTag();
   }
 
   ngOnInit() {
@@ -92,25 +93,10 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
       Prism.highlightElement(this.el, false, () => this.applyTheme()); // eslint-disable-line no-undef
     }
   }
-  initTag() {
-    const el = this.doc.querySelector<HTMLStyleElement>('head .arwes-code-theme');
-    if (el) {
-      this.style = el;
-    } else {
-      const style: HTMLStyleElement = this.doc.createElement('style');
-      style.type = 'text/css';
-      style.className = 'arwes-code-theme';
-      style.appendChild(this.doc.createTextNode(''));
-      this.doc.head.appendChild(style);
-      this.style = style;
-    }
-  }
   applyTheme(theme: NgArwesTheme = this.theme) {
-    let str = '';
     if (!theme || !this.style) {
       return;
     }
-    str = genCodeStyle(theme);
-    this.style.innerHTML = str;
+    this.style.updateContent(this.name, genCodeStyle(theme));
   }
 }
