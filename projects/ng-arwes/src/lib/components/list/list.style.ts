@@ -4,28 +4,28 @@ import { NgArwesTheme } from '../../types/theme.interfaces';
 export const genListStyle = (theme: NgArwesTheme) => `
 .arwes-list {
   display: block;
-  margin: 0 0 ${theme.margin} ${theme.margin}px;
+  margin: 0 0 ${theme.margin}px ${theme.margin}px;
   padding: 0;
 }
 
-.arwes-list dl,
-.arwes-list ul,
-.arwes-list ol {
+dl.arwes-list,
+ul.arwes-list,
+ol.arwes-list {
   margin-bottom: 0;
 }
 
-.arwes-list ul {
+ul.arwes-list {
   margin-left: ${theme.margin + theme.padding / 2}px;
 }
 
-.arwes-list ul li {
+ul.arwes-list li {
   display: block;
   list-style: none;
   padding-left: ${theme.padding}px;
 }
 
-.arwes-list ul li::before {
-  position: ralative;
+ul.arwes-list li::before {
+  position: relative;
   left: -${theme.padding / 2}px;
   display: inline-block;
   margin-left: -${theme.padding}px;
@@ -33,21 +33,21 @@ export const genListStyle = (theme: NgArwesTheme) => `
   color: ${theme.color.primary.light};
 }
 
-.arwes-list ol {
+ol.arwes-list {
   margin-left: ${theme.padding}px;
   padding-left: ${theme.typography.fontSize}px;
 }
 
-.arwes-list ol li {
+ol.arwes-list {
   margin-left: 0;
 }
 
-.arwes-list dl dt {
-  font-style: 'italic';
+dl.arwes-list dt {
+  font-style: italic;
   font-weight: bold;
 }
 
-.arwes-list dl dd {
-  margin-left: ${theme.typography.fontSize};
+dl.arwes-list dd {
+  margin-left: ${theme.typography.fontSize}px;
 }
 `;

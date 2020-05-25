@@ -24,6 +24,7 @@ import { ParagraphComponent } from './components/paragraph/paragraph.component';
 import { FrameComponent } from './components/frame/frame.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LogoComponent } from './components/logo/logo.component';
+import { ListComponent } from './components/list/list.component';
 
 
 export interface NgArwesModuleOptions {
@@ -50,6 +51,7 @@ const components = [
   FrameComponent,
   LoadingComponent,
   LogoComponent,
+  ListComponent,
 ];
 
 @NgModule({
