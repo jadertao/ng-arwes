@@ -86,7 +86,6 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-    this.style = null;
   }
   highlight() {
     if (this.el) {
