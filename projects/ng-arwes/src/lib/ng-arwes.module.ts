@@ -25,6 +25,7 @@ import { FrameComponent } from './components/frame/frame.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { ListComponent } from './components/list/list.component';
+import { PuffComponent } from './components/puff/puff.component';
 
 
 export interface NgArwesModuleOptions {
@@ -52,6 +53,7 @@ const components = [
   LoadingComponent,
   LogoComponent,
   ListComponent,
+  PuffComponent,
 ];
 
 @NgModule({
@@ -77,7 +79,6 @@ const components = [
 })
 export class NgArwesModule {
   static forRoot(options: NgArwesModuleOptions): ModuleWithProviders {
-    console.log(options);
     const forRootProviders = [...providers];
     forRootProviders.push({
       provide: NG_ARWES_THEME_TOKEN,
