@@ -31,12 +31,6 @@ export class ListComponent implements OnInit, OnDestroy {
       ).subscribe(theme => {
         this.theme = theme;
         this.applyTheme(theme);
-        // this.motion = {
-        //   value: null,
-        //   params: {
-        //     animTime: theme?.animTime
-        //   }
-        // };
       });
 
   }
