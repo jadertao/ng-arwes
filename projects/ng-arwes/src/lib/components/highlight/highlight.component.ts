@@ -21,7 +21,7 @@ const ON_ANIMATION_END = [
   'animationend'
 ];
 
-const HightlightSelector = '[arwes-highlight]';
+const HightlightSelector = 'arwes-highlight';
 
 @Component({
   selector: HightlightSelector,
