@@ -32,7 +32,7 @@ import { StyleService } from 'ng-arwes/services/style.service';
 
 const FrameSelector = 'arwes-frame';
 
-export interface FrameInput {
+export interface ArwesFrameInput {
   show: boolean;
   border: boolean;
   layer: NgArwesLayerStatusEnum;
@@ -142,7 +142,7 @@ export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   @InputBoolean()
   noBackground = false;
 
-  get input(): FrameInput {
+  get input(): ArwesFrameInput {
     return {
       show: this.show,
       border: this.border,
@@ -170,7 +170,6 @@ export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   }
 
   ngOnInit() {
-    console.log(this);
     this.themeSvc.theme$.pipe(takeUntil(this.destroy$)).subscribe((theme) => {
       this.applyTheme(theme);
     });

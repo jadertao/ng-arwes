@@ -1,6 +1,6 @@
 import { rgba, lighten } from 'polished';
 import { NgArwesTheme, NgArwesThemeColor } from 'ng-arwes/types/theme.interfaces';
-import { FrameInput } from './frame.component';
+import { ArwesFrameInput } from './frame.component';
 
 const cornerLength = (corners: number) => {
   switch (corners) {
@@ -36,14 +36,14 @@ const cornerWidth = (corners: number) => {
   }
 };
 
-const getColor = (theme: NgArwesTheme, input: FrameInput, level: keyof NgArwesThemeColor) => {
+const getColor = (theme: NgArwesTheme, input: ArwesFrameInput, level: keyof NgArwesThemeColor) => {
   return theme.color[input.disabled ? 'disabled' : input.layer][level];
 };
 
-const getBg = (theme: NgArwesTheme, input: FrameInput) =>
+const getBg = (theme: NgArwesTheme, input: ArwesFrameInput) =>
   theme.background[input.disabled ? 'disabled' : input.layer]['level' + input.level];
 
-export const genFrameStyle = (theme: NgArwesTheme, input: FrameInput) => {
+export const genFrameStyle = (theme: NgArwesTheme, input: ArwesFrameInput) => {
   return `
 .arwes-frame {
   display: block;
