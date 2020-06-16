@@ -1,29 +1,28 @@
 import { Injectable } from '@angular/core';
+class Storage {
+  value = new Map<any, string[]>();
+  constructor() {
 
-const CollectStorage = (() => {
-  class Storage {
-    value = new Map<any, string[]>();
-    constructor() {
-
-    }
-    set(target: any, value: string) {
-      const inputs = this.value.get(target) || [];
-      inputs.push(value);
-      this.value.set(target, inputs);
-    }
-    gather<T>(instance: any): T | null {
-      const inputs = instance.constructor ? this.value.get(instance.constructor) : null;
-      if (!inputs) {
-        return null;
-      }
-      return inputs.reduce((res, cur) => (
-        res[cur] = (this as any)[cur],
-        res
-      ), {} as T);
-    }
   }
-  return new Storage();
-})();
+  set(target: any, value: string) {
+    const _target = target.constructor || target;
+    const inputs = this.value.get(_target) || [];
+    inputs.push(value);
+    this.value.set(_target, inputs);
+  }
+  gather<T>(instance: any): T | null {
+    const inputs = this.value.get(instance.constructor || instance);
+    if (!inputs) {
+      return null;
+    }
+    return inputs.reduce((res, cur) => (
+      res[cur] = (instance as any)[cur],
+      res
+    ), {} as T);
+  }
+}
+
+const CollectStorage = new Storage();
 
 export function CollectInput() {
   return function collect(target: any, input: string): any {
@@ -41,6 +40,8 @@ export class CollectService {
 
   constructor() { }
 
-  public gather = CollectStorage.gather;
+  public gather<T>(instance: any): T | null {
+    return CollectStorage.gather<T>(instance);
+  }
 
 }
