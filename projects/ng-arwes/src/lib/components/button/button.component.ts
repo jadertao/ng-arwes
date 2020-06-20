@@ -97,22 +97,11 @@ export class ButtonComponent implements OnInit, OnDestroy {
     this.arwesClick.emit();
   }
 
-  get input(): ArwesButtonInput {
-    return {
-      show: this.show,
-      animate: this.animate,
-      layer: this.layer,
-      level: this.level,
-      disabled: this.disabled,
-      active: this.active,
-    };
-  }
-
   applyTheme(theme: NgArwesTheme = this.theme) {
     if (!theme || !this.style) {
       return;
     }
-    this.style.updateContent(this.name, genButtonStyle(theme, this.input));
+    // this.style.updateContent(this.name, genButtonStyle(theme, this.input));
   }
 
   ngOnInit() {
