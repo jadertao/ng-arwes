@@ -6,8 +6,8 @@ export function styleObject2String(style: Record<string, string | number>) {
   }, '');
 }
 
-type ComponentClassFn = (name: string, theme: NgArwesTheme) => string;
-type ComponentInstanceFn<T> = (name: string, id: string, theme: NgArwesTheme, input: T) => string;
+export type ComponentClassFn = (params: { name: string, theme: NgArwesTheme }) => string;
+export type ComponentInstanceFn<T> = (params: { name: string, id: string, theme: NgArwesTheme, input: T }) => string;
 
 export class ComponentStyleGenerator<T> {
   public name: string;
