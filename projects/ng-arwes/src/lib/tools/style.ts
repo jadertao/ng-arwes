@@ -16,9 +16,9 @@ export class ComponentStyleGenerator<T> {
   public genClassStyle: ComponentClassFn | null = null;
   constructor() { }
 
-  info(name: string, id: string) {
-    this.name = name;
-    this.id = id;
+  info(data: { name: string, id: string }) {
+    this.name = data.name;
+    this.id = data.id;
     return this;
   }
 
@@ -28,6 +28,33 @@ export class ComponentStyleGenerator<T> {
   }
   forInstance(fn: ComponentInstanceFn<T>) {
     this.genInstanceStyle = fn;
+    return this;
+  }
+  updateClass(data: { input: T, theme: NgArwesTheme }) {
+    const { id, name } = this;
+    const { input, theme } = data;
+    if (this.genClassStyle) {
+      this.genClassStyle({ name, theme });
+    }
+    return this;
+  }
+  updateInstance(data: { input: T, theme: NgArwesTheme }) {
+    const { id, name } = this;
+    const { input, theme } = data;
+    if (this.genInstanceStyle) {
+      this.genInstanceStyle({ id, name, theme, input });
+    }
+    return this;
+  }
+  update(data: { input: T, theme: NgArwesTheme }) {
+    const { id, name } = this;
+    const { input, theme } = data;
+    if (this.genClassStyle) {
+      this.genClassStyle({ name, theme });
+    }
+    if (this.genInstanceStyle) {
+      this.genInstanceStyle({ id, name, theme, input });
+    }
     return this;
   }
 }
