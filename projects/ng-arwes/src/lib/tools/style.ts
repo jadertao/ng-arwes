@@ -1,4 +1,5 @@
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
+import { setCallback } from 'ng-arwes/services/theme.service';
 
 export function styleObject2String(style: Record<string, string | number>) {
   return Object.keys(style).reduce((res, key) => {
@@ -24,6 +25,7 @@ export class ComponentStyleGenerator<T> {
 
   forClass(fn: ComponentClassFn) {
     this.genClassStyle = fn;
+    setCallback(this.name, fn);
     return this;
   }
   forInstance(fn: ComponentInstanceFn<T>) {
@@ -49,9 +51,6 @@ export class ComponentStyleGenerator<T> {
   update(data: { input: T, theme: NgArwesTheme }) {
     const { id, name } = this;
     const { input, theme } = data;
-    if (this.genClassStyle) {
-      this.genClassStyle({ name, theme });
-    }
     if (this.genInstanceStyle) {
       this.genInstanceStyle({ id, name, theme, input });
     }
