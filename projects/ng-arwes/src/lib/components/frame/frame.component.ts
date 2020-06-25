@@ -103,7 +103,7 @@ export interface ArwesFrameInput {
 export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
   public theme: NgArwesTheme | null = null;
   private destroy$ = new Subject<void>();
-  private name: 'arwes-frame';
+  private name = 'arwes-frame';
 
   @Input()
   @InputBoolean()
