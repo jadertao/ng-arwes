@@ -1,18 +1,16 @@
-import { rgba, lighten } from 'polished';
-import { NgArwesTheme, NgArwesThemeColor } from 'ng-arwes/types/theme.interfaces';
 import { ArwesButtonInput } from './button.component';
+import { ComponentClassFn, ComponentInstanceFn } from 'ng-arwes/tools/style';
 
 
-export const genButtonStyle = (theme: NgArwesTheme, input: ArwesButtonInput) => {
-  return `
-.arwes-button {
+export const genButtonClassStyle: ComponentClassFn = ({ name, theme }) => `
+.${name} {
   display: inline-block;
   position: relative;
   line-height: 1;
   vertical-align: middle;
 }
 
-.arwes-button .arwes-button-body {
+.${name} .${name}-body {
   position: relative;
   z-index: 2;
   display: inline-block;
@@ -20,7 +18,6 @@ export const genButtonStyle = (theme: NgArwesTheme, input: ArwesButtonInput) => 
   border: none;
   padding: ${theme.padding / 2}px, ${theme.padding};
   background: transparent;
-  color: ${theme.color[input.disabled ? 'disabled' : input.layer].base};
   font-size: ${theme.typography.fontSize * 0.75};
   line-height: 1;
   vertical-align: middle;
@@ -28,15 +25,20 @@ export const genButtonStyle = (theme: NgArwesTheme, input: ArwesButtonInput) => 
   transition: all ${theme.animTime}ms ease out;
   user-select: none;
   outline: none;
-  cursor: ${input.disabled ? 'auto' : 'pointer'};
 }
 
-.arwes-button .arwes-button-body:focus {
+.${name} .${name}-body:focus {
   outline: none;
 }
 
-.arwes-button .arwes-button-body::-noz-focus-inner {
+.${name} .${name}-body::-noz-focus-inner {
   border: none;
 }
-  `;
-};
+`;
+
+export const genButtonInstanceStyle: ComponentInstanceFn<ArwesButtonInput> = ({ name, id, theme, input }) => `
+.${name} .${name}-body {
+  color: ${theme.color[input.disabled ? 'disabled' : input.layer].base};
+  cursor: ${input.disabled ? 'auto' : 'pointer'};
+}
+`;
