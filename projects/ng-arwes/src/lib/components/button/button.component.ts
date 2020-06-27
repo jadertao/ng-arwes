@@ -1,14 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges } from '@angular/core';
 import { nanoid } from 'nanoid';
 import { InputBoolean } from 'ng-arwes/tools';
 import { NgArwesLayerStatusEnum } from 'ng-arwes/types/theme.enums';
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
-import { Subject } from 'rxjs';
+import { Subject, pipe, combineLatest } from 'rxjs';
 import { ThemeService } from 'ng-arwes/services/public-api';
 import { takeUntil } from 'rxjs/operators';
 import { StyleService } from 'ng-arwes/services/style.service';
-import { genButtonStyle } from './button.style';
+import { genButtonClassStyle, genButtonInstanceStyle } from './button.style';
 import { CollectInput, CollectService } from 'ng-arwes/services/collect.service';
+import { ComponentStyleGenerator } from 'ng-arwes/tools/style';
 
 export interface ArwesButtonInput {
   show: boolean;
@@ -21,7 +22,6 @@ export interface ArwesButtonInput {
 
 @Component({
   selector: 'arwes-button',
-  styleUrls: ['./button.component.css'],
   template: `
     <div class="arwes-button" (click)="onClick()">
       <arwes-frame
@@ -43,11 +43,14 @@ export interface ArwesButtonInput {
     </div>
   `,
 })
-export class ButtonComponent implements OnInit, OnDestroy {
+export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
   private name = 'arwes-button';
   private id = nanoid();
   public theme: NgArwesTheme | null = null;
+  public styleUpdater: ComponentStyleGenerator<ArwesButtonInput>;
   private destroy$ = new Subject<void>();
+  private change$ = new Subject<ArwesButtonInput>();
+
 
   @CollectInput()
   @Input()
@@ -85,12 +88,26 @@ export class ButtonComponent implements OnInit, OnDestroy {
     private style: StyleService,
     private collect: CollectService
   ) {
-    this.themeSvc.theme$.pipe(
+    this.styleUpdater = new ComponentStyleGenerator<ArwesButtonInput>()
+      .info({ name: this.name, id: this.id })
+      .forClass(genButtonClassStyle)
+      .forInstance(genButtonInstanceStyle);
+
+    const pipe$ = this.themeSvc.theme$.pipe(
       takeUntil(this.destroy$)
-    ).subscribe((theme) => {
+    );
+    pipe$.subscribe((theme) => {
       this.applyTheme(theme);
       this.theme = theme;
     });
+
+    combineLatest(
+      this.change$,
+      pipe$
+    ).subscribe(([input, theme]) => {
+      this.styleUpdater.update({ input, theme });
+    });
+
   }
 
   public onClick() {
@@ -102,6 +119,11 @@ export class ButtonComponent implements OnInit, OnDestroy {
       return;
     }
     // this.style.updateContent(this.name, genButtonStyle(theme, this.input));
+  }
+
+  ngOnChanges() {
+    const inputs = this.collect.gather<ArwesButtonInput>(this);
+    this.change$.next(inputs);
   }
 
   ngOnInit() {
