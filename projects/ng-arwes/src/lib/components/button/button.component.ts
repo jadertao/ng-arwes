@@ -9,7 +9,7 @@ import { takeUntil } from 'rxjs/operators';
 import { StyleService } from 'ng-arwes/services/style.service';
 import { genButtonClassStyle, genButtonInstanceStyle } from './button.style';
 import { CollectInput, CollectService } from 'ng-arwes/services/collect.service';
-import { ComponentStyleGenerator } from 'ng-arwes/tools/style';
+import { ComponentStyleGenerator, genInstanceID } from 'ng-arwes/tools/style';
 
 export interface ArwesButtonInput {
   show: boolean;
@@ -23,7 +23,7 @@ export interface ArwesButtonInput {
 @Component({
   selector: 'arwes-button',
   template: `
-    <div class="arwes-button" (click)="onClick()">
+    <div [class]="name+' '+id" (click)="onClick()">
       <arwes-frame
         [animate]="animate"
         hover
@@ -44,8 +44,8 @@ export interface ArwesButtonInput {
   `,
 })
 export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
-  private name = 'arwes-button';
-  private id = nanoid();
+  public name = 'arwes-button';
+  public id = genInstanceID(this.name);
   public theme: NgArwesTheme | null = null;
   public styleUpdater: ComponentStyleGenerator<ArwesButtonInput>;
   private destroy$ = new Subject<void>();
@@ -88,7 +88,7 @@ export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
     private style: StyleService,
     private collect: CollectService
   ) {
-    this.styleUpdater = new ComponentStyleGenerator<ArwesButtonInput>()
+    this.styleUpdater = new ComponentStyleGenerator<ArwesButtonInput>(style)
       .info({ name: this.name, id: this.id })
       .forClass(genButtonClassStyle)
       .forInstance(genButtonInstanceStyle);
@@ -126,9 +126,8 @@ export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
     this.change$.next(inputs);
   }
 
-  ngOnInit() {
-    console.log(this.collect.gather(this));
-  }
+  ngOnInit() { }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

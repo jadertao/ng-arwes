@@ -1,10 +1,16 @@
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
 import { setCallback } from 'ng-arwes/services/theme.service';
+import { StyleService } from 'ng-arwes/services/style.service';
+import { nanoid } from 'nanoid';
 
 export function styleObject2String(style: Record<string, string | number>) {
   return Object.keys(style).reduce((res, key) => {
     return `${res} ${key}:${style[key]};`;
   }, '');
+}
+
+export function genInstanceID(name: string): string {
+  return `${name}-${nanoid()}`;
 }
 
 export type ComponentClassFn = (params: { name: string, theme: NgArwesTheme }) => string;
@@ -15,7 +21,9 @@ export class ComponentStyleGenerator<T> {
   public id: string;
   public genInstanceStyle: ComponentInstanceFn<T> | null = null;
   public genClassStyle: ComponentClassFn | null = null;
-  constructor() { }
+  constructor(
+    public style: StyleService
+  ) { }
 
   info(data: { name: string, id: string }) {
     this.name = data.name;
@@ -36,7 +44,7 @@ export class ComponentStyleGenerator<T> {
     const { id, name } = this;
     const { input, theme } = data;
     if (this.genClassStyle) {
-      this.genClassStyle({ name, theme });
+      this.style.updateContent(name, this.genClassStyle({ name, theme }));
     }
     return this;
   }
@@ -44,7 +52,7 @@ export class ComponentStyleGenerator<T> {
     const { id, name } = this;
     const { input, theme } = data;
     if (this.genInstanceStyle) {
-      this.genInstanceStyle({ id, name, theme, input });
+      this.style.updateContent(id, this.genInstanceStyle({ id, name, theme, input }));
     }
     return this;
   }
@@ -52,7 +60,7 @@ export class ComponentStyleGenerator<T> {
     const { id, name } = this;
     const { input, theme } = data;
     if (this.genInstanceStyle) {
-      this.genInstanceStyle({ id, name, theme, input });
+      this.style.updateContent(id, this.genInstanceStyle({ id, name, theme, input }));
     }
     return this;
   }

@@ -16,13 +16,13 @@ export const genButtonClassStyle: ComponentClassFn = ({ name, theme }) => `
   display: inline-block;
   margin: 0;
   border: none;
-  padding: ${theme.padding / 2}px, ${theme.padding};
+  padding: ${theme.padding / 2}px ${theme.padding}px;
   background: transparent;
-  font-size: ${theme.typography.fontSize * 0.75};
+  font-size: ${theme.typography.fontSize * 0.75}px;
   line-height: 1;
   vertical-align: middle;
 
-  transition: all ${theme.animTime}ms ease out;
+  transition: all ${theme.animTime}ms ease-out;
   user-select: none;
   outline: none;
 }
@@ -37,7 +37,7 @@ export const genButtonClassStyle: ComponentClassFn = ({ name, theme }) => `
 `;
 
 export const genButtonInstanceStyle: ComponentInstanceFn<ArwesButtonInput> = ({ name, id, theme, input }) => `
-.${name} .${name}-body {
+.${name}.${id} .${name}-body {
   color: ${theme.color[input.disabled ? 'disabled' : input.layer].base};
   cursor: ${input.disabled ? 'auto' : 'pointer'};
 }
