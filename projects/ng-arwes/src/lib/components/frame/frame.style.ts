@@ -1,6 +1,7 @@
 import { rgba, lighten } from 'polished';
 import { NgArwesTheme, NgArwesThemeColor } from 'ng-arwes/types/theme.interfaces';
 import { ArwesFrameInput } from './frame.component';
+import { ComponentInstanceFn, ComponentClassFn } from 'ng-arwes/tools/style';
 
 const cornerLength = (corners: number) => {
   switch (corners) {
@@ -43,30 +44,89 @@ const getColor = (theme: NgArwesTheme, input: ArwesFrameInput, level: keyof NgAr
 const getBg = (theme: NgArwesTheme, input: ArwesFrameInput) =>
   theme.background[input.disabled ? 'disabled' : input.layer]['level' + input.level];
 
-export const genFrameStyle = (theme: NgArwesTheme, input: ArwesFrameInput) => {
+export const genFrameStyle: ComponentClassFn = ({ name, theme }) => {
   return `
-.arwes-frame {
+.${name} {
   display: block;
   position: relative;
   padding: 1px;
 }
 
-.arwes-frame:hover .arwes-frame-border {
-  border-color: ${getColor(theme, input, 'base')};
-  box-shadow: 0 0 ${theme.shadowLength}px ${rgba(getColor(theme, input, 'base'), theme.alpha)};
-}
-
-.arwes-frame:hover .arwes-frame-corner {
-  border-color: ${getColor(theme, input, 'light')};
-  box-shadow: 0 0 ${theme.shadowLength}px -${theme.shadowLength / 2}px ${rgba(getColor(theme, input, 'light'), theme.alpha)};
-}
-
-.arwes-frame .arwes-frame-box {
+.${name} .${name}-box {
   z-index: 3;
   position: relative;
   overflow: hidden;
   display: block;
   transition: background-color ${theme.animTime}ms ease-in;
+}
+
+.${name} .${name}-children {
+  display: block;
+}
+
+.${name} .${name}-border {
+  z-index: 1;
+  position: absolute;
+  border-style: solid;
+  transition: all ${theme.animTime}ms ease-in;
+  opacity: 1;
+}
+
+.${name} .${name}-border-left {
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  border-width: 0 0 0 1px;
+  height: 100%;
+}
+
+.${name} .${name}-border-right {
+  right: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  border-width: 0 0 0 1px;
+  height: 100%;
+}
+
+.${name} .${name}-border-top {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-width: 1px 0 0 0;
+  width: 100%;
+}
+
+.${name} .${name}-border-bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-width: 1px 0 0 0;
+  width: 100%;
+}
+
+.${name} .${name}-corner {
+  z-index: 2;
+  position: absolute;
+  transition: all ${theme.animTime}ms ease-in;
+  border-style: solid;
+  opacity: 1;
+}
+
+  `;
+};
+
+export const genFrameInstanceStyle: ComponentInstanceFn<ArwesFrameInput> = ({ name, id, theme, input }) => `
+.${name}.${id}:hover .${name}-border {
+  border-color: ${getColor(theme, input, 'base')};
+  box-shadow: 0 0 ${theme.shadowLength}px ${rgba(getColor(theme, input, 'base'), theme.alpha)};
+}
+
+.${name}.${id}:hover .${name}-corner {
+  border-color: ${getColor(theme, input, 'light')};
+  box-shadow: 0 0 ${theme.shadowLength}px -${theme.shadowLength / 2}px ${rgba(getColor(theme, input, 'light'), theme.alpha)};
+}
+
+.${name}.${id} .${name}-box {
   background-color: ${
     input.noBackground
       ? 'transparent'
@@ -76,86 +136,40 @@ export const genFrameStyle = (theme: NgArwesTheme, input: ArwesFrameInput) => {
     }
 }
 
-.arwes-frame .arwes-frame-children {
-  display: block;
-}
-
-.arwes-frame .arwes-frame-border {
-  z-index: 1;
-  position: absolute;
-  border-style: solid;
-  transition: all ${theme.animTime}ms ease-in;
+.${name}.${id} .${name}-border {
   border-color: ${getColor(theme, input, 'dark')};
   box-shadow: 0 0 ${theme.shadowLength}px ${rgba(getColor(theme, input, 'dark'), theme.alpha)};
-  opacity: 1;
 }
 
-.arwes-frame .arwes-frame-border-left {
-  left: 0;
-  top: 50%;
-  transform: translate(0, -50%);
-  border-width: 0 0 0 1px;
-  height: 100%;
-}
-
-.arwes-frame .arwes-frame-border-right {
-  right: 0;
-  top: 50%;
-  transform: translate(0, -50%);
-  border-width: 0 0 0 1px;
-  height: 100%;
-}
-
-.arwes-frame .arwes-frame-border-top {
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-  border-width: 1px 0 0 0;
-  width: 100%;
-}
-
-.arwes-frame .arwes-frame-border-bottom {
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-  border-width: 1px 0 0 0;
-  width: 100%;
-}
-
-.arwes-frame .arwes-frame-corner {
-  z-index: 2;
-  position: absolute;
+.${name}.${id} .${name}-corner {
   width: ${cornerLength(input.corners)}px;
   height: ${cornerLength(input.corners)}px;
-  transition: all ${theme.animTime}ms ease-in;
-  border-style: solid;
   border-color: ${getColor(theme, input, 'base')};
   box-shadow: 0 0 ${theme.shadowLength}px -${theme.shadowLength / 2}px ${rgba(getColor(theme, input, 'base'), theme.alpha)};
-  opacity: 1
 }
 
-.arwes-frame .arwes-frame-cornerLT {
+.${name}.${id} .${name}-cornerLT {
   left: -${cornerWidth(input.corners)}px;
   top: -${cornerWidth(input.corners)}px;
   border-width: ${cornerWidth(input.corners)}px 0 0 ${cornerWidth(input.corners)}px;
 }
 
-.arwes-frame .arwes-frame-cornerLB {
+.${name}.${id} .${name}-cornerLB {
   left: -${cornerWidth(input.corners)}px;
   bottom: -${cornerWidth(input.corners)}px;
   border-width: 0 0 ${cornerWidth(input.corners)}px ${cornerWidth(input.corners)}px;
 }
 
-.arwes-frame .arwes-frame-cornerRT {
+.${name}.${id} .${name}-cornerRT {
   right: -${cornerWidth(input.corners)}px;
   top: -${cornerWidth(input.corners)}px;
   border-width: ${cornerWidth(input.corners)}px ${cornerWidth(input.corners)}px 0 0;
 }
 
-.arwes-frame .arwes-frame-cornerRB {
+.${name}.${id} .${name}-cornerRB {
   right: -${cornerWidth(input.corners)}px;
   bottom: -${cornerWidth(input.corners)}px;
   border-width: 0 ${cornerWidth(input.corners)}px ${cornerWidth(input.corners)}px 0;
 }
-  `;
-};
+`;
+
