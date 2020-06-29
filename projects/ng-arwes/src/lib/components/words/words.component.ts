@@ -124,12 +124,9 @@ export class WordsComponent
     }
   }
 
-  ngOnInit() { 
-    console.log('[log here] words component init');
-  }
+  ngOnInit() {  }
 
   ngOnDestroy() {
-    console.log('[log here] words component destroy');
     this.stopAnimation();
     this.destroy$.next();
     this.destroy$.complete();

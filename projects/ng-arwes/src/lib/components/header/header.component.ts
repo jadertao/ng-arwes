@@ -79,9 +79,7 @@ export class HeaderComponent implements OnDestroy, AfterViewInit, OnChanges {
     });
   }
   ngAfterViewInit() {
-    console.log('init');
     if (this.animate && this.show && this.sounds.deploy) {
-      console.log('init play');
       this.sounds.deploy.play();
     }
   }
@@ -96,7 +94,6 @@ export class HeaderComponent implements OnDestroy, AfterViewInit, OnChanges {
       changes.show.previousValue !== this.show &&
       this.sounds.deploy
     ) {
-      console.log(changes, 'change play');
       this.sounds.deploy.play();
     }
   }

@@ -139,12 +139,9 @@ export class LogoComponent implements OnInit, OnDestroy {
   constructor(
     public themeSvc: ThemeService,
     public sanitizer: DomSanitizer,
-  ) {
-    console.log(this.animate);
-  }
+  ) { }
 
   ngOnInit() {
-    console.log(this.animate);
     this.themeSvc.theme$
       .pipe(
         takeUntil(this.destroy$)
