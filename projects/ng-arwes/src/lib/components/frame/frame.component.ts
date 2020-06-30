@@ -26,8 +26,8 @@ import {
   cornerMotion,
   boxMotion,
 } from './frame.animation';
-import { StyleService } from 'ng-arwes/services/style.service';
-import { CollectInput, CollectService } from 'ng-arwes/services/collect.service';
+import { StyleService } from 'ng-arwes/services/style/style.service';
+import { CollectInput, CollectService } from 'ng-arwes/services/collect/collect.service';
 import { genInstanceID, ComponentStyleGenerator } from 'ng-arwes/tools/style';
 
 const FrameSelector = 'arwes-frame';

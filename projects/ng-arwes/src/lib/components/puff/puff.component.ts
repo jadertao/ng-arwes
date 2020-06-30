@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy, OnChanges, 
 import { InputBoolean } from 'ng-arwes/tools';
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
 import { ThemeService } from 'ng-arwes/services/public-api';
-import { StyleService } from 'ng-arwes/services/style.service';
+import { StyleService } from 'ng-arwes/services/style/style.service';
 import { takeUntil } from 'rxjs/operators';
 import { genPuffStyle } from './puff.style';
 import { Subject } from 'rxjs';

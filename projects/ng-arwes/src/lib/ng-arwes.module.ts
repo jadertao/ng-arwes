@@ -13,7 +13,7 @@ import { LinkComponent } from './components/link/link.component';
 import { NG_ARWES_THEME_TOKEN, DEFAULT_THEME } from './tools/theme';
 import { NgArwesTheme } from './types/theme.interfaces';
 import { CommonModule } from '@angular/common';
-import { ThemeService } from './services/theme.service';
+import { ThemeService } from './services/theme/theme.service';
 import { LineComponent } from './components/line/line.component';
 import { NgModule, ModuleWithProviders, Provider } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

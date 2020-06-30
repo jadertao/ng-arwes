@@ -2,7 +2,7 @@ import { NgArwesTheme } from './../../types/theme.interfaces';
 import { takeUntil } from 'rxjs/operators';
 import { NG_ARWES_SOUND_TOKEN } from './../../tools/sound';
 import type { NgArwesSound } from './../../tools/sound';
-import { ThemeService } from './../../services/theme.service';
+import { ThemeService } from '../../services/theme/theme.service';
 import { NgArwesLayerStatusEnum } from './../../types/theme.enums';
 import {
   Component,

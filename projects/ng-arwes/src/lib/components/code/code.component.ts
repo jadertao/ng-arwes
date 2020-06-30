@@ -11,7 +11,7 @@ import { DOCUMENT } from '@angular/common';
 import { genCodeStyle } from './code.style';
 import { codeMotion } from './code.animation';
 import { DEFAULT_THEME } from './../../tools/theme';
-import { StyleService } from 'ng-arwes/services/style.service';
+import { StyleService } from 'ng-arwes/services/style/style.service';
 
 const CodeSelector = 'code[arwes-code], pre[arwes-code]';
 

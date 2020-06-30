@@ -1,2 +1,2 @@
-export { ThemeService } from './theme.service';
-export { SoundService } from './sound.service';
+export { ThemeService } from './theme/theme.service';
+export { SoundService } from './sound/sound.service';

@@ -6,7 +6,7 @@ import { rgba } from 'polished';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NgArwesTheme } from '../../types/theme.interfaces';
-import { ThemeService } from '../../services/theme.service';
+import { ThemeService } from '../../services/theme/theme.service';
 
 const LinkSelector = 'a[arwes-link]';
 

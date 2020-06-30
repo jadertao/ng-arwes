@@ -1,4 +1,4 @@
-import { NG_ARWES_SOUND_TOKEN, NgArwesSound } from './../tools/sound';
+import { NG_ARWES_SOUND_TOKEN, NgArwesSound } from '../../tools/sound';
 import { Injectable, Inject } from '@angular/core';
 
 @Injectable({

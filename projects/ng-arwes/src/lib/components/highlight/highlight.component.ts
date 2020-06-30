@@ -1,6 +1,6 @@
 import { darken } from 'polished';
 import { takeUntil } from 'rxjs/operators';
-import { ThemeService } from './../../services/theme.service';
+import { ThemeService } from '../../services/theme/theme.service';
 import { NgArwesLayerStatusEnum } from './../../types/theme.enums';
 import { InputBoolean } from './../../tools';
 import { Subject } from 'rxjs';

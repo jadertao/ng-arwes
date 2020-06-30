@@ -1,6 +1,6 @@
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
-import { setCallback } from 'ng-arwes/services/theme.service';
-import { StyleService } from 'ng-arwes/services/style.service';
+import { setCallback } from 'ng-arwes/services/theme/theme.service';
+import { StyleService } from 'ng-arwes/services/style/style.service';
 import { nanoid } from 'nanoid';
 
 export function styleObject2String(style: Record<string, string | number>) {

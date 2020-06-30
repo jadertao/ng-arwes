@@ -3,7 +3,7 @@ import { rgba } from 'polished';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, } from 'rxjs';
 import { NgArwesThemeTypographyHeaderEnum } from '../../types/theme.enums';
-import { ThemeService } from '../../services/theme.service';
+import { ThemeService } from '../../services/theme/theme.service';
 import { NgArwesTheme } from '../../types/theme.interfaces';
 
 const HeadingSelector = 'h1[arwes-heading], h2[arwes-heading], h3[arwes-heading], h4[arwes-heading], h5[arwes-heading], h6[arwes-heading]';

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, Renderer2, ElementRef, HostBinding, ChangeDetectionStrategy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ThemeService } from '../../services/theme.service';
+import { ThemeService } from '../../services/theme/theme.service';
 import { NgArwesTheme } from '../../types/theme.interfaces';
 import { NgArwesLayerStatusEnum } from '../../types/theme.enums';
 

@@ -1,10 +1,10 @@
-import { NgArwesModule } from './../ng-arwes.module';
-import { DEFAULT_THEME, NG_ARWES_THEME_TOKEN } from './../tools/theme';
-import { NgArwesTheme } from '../types/theme.interfaces';
+import { NgArwesModule } from '../../ng-arwes.module';
+import { DEFAULT_THEME, NG_ARWES_THEME_TOKEN } from '../../tools/theme';
+import { NgArwesTheme } from '../../types/theme.interfaces';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
-import { mergeDeep } from '../tools/merge';
-import { StyleService } from './style.service';
+import { mergeDeep } from '../../tools/merge';
+import { StyleService } from '../style/style.service';
 import { delay } from 'rxjs/operators';
 
 const UpdateCallbacks: Record<string, (data: { name: string, theme: NgArwesTheme }) => string> = {};

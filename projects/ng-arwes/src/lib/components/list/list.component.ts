@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, HostBinding } from '@angular/core';
 import { ThemeService } from 'ng-arwes/services/public-api';
-import { StyleService } from 'ng-arwes/services/style.service';
+import { StyleService } from 'ng-arwes/services/style/style.service';
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
 import { genListStyle } from './list.style';
 import { takeUntil } from 'rxjs/operators';
