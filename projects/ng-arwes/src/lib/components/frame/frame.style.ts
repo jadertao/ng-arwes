@@ -44,7 +44,7 @@ const getColor = (theme: NgArwesTheme, input: ArwesFrameInput, level: keyof NgAr
 const getBg = (theme: NgArwesTheme, input: ArwesFrameInput) =>
   theme.background[input.disabled ? 'disabled' : input.layer]['level' + input.level];
 
-export const genFrameStyle: ComponentClassFn = ({ name, theme }) => {
+export const genFrameClassStyle: ComponentClassFn = ({ name, theme }) => {
   return `
 .${name} {
   display: block;

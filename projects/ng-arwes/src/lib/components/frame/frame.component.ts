@@ -3,8 +3,6 @@ import {
   OnInit,
   OnDestroy,
   Input,
-  ElementRef,
-  Renderer2,
   Inject,
   ViewEncapsulation,
   ChangeDetectionStrategy,
@@ -13,7 +11,7 @@ import {
   OnChanges,
 } from '@angular/core';
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
-import { Subject } from 'rxjs';
+import { Subject, combineLatest } from 'rxjs';
 import { InputBoolean } from 'ng-arwes/tools';
 import { NgArwesLayerStatusEnum } from 'ng-arwes/types/theme.enums';
 import { ThemeService } from 'ng-arwes/services/public-api';
@@ -21,7 +19,7 @@ import { takeUntil } from 'rxjs/operators';
 import { NG_ARWES_SOUND_TOKEN } from 'ng-arwes/tools/sound';
 import type { NgArwesSound } from 'ng-arwes/tools/sound';
 import { DOCUMENT } from '@angular/common';
-import { genFrameStyle } from './frame.style';
+import { genFrameClassStyle, genFrameInstanceStyle } from './frame.style';
 import {
   borderHeightMotion,
   borderWidthMotion,
@@ -29,6 +27,8 @@ import {
   boxMotion,
 } from './frame.animation';
 import { StyleService } from 'ng-arwes/services/style.service';
+import { CollectInput, CollectService } from 'ng-arwes/services/collect.service';
+import { genInstanceID, ComponentStyleGenerator } from 'ng-arwes/tools/style';
 
 const FrameSelector = 'arwes-frame';
 
@@ -46,12 +46,11 @@ export interface ArwesFrameInput {
 
 @Component({
   selector: FrameSelector,
-  styleUrls: ['./frame.component.less'],
   animations: [borderHeightMotion, borderWidthMotion, cornerMotion, boxMotion],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="arwes-frame" [@.disabled]="!animate" *ngIf="show">
+    <div [class]="name+' '+id"  [@.disabled]="!animate" *ngIf="show">
       <div
         *ngIf="border"
         [@borderHeightMotion]="{ value: null, params: { animTime: theme.animTime }}"
@@ -101,14 +100,23 @@ export interface ArwesFrameInput {
   `,
 })
 export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
+  public name = 'arwes-frame';
+  public id = genInstanceID(this.name);
   public theme: NgArwesTheme | null = null;
-  private destroy$ = new Subject<void>();
-  private name = 'arwes-frame';
+  public styleUpdater: ComponentStyleGenerator<ArwesFrameInput>;
 
+
+  private destroy$ = new Subject<void>();
+  private change$ = new Subject<ArwesFrameInput>();
+  private changed = false;
+
+
+  @CollectInput()
   @Input()
   @InputBoolean()
   show = true;
 
+  @CollectInput()
   @Input()
   @InputBoolean()
   border = true;
@@ -117,63 +125,64 @@ export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   @InputBoolean()
   animate = true;
 
+  @CollectInput()
   @Input()
   layer = NgArwesLayerStatusEnum.Primary;
 
+  @CollectInput()
   @Input()
   corners: 0 | 1 | 2 | 3 | 4 | 5 | 6 = 0;
 
+  @CollectInput()
   @Input()
   level: 0 | 1 | 2 | 3 = 0;
 
+  @CollectInput()
   @Input()
   @InputBoolean()
   disabled = false;
 
+  @CollectInput()
   @Input()
   @InputBoolean()
   active = false;
 
+  @CollectInput()
   @Input()
   @InputBoolean()
   hover = true;
 
+  @CollectInput()
   @Input()
   @InputBoolean()
   noBackground = false;
 
-  get input(): ArwesFrameInput {
-    return {
-      show: this.show,
-      border: this.border,
-      layer: this.layer,
-      corners: this.corners,
-      level: this.level,
-      disabled: this.disabled,
-      active: this.active,
-      hover: this.hover,
-      noBackground: this.noBackground,
-    };
-  }
-
   constructor(
-    private elementRef: ElementRef,
     private themeSvc: ThemeService,
-    private renderer: Renderer2,
     private style: StyleService,
+    private collect: CollectService,
     @Inject(NG_ARWES_SOUND_TOKEN) private sounds: NgArwesSound,
     @Inject(DOCUMENT) private doc: Document
   ) {
-    this.themeSvc.theme$.pipe(takeUntil(this.destroy$)).subscribe((theme) => {
+    this.styleUpdater = new ComponentStyleGenerator<ArwesFrameInput>(style)
+      .info({ name: this.name, id: this.id })
+      .forClass(genFrameClassStyle)
+      .forInstance(genFrameInstanceStyle);
+
+    const pipe$ = this.themeSvc.theme$.pipe(takeUntil(this.destroy$));
+    pipe$.subscribe((theme) => {
       this.theme = theme;
+      this.styleUpdater.updateClass({ theme });
     });
+
+    combineLatest(this.change$, pipe$).subscribe(
+      ([input, theme]) => { this.styleUpdater.updateInstance({ input, theme }); }
+    );
   }
 
-  ngOnInit() {
-    this.themeSvc.theme$.pipe(takeUntil(this.destroy$)).subscribe((theme) => {
-      this.applyTheme(theme);
-    });
-  }
+  ngOnInit() {  }
+
+
   ngAfterViewInit() {
     if (this.animate && this.show && this.sounds.deploy) {
       this.sounds.deploy.play();
@@ -181,7 +190,11 @@ export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.animate && changes.animate.isFirstChange()) {
+    const inputs = this.collect.gather<ArwesFrameInput>(this);
+    this.change$.next(inputs);
+
+    if (!this.changed) {
+      this.changed = true;
       return;
     }
     if (this.animate && changes.show && changes.show.previousValue !== this.show && this.sounds.deploy) {
@@ -194,10 +207,4 @@ export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
     this.destroy$.complete();
   }
 
-  applyTheme(theme: NgArwesTheme = this.theme) {
-    if (!theme || !this.style) {
-      return;
-    }
-    this.style.updateContent(this.name, genFrameStyle(theme, this.input));
-  }
 }

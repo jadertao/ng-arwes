@@ -31,5 +31,18 @@ export const Text = () => ({
     </div>
   </arwes-frame>
 </div>
+<div>
+  <arwes-frame
+    show animate
+    [level]="3"
+    [corners]="4"
+    layer="secondary"
+    style="display: inline-block;"
+  >
+    <div style="height: 100px; width: 200px; line-height: 100px; text-align: center;">
+      Cyberpunk
+    </div>
+  </arwes-frame>
+</div>
   `,
 });
