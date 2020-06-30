@@ -97,28 +97,21 @@ export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
       takeUntil(this.destroy$)
     );
     pipe$.subscribe((theme) => {
-      this.applyTheme(theme);
       this.theme = theme;
+      this.styleUpdater.updateClass({ theme });
     });
 
     combineLatest(
       this.change$,
       pipe$
     ).subscribe(([input, theme]) => {
-      this.styleUpdater.update({ input, theme });
+      this.styleUpdater.updateInstance({ input, theme });
     });
 
   }
 
   public onClick() {
     this.arwesClick.emit();
-  }
-
-  applyTheme(theme: NgArwesTheme = this.theme) {
-    if (!theme || !this.style) {
-      return;
-    }
-    // this.style.updateContent(this.name, genButtonStyle(theme, this.input));
   }
 
   ngOnChanges() {

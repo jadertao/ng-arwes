@@ -26,15 +26,6 @@ export class ThemeService {
     private style: StyleService,
   ) {
     this.theme = new BehaviorSubject(themeConfig);
-    this.theme.asObservable()
-      .pipe(
-        delay(1)
-      )
-      .subscribe((theme) => {
-        Object.keys(UpdateCallbacks).forEach(name => {
-          style.updateContent(name, UpdateCallbacks[name]({ name, theme }));
-        });
-      });
   }
 
   setCallback = setCallback;

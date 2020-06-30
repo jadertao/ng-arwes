@@ -40,9 +40,9 @@ export class ComponentStyleGenerator<T> {
     this.genInstanceStyle = fn;
     return this;
   }
-  updateClass(data: { input: T, theme: NgArwesTheme }) {
-    const { id, name } = this;
-    const { input, theme } = data;
+  updateClass(data: { theme: NgArwesTheme }) {
+    const { name } = this;
+    const { theme } = data;
     if (this.genClassStyle) {
       this.style.updateContent(name, this.genClassStyle({ name, theme }));
     }
@@ -59,6 +59,9 @@ export class ComponentStyleGenerator<T> {
   update(data: { input: T, theme: NgArwesTheme }) {
     const { id, name } = this;
     const { input, theme } = data;
+    if (this.genClassStyle) {
+      this.style.updateContent(name, this.genClassStyle({ name, theme }));
+    }
     if (this.genInstanceStyle) {
       this.style.updateContent(id, this.genInstanceStyle({ id, name, theme, input }));
     }
