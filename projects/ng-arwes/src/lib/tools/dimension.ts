@@ -47,8 +47,15 @@ function getViewportSize(name: 'Width' | 'Height') {
   return size;
 }
 
-
-export function getDimension(wMin, hMin, wMax, hMax) {
+/**
+ * Get the usable browser window dimentions.
+ */
+export function getDimension(
+  wMin: number, hMin: number, wMax: number, hMax: number
+): {
+  width: number,
+  height: number,
+} {
   let width = isNode ? 1024 : getViewportSize('Width');
   let height = isNode ? 768 : getViewportSize('Height');
 
