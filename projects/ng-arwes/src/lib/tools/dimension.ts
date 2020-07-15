@@ -50,8 +50,8 @@ function getViewportSize(name: 'Width' | 'Height') {
 /**
  * Get the usable browser window dimentions.
  */
-export function getDimension(
-  wMin: number, hMin: number, wMax: number, hMax: number
+export function getDimensions(
+  wMin?: number, hMin?: number, wMax?: number, hMax?: number
 ): {
   width: number,
   height: number,
