@@ -31,8 +31,7 @@ export interface ArwesImageInput {
 }
 
 @Component({
-  selector: 'arwes-images',
-  styleUrls: ['./image.component.css'],
+  selector: 'arwes-image',
   template: `
     <figure [class]="name + ' ' + id" [class.ready]="ready">
       <arwes-frame [animate]="animate" [show]="show" [layer]="layer">
@@ -63,8 +62,8 @@ export interface ArwesImageInput {
     </figure>
   `,
 })
-export class ImagesComponent implements OnInit, OnDestroy, OnChanges {
-  public name = 'arwes-images';
+export class ImageComponent implements OnInit, OnDestroy, OnChanges {
+  public name = 'arwes-image';
   public id = genInstanceID(this.name);
   public theme: NgArwesTheme | null = null;
   public styleUpdater: ComponentStyleGenerator<ArwesImageInput>;

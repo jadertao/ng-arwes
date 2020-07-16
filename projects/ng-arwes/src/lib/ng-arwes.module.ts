@@ -27,6 +27,7 @@ import { LogoComponent } from './components/logo/logo.component';
 import { ListComponent } from './components/list/list.component';
 import { PuffComponent } from './components/puff/puff.component';
 import { ButtonComponent } from './components/button/button.component';
+import { ImageComponent } from './components/Image/Image.component';
 
 
 export interface NgArwesModuleOptions {
@@ -56,6 +57,7 @@ const components = [
   ListComponent,
   PuffComponent,
   ButtonComponent,
+  ImageComponent,
 ];
 
 @NgModule({
