@@ -7,7 +7,7 @@ export class LoadService {
 
   constructor() { }
 
-  image(url: string): Promise<void> {
+  loadImage(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => resolve();
@@ -16,7 +16,7 @@ export class LoadService {
     });
   }
 
-  sound(url: string): Promise<void> {
+  loadSound(url: string): Promise<void> {
     return new Promise((resolve, reject) => {
       const sound = new Audio();
       sound.addEventListener('canplaythrough', () => resolve());
@@ -25,15 +25,18 @@ export class LoadService {
     });
   }
 
-  all(resources: { images: string[], sounds: string[] }, opts?: { timeout: string }): Promise<void> {
+  loadAll(resources: { images?: string[], sounds?: string[] }, opts?: { timeout: string }): Promise<void> {
+    if (!resources.images && !resources.sounds) {
+      return;
+    }
     const { images = [], sounds = [] } = resources || {};
     const options = Object.assign({ timeout: 30000 }, opts);
 
     return new Promise((resolve, reject) => {
       setTimeout(reject, options.timeout);
       Promise.all([
-        ...images.map(image => this.image(image)),
-        ...sounds.map(sound => this.sound(sound))
+        ...images.map(image => this.loadImage(image)),
+        ...sounds.map(sound => this.loadSound(sound))
       ]).then(() => resolve(), reject);
     });
   }
