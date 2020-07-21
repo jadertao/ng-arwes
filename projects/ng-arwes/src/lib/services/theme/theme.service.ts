@@ -19,22 +19,25 @@ export const setCallback = (name: string, fn: (data: { name: string, theme: NgAr
 })
 export class ThemeService {
 
-  private theme: BehaviorSubject<NgArwesTheme>;
+  private emitter: BehaviorSubject<NgArwesTheme>;
+  public theme: NgArwesTheme;
 
   constructor(
     @Inject(NG_ARWES_THEME_TOKEN) private themeConfig: NgArwesTheme,
     private style: StyleService,
   ) {
-    this.theme = new BehaviorSubject(themeConfig);
+    this.theme = themeConfig;
+    this.emitter = new BehaviorSubject(themeConfig);
   }
 
   setCallback = setCallback;
 
   setTheme(theme: Partial<NgArwesTheme>) {
-    this.theme.next(mergeDeep(DEFAULT_THEME, theme));
+    this.theme = mergeDeep(DEFAULT_THEME, theme);
+    this.emitter.next(this.theme);
   }
 
   get theme$() {
-    return this.theme.asObservable();
+    return this.emitter.asObservable();
   }
 }
