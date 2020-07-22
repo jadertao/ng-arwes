@@ -1,4 +1,4 @@
-import { ArwesImageResource } from 'ng-arwes/components/Image/Image.component';
+import { ArwesImageResource } from 'ng-arwes/components/image/image.component';
 import { ResponsiveStatus, ResponsiveStatusType } from 'ng-arwes/services/responsive/responsive.service';
 
 export const getResponsiveResource = (resources: ArwesImageResource, responsive: ResponsiveStatus): string => {
