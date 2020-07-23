@@ -19,6 +19,7 @@ import {
 import { Subject } from 'rxjs';
 import { InputBoolean } from './../../tools';
 import '../../polyfills/requestAnimationFrame.js';
+import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
 
 @Component({
   selector: 'arwes-words',
@@ -100,7 +101,7 @@ export class WordsComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.animate.isFirstChange()) {
+    if (isFirstChange(changes)) {
       return;
     }
     const { animate, show, children } = this;

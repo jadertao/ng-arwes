@@ -6,6 +6,7 @@ import { StyleService } from 'ng-arwes/services/style/style.service';
 import { takeUntil } from 'rxjs/operators';
 import { genPuffStyle } from './puff.style';
 import { Subject } from 'rxjs';
+import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
 
 @Component({
   selector: 'arwes-puff',
@@ -71,7 +72,7 @@ export class PuffComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.animate && changes.animate.isFirstChange()) {
+    if (isFirstChange(changes)) {
       return;
     }
     if (changes.animate.previousValue !== this.animate) {

@@ -21,6 +21,7 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { InputBoolean } from '../../tools';
+import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
 
 const FooterSelector = 'arwes-footer';
 
@@ -87,7 +88,7 @@ export class FooterComponent implements OnDestroy, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.animate && changes.animate.isFirstChange()) {
+    if (isFirstChange(changes)) {
       return;
     }
     if (this.animate && changes.show && changes.show.previousValue !== this.show && this.sounds.deploy) {

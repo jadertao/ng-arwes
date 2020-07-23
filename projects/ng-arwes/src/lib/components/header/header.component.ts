@@ -20,6 +20,7 @@ import { InputBoolean } from 'ng-arwes/tools';
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
 import { NG_ARWES_SOUND_TOKEN } from 'ng-arwes/tools/sound';
 import type { NgArwesSound } from 'ng-arwes/tools/sound';
+import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
 
 const HeaderSelector = 'arwes-header';
 
@@ -85,7 +86,7 @@ export class HeaderComponent implements OnDestroy, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.animate && changes.animate.isFirstChange()) {
+    if (isFirstChange(changes)) {
       return;
     }
     if (
