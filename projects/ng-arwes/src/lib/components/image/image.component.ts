@@ -15,6 +15,7 @@ import { genImageClassStyle, genImageInstanceStyle } from './image.style';
 import { LoadService } from 'ng-arwes/services/load/load.service';
 import { ResponsiveService } from 'ng-arwes/services/responsive/responsive.service';
 import { getResponsiveResource } from 'ng-arwes/tools/resource';
+import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
 
 export type ArwesImageResource =
   | string
@@ -63,11 +64,11 @@ const ArwesImageDefaultState = {
         </div>
         <div
           [class]="name + '-separator'"
-          *ngIf="ref.children.length === 0"
+          *ngIf="ref&&ref.children.length === 0"
         ></div>
         <figcaption
           [class]="name + '-children'"
-          *ngIf="ref.children.length === 0"
+          *ngIf="ref&&ref.children.length === 0"
         >
           <small #ref>
             <ng-content></ng-content>
@@ -111,7 +112,9 @@ export class ImageComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
   resources: ArwesImageResource;
 
   @Input()
-  i18n: ArwesImageI18n;
+  i18n: ArwesImageI18n = {
+    error: 'Image error'
+  };
 
   constructor(
     private themeSvc: ThemeService,
@@ -173,6 +176,9 @@ export class ImageComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
   ngOnChanges(changes: SimpleChanges) {
     const inputs = this.collect.gather<ArwesImageInput>(this);
     this.change$.next(inputs);
+    if (isFirstChange(changes)) {
+      return;
+    }
     if (changes.resources && changes.resources.previousValue !== changes.resources.currentValue) {
       this.loadResource();
     }
