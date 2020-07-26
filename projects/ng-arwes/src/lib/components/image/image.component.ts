@@ -53,8 +53,9 @@ const ArwesImageDefaultState = {
       <arwes-frame [animate]="animate" [show]="show" [layer]="layer">
         <div [class]="name + '-holder'">
           <img [src]="state.resource" [class]="name + '-img'" />
-          <div [class]="name + '-error'">{{ i18n.error }}</div>
+          <div *ngIf="state.error" [class]="name + '-error'">{{ i18n.error }}</div>
           <arwes-loading
+            *ngIf="!state.ready&&!state.error"
             [full]
             [animate]="animate"
             [show]="show"
