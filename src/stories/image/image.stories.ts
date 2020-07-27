@@ -9,6 +9,10 @@ export default {
 
 export const Text = () => ({
   template: `
-<arwes-image animate resources='images/wallpaper.jpg'></arwes-image>
+  <div style="margin: 0 auto; padding: 20px; max-width: 600px">
+    <arwes-image animate resources='images/wallpaper.jpg'>
+      The vast universe around us
+    </arwes-image>
+  </div>
   `
 });

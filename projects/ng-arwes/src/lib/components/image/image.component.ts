@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { genInstanceID, ComponentStyleGenerator } from 'ng-arwes/tools/style';
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
 import { takeUntil } from 'rxjs/operators';
@@ -48,14 +48,21 @@ const ArwesImageDefaultState = {
 
 @Component({
   selector: 'arwes-image',
+  styleUrls: ['./image.style.less'],
   template: `
     <figure [class]="name + ' ' + id" [class.ready]="state.ready">
       <arwes-frame [animate]="animate" [show]="show" [layer]="layer">
         <div [class]="name + '-holder'">
-          <img [src]="state.resource" [class]="name + '-img'" />
-          <div *ngIf="state.error" [class]="name + '-error'">{{ i18n.error }}</div>
+          <img
+            *ngIf="state.resource"
+            [src]="state.resource"
+            [class]="name + '-img'"
+          />
+          <div *ngIf="state.error" [class]="name + '-error'">
+            {{ i18n.error }}
+          </div>
           <arwes-loading
-            *ngIf="!state.ready&&!state.error"
+            *ngIf="!state.ready && !state.error"
             [full]
             [animate]="animate"
             [show]="show"
@@ -63,15 +70,18 @@ const ArwesImageDefaultState = {
           >
           </arwes-loading>
         </div>
+
         <div
+          [hidden]="!hasChild"
           [class]="name + '-separator'"
-          *ngIf="ref&&ref.children.length === 0"
+          *ngIf="true"
         ></div>
         <figcaption
+          [hidden]="!hasChild"
           [class]="name + '-children'"
-          *ngIf="ref&&ref.children.length === 0"
+          *ngIf="true"
         >
-          <small #ref>
+          <small #children class="description">
             <ng-content></ng-content>
           </small>
         </figcaption>
@@ -79,7 +89,8 @@ const ArwesImageDefaultState = {
     </figure>
   `,
 })
-export class ImageComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+export class ImageComponent
+  implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   public name = 'arwes-image';
   public id = genInstanceID(this.name);
   public theme: NgArwesTheme | null = null;
@@ -114,16 +125,25 @@ export class ImageComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
 
   @Input()
   i18n: ArwesImageI18n = {
-    error: 'Image error'
+    error: 'Image error',
   };
+
+  @ViewChild('children') children: ElementRef;
+
+  get hasChild() {
+    return Boolean(
+      this.children && this.children.nativeElement.childNodes.length > 0
+    );
+  }
 
   constructor(
     private themeSvc: ThemeService,
     private style: StyleService,
     private collect: CollectService,
     private loader: LoadService,
-    private responsive: ResponsiveService,
+    private responsive: ResponsiveService
   ) {
+    console.log(this);
     this.styleUpdater = new ComponentStyleGenerator<ArwesImageInput>(style)
       .info({ name: this.name, id: this.id })
       .forClass(genImageClassStyle)
@@ -154,7 +174,6 @@ export class ImageComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
     if (!loadResources) {
       return;
     }
-
     const responsive = this.responsive.get();
     const resource = getResponsiveResource(resources, responsive);
 
@@ -180,7 +199,10 @@ export class ImageComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
     if (isFirstChange(changes)) {
       return;
     }
-    if (changes.resources && changes.resources.previousValue !== changes.resources.currentValue) {
+    if (
+      changes.resources &&
+      changes.resources.previousValue !== changes.resources.currentValue
+    ) {
       this.loadResource();
     }
   }
@@ -189,7 +211,7 @@ export class ImageComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
     this.loadResource();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ngOnDestroy(): void {
     this.destroy$.next();

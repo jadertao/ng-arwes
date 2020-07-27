@@ -18,7 +18,7 @@ export const genImageClassStyle: ComponentClassFn = ({ name, theme }) => `
   display: flex;
   flex-direction: column;
   transition: all ${theme.animTime}ms ease-out;
-  min-height: 200;
+  min-height: 200px;
 }
 
 .${name} .${name}-img {
@@ -26,6 +26,8 @@ export const genImageClassStyle: ComponentClassFn = ({ name, theme }) => `
   border: none;
   margin: 0;
   padding: 0;
+  height: auto;
+  width: 100%;
   vertical-align: top;
   box-shadow: none;
   transition: all ${theme.animTime}ms ease-in;
@@ -60,10 +62,10 @@ export const genImageClassStyle: ComponentClassFn = ({ name, theme }) => `
   opacity: 1;
 }
 
-.${name} .${name}-ready.${name}-holder {
+.${name}.ready .${name}-holder {
   min-height: auto;
 }
-.${name} .${name}-ready.${name}-img {
+.${name}.ready .${name}-img {
   opacity: 1;
 }
 `;
