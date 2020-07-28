@@ -63,7 +63,7 @@ const ArwesImageDefaultState = {
           </div>
           <arwes-loading
             *ngIf="!state.ready && !state.error"
-            [full]
+            full
             [animate]="animate"
             [show]="show"
             [layer]="layer"
