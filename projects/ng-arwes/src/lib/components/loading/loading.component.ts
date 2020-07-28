@@ -24,7 +24,7 @@ import { loadingBodyMotion } from './loading.animation';
     <div
       #root
       class="arwes-loading"
-      [ngClass]="{ full: full, small: small, full: full }"
+      [ngClass]="{ full: full, small: small }"
       *ngIf="show"
       [@.disabled]="!animate"
       [@loadingBodyMotion]="{
