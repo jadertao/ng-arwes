@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'arwes-content',
-  templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css']
+  template: '<ng-content></ng-content>',
 })
 export class ContentComponent implements OnInit {
 
