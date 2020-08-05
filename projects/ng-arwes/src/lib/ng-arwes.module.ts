@@ -28,6 +28,10 @@ import { ListComponent } from './components/list/list.component';
 import { PuffComponent } from './components/puff/puff.component';
 import { ButtonComponent } from './components/button/button.component';
 import { ImageComponent } from './components/image/image.component';
+import jss from 'jss';
+import preset from 'jss-preset-default';
+
+jss.setup(preset());
 
 
 export interface NgArwesModuleOptions {
