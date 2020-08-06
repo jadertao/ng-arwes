@@ -30,9 +30,14 @@ import { ButtonComponent } from './components/button/button.component';
 import { ImageComponent } from './components/image/image.component';
 import jss from 'jss';
 import preset from 'jss-preset-default';
+import defaultUnit from 'jss-plugin-default-unit';
+import jssNested from 'jss-plugin-nested';
+import jssFunction from 'jss-plugin-rule-value-function';
 
 jss.setup(preset());
-
+jss.use(defaultUnit());
+jss.use(jssNested());
+jss.use(jssFunction());
 
 export interface NgArwesModuleOptions {
   theme?: DeepPartial<NgArwesTheme>;
