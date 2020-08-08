@@ -44,7 +44,7 @@ const getColor = (theme: NgArwesTheme, input: ArwesFrameInput, level: keyof NgAr
 const getBg = (theme: NgArwesTheme, input: ArwesFrameInput) =>
   theme.background[input.disabled ? 'disabled' : input.layer]['level' + input.level];
 
-export const genFrameStyl = (theme: NgArwesTheme, input: ArwesFrameInput) => ({
+export const genFrameStyle = (theme: NgArwesTheme) => ({
   root: {
     display: 'block',
     position: 'relative',
@@ -70,14 +70,14 @@ export const genFrameStyl = (theme: NgArwesTheme, input: ArwesFrameInput) => ({
     // TODO: The hover rule is not being referenced by JSS.
     '&$hover:hover': {
       '& $border': {
-        borderColor: input => getColor(theme, input, 'base'),
-        boxShadow: input =>
+        borderColor: (input: ArwesFrameInput) => getColor(theme, input, 'base'),
+        boxShadow: (input: ArwesFrameInput) =>
           `0 0 ${theme.shadowLength}px ` +
           rgba(getColor(theme, input, 'base'), theme.alpha)
       },
       '& $corner': {
-        borderColor: input => getColor(theme, input, 'light'),
-        boxShadow: input =>
+        borderColor: (input: ArwesFrameInput) => getColor(theme, input, 'light'),
+        boxShadow: (input: ArwesFrameInput) =>
           `0 0 ${theme.shadowLength}px -${theme.shadowLength / 2}px ` +
           rgba(getColor(theme, input, 'light'), theme.alpha)
       }
@@ -89,7 +89,7 @@ export const genFrameStyl = (theme: NgArwesTheme, input: ArwesFrameInput) => ({
     overflow: 'hidden',
     display: 'block',
     transition: `background-color ${theme.animTime}ms ease-in`,
-    backgroundColor: input =>
+    backgroundColor: (input: ArwesFrameInput) =>
       input.noBackground
         ? 'transparent'
         : input.active
@@ -107,8 +107,8 @@ export const genFrameStyl = (theme: NgArwesTheme, input: ArwesFrameInput) => ({
     position: 'absolute',
     borderStyle: 'solid',
     transition: `all ${theme.animTime}ms ease-in`,
-    borderColor: input => getColor(theme, input, 'dark'),
-    boxShadow: input =>
+    borderColor: (input: ArwesFrameInput) => getColor(theme, input, 'dark'),
+    boxShadow: (input: ArwesFrameInput) =>
       `0 0 ${theme.shadowLength}px ` +
       rgba(getColor(theme, input, 'dark'), theme.alpha),
     opacity: 1
@@ -147,35 +147,35 @@ export const genFrameStyl = (theme: NgArwesTheme, input: ArwesFrameInput) => ({
   corner: {
     zIndex: 2,
     position: 'absolute',
-    width: cornerLength(input.corners),
-    height: cornerLength(input.corners),
+    width: (input: ArwesFrameInput) => cornerLength(input.corners),
+    height: (input: ArwesFrameInput) => cornerLength(input.corners),
     transition: `all ${theme.animTime}ms ease-in`,
     borderStyle: 'solid',
-    borderColor: getColor(theme, input, 'base'),
-    boxShadow:
+    borderColor: (input: ArwesFrameInput) => getColor(theme, input, 'base'),
+    boxShadow: (input: ArwesFrameInput) =>
       `0 0 ${theme.shadowLength}px -${theme.shadowLength / 2}px ` +
       rgba(getColor(theme, input, 'base'), theme.alpha),
     opacity: 1
   },
   cornerLT: {
-    left: -cornerWidth(input.corners),
-    top: -cornerWidth(input.corners),
-    borderWidth: `${cornerWidth(input.corners)}px 0 0 ${cornerWidth(input.corners)}px`
+    left: (input: ArwesFrameInput) => -cornerWidth(input.corners),
+    top: (input: ArwesFrameInput) => -cornerWidth(input.corners),
+    borderWidth: (input: ArwesFrameInput) => `${cornerWidth(input.corners)}px 0 0 ${cornerWidth(input.corners)}px`
   },
   cornerLB: {
-    left: -cornerWidth(input.corners),
-    bottom: -cornerWidth(input.corners),
-    borderWidth: `0 0 ${cornerWidth(input.corners)}px ${cornerWidth(input.corners)}px`
+    left: (input: ArwesFrameInput) => -cornerWidth(input.corners),
+    bottom: (input: ArwesFrameInput) => -cornerWidth(input.corners),
+    borderWidth: (input: ArwesFrameInput) => `0 0 ${cornerWidth(input.corners)}px ${cornerWidth(input.corners)}px`
   },
   cornerRT: {
-    right: -cornerWidth(input.corners),
-    top: -cornerWidth(input.corners),
-    borderWidth: `${cornerWidth(input.corners)}px ${cornerWidth(input.corners)}px 0 0`
+    right: (input: ArwesFrameInput) => -cornerWidth(input.corners),
+    top: (input: ArwesFrameInput) => -cornerWidth(input.corners),
+    borderWidth: (input: ArwesFrameInput) => `${cornerWidth(input.corners)}px ${cornerWidth(input.corners)}px 0 0`
   },
   cornerRB: {
-    right: -cornerWidth(input.corners),
-    bottom: -cornerWidth(input.corners),
-    borderWidth: `0 ${cornerWidth(input.corners)}px ${cornerWidth(input.corners)}px 0`
+    right: (input: ArwesFrameInput) => -cornerWidth(input.corners),
+    bottom: (input: ArwesFrameInput) => -cornerWidth(input.corners),
+    borderWidth: (input: ArwesFrameInput) => `0 ${cornerWidth(input.corners)}px ${cornerWidth(input.corners)}px 0`
   },
 
 });
