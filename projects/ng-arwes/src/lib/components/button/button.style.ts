@@ -2,6 +2,8 @@ import { ArwesButtonInput } from './button.component';
 import { ComponentClassFn, ComponentInstanceFn } from 'ng-arwes/tools/style';
 
 
+export const genButtonStyle = () => { };
+
 export const genButtonClassStyle: ComponentClassFn = ({ name, theme }) => `
 .${name} {
   display: inline-block;
