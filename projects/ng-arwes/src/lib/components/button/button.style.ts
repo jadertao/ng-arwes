@@ -1,8 +1,52 @@
 import { ArwesButtonInput } from './button.component';
 import { ComponentClassFn, ComponentInstanceFn } from 'ng-arwes/tools/style';
+import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
 
 
-export const genButtonStyle = () => { };
+export const genButtonStyle = (theme: NgArwesTheme) => {
+  return {
+    root: {
+      display: 'inline-block',
+      position: 'relative',
+      lineHeight: 1,
+      verticalAlign: 'middle'
+    },
+    button: {
+      position: 'relative',
+      zIndex: 2,
+      display: 'inline-block',
+      margin: 0,
+      border: 'none',
+      padding: [theme.padding / 2, theme.padding],
+      background: 'transparent',
+
+      color: (input: ArwesButtonInput) =>
+        theme.color[input.disabled ? 'disabled' : input.layer].base,
+      fontSize: theme.typography.fontSize * 0.75,
+      lineHeight: 1,
+      verticalAlign: 'middle',
+
+      transition: `all ${theme.animTime}ms ease-out`,
+      userSelect: 'none',
+      outline: 'none',
+      cursor: (input: ArwesButtonInput) => (input.disabled ? 'auto' : 'pointer'),
+
+      '&:focus': {
+        outline: 'none'
+      },
+
+      '&::-moz-focus-inner': {
+        border: 'none'
+      },
+
+      '& .mdi, & .icon': {
+        lineHeight: 0,
+        fontSize: '140%',
+        verticalAlign: 'middle'
+      }
+    }
+  };
+};
 
 export const genButtonClassStyle: ComponentClassFn = ({ name, theme }) => `
 .${name} {
