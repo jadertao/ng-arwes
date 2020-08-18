@@ -7,7 +7,7 @@ import { Subject, pipe, combineLatest } from 'rxjs';
 import { ThemeService } from 'ng-arwes/services/public-api';
 import { takeUntil } from 'rxjs/operators';
 import { StyleService } from 'ng-arwes/services/style/style.service';
-import { genButtonClassStyle, genButtonInstanceStyle } from './button.style';
+import { genButtonClassStyle, genButtonInstanceStyle, genButtonStyle } from './button.style';
 import { CollectInput, CollectService } from 'ng-arwes/services/collect/collect.service';
 import { ComponentStyleGenerator, genInstanceID } from 'ng-arwes/tools/style';
 
