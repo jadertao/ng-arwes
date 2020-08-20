@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'arwes',
+  selector: 'na-root',
   templateUrl: './arwes.component.html',
   styleUrls: ['./arwes.component.css']
 })

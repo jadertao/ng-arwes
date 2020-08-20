@@ -14,7 +14,7 @@ import { ThemeService } from './../../services/public-api';
 import { NgArwesTheme } from './../../types/theme.interfaces';
 import { InputBoolean } from './../../tools';
 
-const AppearSelector = 'arwes-appear';
+const AppearSelector = 'na-appear';
 
 @Component({
   selector: AppearSelector,
@@ -24,7 +24,7 @@ const AppearSelector = 'arwes-appear';
   styleUrls: ['./appear.component.less'],
   template: `
     <span
-      class="arwes-appear"
+      class="na-appear"
       *ngIf="show"
       [@.disabled]="!animate"
       [@appearMotion]="{

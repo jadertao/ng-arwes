@@ -8,5 +8,5 @@ export default {
 };
 
 export const Text = () => ({
-  template: `<a arwes-link href="https://www.angular.io" target="_blank"> Put your content here </a>`,
+  template: `<a na-link href="https://www.angular.io" target="_blank"> Put your content here </a>`,
 });

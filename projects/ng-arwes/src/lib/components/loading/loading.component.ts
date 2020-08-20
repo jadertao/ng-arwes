@@ -17,13 +17,13 @@ import { takeUntil } from 'rxjs/operators';
 import { loadingBodyMotion } from './loading.animation';
 
 @Component({
-  selector: 'arwes-loading',
+  selector: 'na-loading',
   styleUrls: ['./loading.component.less'],
   animations: [loadingBodyMotion],
   template: `
     <div
       #root
-      class="arwes-loading"
+      class="na-loading"
       [ngClass]="{ full: full, small: small }"
       *ngIf="show"
       [@.disabled]="!animate"
@@ -112,12 +112,12 @@ export class LoadingComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
     if (this.circle1) {
-      this.circle1.nativeElement.style.animation = `arwes-loading-circle1 ${
+      this.circle1.nativeElement.style.animation = `na-loading-circle1 ${
         theme.animTime * 3
         }ms infinite linear`;
     }
     if (this.circle2) {
-      this.circle2.nativeElement.style.animation = `arwes-loading-circle2 ${
+      this.circle2.nativeElement.style.animation = `na-loading-circle2 ${
         theme.animTime * 3
         }ms infinite linear`;
       if (this.small) {

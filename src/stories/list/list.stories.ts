@@ -9,17 +9,17 @@ export default {
 
 export const Text = () => ({
   template: `
-  <ul arwes-list>
+  <ul na-list>
     <li>list item</li>
     <li>list item</li>
     <li>list item</li>
   </ul>
-  <ol arwes-list>
+  <ol na-list>
     <li>list item</li>
     <li>list item</li>
     <li>list item</li>
   </ol>
-  <dl arwes-list>
+  <dl na-list>
     <dt>list item</dt>
     <dd>list item</dd>
     <dt>list item</dt>

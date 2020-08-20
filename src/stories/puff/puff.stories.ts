@@ -9,8 +9,8 @@ export default {
 
 export const Text = () => ({
   template: `
-  <arwes-puff>
+  <na-puff>
     <div style="width: 100%; height: 500px"></div>
-  </arwes-puff>
+  </na-puff>
 `,
 });

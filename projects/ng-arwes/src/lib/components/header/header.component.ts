@@ -22,7 +22,7 @@ import { NG_ARWES_SOUND_TOKEN } from 'ng-arwes/tools/sound';
 import type { NgArwesSound } from 'ng-arwes/tools/sound';
 import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
 
-const HeaderSelector = 'arwes-header';
+const HeaderSelector = 'na-header';
 
 @Component({
   selector: HeaderSelector,
@@ -35,14 +35,14 @@ const HeaderSelector = 'arwes-header';
       *ngIf="show"
       [@.disabled]="!animate"
       [style.background-color]="bgColor"
-      class="arwes-header"
+      class="na-header"
     >
-      <div *ngIf="show" class="arwes-header-children">
+      <div *ngIf="show" class="na-header-children">
         <ng-content></ng-content>
       </div>
       <div
         *ngIf="show"
-        class="arwes-header-separator"
+        class="na-header-separator"
         [style.border-color]="theme.color.primary.dark"
         [@headerSeparatorMotion]="{
           value: null,

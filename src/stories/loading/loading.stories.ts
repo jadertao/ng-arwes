@@ -9,10 +9,10 @@ export default {
 
 export const Text = () => ({
   template: `
-  <arwes-loading animate></arwes-loading>
-  <arwes-loading animate small></arwes-loading>
+  <na-loading animate></na-loading>
+  <na-loading animate small></na-loading>
   <div style="position: relative; width: 200px; height: 200px;">
-    <arwes-loading animate full></arwes-loading>
+    <na-loading animate full></na-loading>
   </div>
   `,
 });

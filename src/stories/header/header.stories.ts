@@ -9,8 +9,8 @@ export default {
 
 export const Text = () => ({
   template: `
-<arwes-header animate>arwes header component</arwes-header>
-<arwes-header animate>arwes header component</arwes-header>
-<arwes-header animate>arwes header component</arwes-header>
+<na-header animate>arwes header component</na-header>
+<na-header animate>arwes header component</na-header>
+<na-header animate>arwes header component</na-header>
   `
 });

@@ -2,29 +2,29 @@ import { rgba } from 'polished';
 import { NgArwesTheme } from '../../types/theme.interfaces';
 
 export const genListStyle = (theme: NgArwesTheme) => `
-.arwes-list {
+.na-list {
   display: block;
   margin: 0 0 ${theme.margin}px ${theme.margin}px;
   padding: 0;
 }
 
-dl.arwes-list,
-ul.arwes-list,
-ol.arwes-list {
+dl.na-list,
+ul.na-list,
+ol.na-list {
   margin-bottom: 0;
 }
 
-ul.arwes-list {
+ul.na-list {
   margin-left: ${theme.margin + theme.padding / 2}px;
 }
 
-ul.arwes-list li {
+ul.na-list li {
   display: block;
   list-style: none;
   padding-left: ${theme.padding}px;
 }
 
-ul.arwes-list li::before {
+ul.na-list li::before {
   position: relative;
   left: -${theme.padding / 2}px;
   display: inline-block;
@@ -33,21 +33,21 @@ ul.arwes-list li::before {
   color: ${theme.color.primary.light};
 }
 
-ol.arwes-list {
+ol.na-list {
   margin-left: ${theme.padding}px;
   padding-left: ${theme.typography.fontSize}px;
 }
 
-ol.arwes-list {
+ol.na-list {
   margin-left: 0;
 }
 
-dl.arwes-list dt {
+dl.na-list dt {
   font-style: italic;
   font-weight: bold;
 }
 
-dl.arwes-list dd {
+dl.na-list dd {
   margin-left: ${theme.typography.fontSize}px;
 }
 `;

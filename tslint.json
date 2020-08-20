@@ -79,7 +79,7 @@
       true,
       "attribute",
       [
-        "arwes"
+        "na"
       ],
       [
         "camelCase",
@@ -93,7 +93,7 @@
         "attribute"
       ],
       [
-        "arwes",
+        "na",
         "test"
       ],
       "kebab-case"

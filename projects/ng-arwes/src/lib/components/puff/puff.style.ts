@@ -7,16 +7,16 @@ export const genPuffStyle = (theme: NgArwesTheme) => {
   const shadow1 = theme.shadowLength;
   const shadow2 = theme.shadowLength * 2;
   return `
-.arwes-puff {
+.na-puff {
   display: block;
   position: relative;
 }
 
-.arwes-puff-children {
+.na-puff-children {
   display: block;
 }
 
-.arwes-puff-item {
+.na-puff-item {
   position: absolute;
   display: block;
   width: 1px;
@@ -25,15 +25,15 @@ export const genPuffStyle = (theme: NgArwesTheme) => {
   box-shadow: 0 0 ${shadow1}px ${shadow1}px ${rgba(theme.color.primary.base, colorAlpha)};
   border-radius: 50%;
   opacity: 0;
-  animation: arwes-puff ${duration}ms ease-out 0ms 1;
+  animation: na-puff ${duration}ms ease-out 0ms 1;
 }
 
 .puff-long {
   box-shadow: 0 0 ${shadow2}px ${shadow2}px ${rgba(theme.color.primary.base, colorAlpha)};
-  animation: arwes-puff-1 ${duration}ms ease-out 0ms 1;
+  animation: na-puff-1 ${duration}ms ease-out 0ms 1;
 }
 
-@keyframes arwes-puff {
+@keyframes na-puff {
   0% {
     transform: scale(0.5, 0.5) translate(0, 30px);
     opacity: 0.25;
@@ -47,7 +47,7 @@ export const genPuffStyle = (theme: NgArwesTheme) => {
   }
 }
 
-@keyframes arwes-puff-1 {
+@keyframes na-puff-1 {
   0% {
     transform: scale(0.5, 0.5) translate(0, 50px);
     opacity: 0.25;

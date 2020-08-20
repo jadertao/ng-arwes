@@ -47,11 +47,11 @@ const ArwesImageDefaultState = {
 };
 
 @Component({
-  selector: 'arwes-image',
+  selector: 'na-image',
   styleUrls: ['./image.style.less'],
   template: `
     <figure [class]="name + ' ' + id" [class.ready]="state.ready">
-      <arwes-frame [animate]="animate" [show]="show" [layer]="layer">
+      <na-frame [animate]="animate" [show]="show" [layer]="layer">
         <div [class]="name + '-holder'">
           <img
             *ngIf="state.resource"
@@ -61,14 +61,14 @@ const ArwesImageDefaultState = {
           <div *ngIf="state.error" [class]="name + '-error'">
             {{ i18n.error }}
           </div>
-          <arwes-loading
+          <na-loading
             *ngIf="!state.ready && !state.error"
             full
             [animate]="animate"
             [show]="show"
             [layer]="layer"
           >
-          </arwes-loading>
+          </na-loading>
         </div>
 
         <div
@@ -85,13 +85,13 @@ const ArwesImageDefaultState = {
             <ng-content></ng-content>
           </small>
         </figcaption>
-      </arwes-frame>
+      </na-frame>
     </figure>
   `,
 })
 export class ImageComponent
   implements OnInit, OnDestroy, OnChanges, AfterViewInit {
-  public name = 'arwes-image';
+  public name = 'na-image';
   public id = genInstanceID(this.name);
   public theme: NgArwesTheme | null = null;
   public styleUpdater: ComponentStyleGenerator<ArwesImageInput>;

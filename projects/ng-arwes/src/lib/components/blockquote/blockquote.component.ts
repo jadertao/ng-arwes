@@ -5,7 +5,7 @@ import { ThemeService } from '../../services/theme/theme.service';
 import { NgArwesTheme } from '../../types/theme.interfaces';
 import { NgArwesLayerStatusEnum } from '../../types/theme.enums';
 
-const BlockquoteSelector = 'blockquote[arwes-blockquote]';
+const BlockquoteSelector = 'blockquote[na-blockquote]';
 
 @Component({
   selector: BlockquoteSelector,

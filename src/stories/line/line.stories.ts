@@ -9,9 +9,9 @@ export default {
 
 export const Text = () => ({
   template: `
-<arwes-line animate></arwes-line>
-<arwes-line animate layer="success"></arwes-line>
-<arwes-line animate layer="disabled"></arwes-line>
-<arwes-line animate layer="alert"></arwes-line>
+<na-line animate></na-line>
+<na-line animate layer="success"></na-line>
+<na-line animate layer="disabled"></na-line>
+<na-line animate layer="alert"></na-line>
   `
 });

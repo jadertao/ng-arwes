@@ -30,7 +30,7 @@ import { StyleService } from 'ng-arwes/services/style/style.service';
 import { CollectInput, CollectService } from 'ng-arwes/services/collect/collect.service';
 import { genInstanceID, ComponentStyleGenerator } from 'ng-arwes/tools/style';
 
-const FrameSelector = 'arwes-frame';
+const FrameSelector = 'na-frame';
 
 export interface ArwesFrameInput {
   show: boolean;
@@ -54,45 +54,45 @@ export interface ArwesFrameInput {
       <div
         *ngIf="border"
         [@borderHeightMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="arwes-frame-border arwes-frame-border-left"
+        class="na-frame-border na-frame-border-left"
       ></div>
       <div
         *ngIf="border"
         [@borderHeightMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="arwes-frame-border arwes-frame-border-right"
+        class="na-frame-border na-frame-border-right"
       ></div>
       <div
         *ngIf="border"
         [@borderWidthMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="arwes-frame-border arwes-frame-border-top"
+        class="na-frame-border na-frame-border-top"
       ></div>
       <div
         *ngIf="border"
         [@borderWidthMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="arwes-frame-border arwes-frame-border-bottom"
+        class="na-frame-border na-frame-border-bottom"
       ></div>
       <div
         *ngIf="corners"
         [@cornerMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="arwes-frame-corner arwes-frame-cornerLT"
+        class="na-frame-corner na-frame-cornerLT"
       ></div>
       <div
         *ngIf="corners"
         [@cornerMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="arwes-frame-corner arwes-frame-cornerLB"
+        class="na-frame-corner na-frame-cornerLB"
       ></div>
       <div
         *ngIf="corners"
         [@cornerMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="arwes-frame-corner arwes-frame-cornerRT"
+        class="na-frame-corner na-frame-cornerRT"
       ></div>
       <div
         *ngIf="corners"
         [@cornerMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="arwes-frame-corner arwes-frame-cornerRB"
+        class="na-frame-corner na-frame-cornerRB"
       ></div>
-      <div class="arwes-frame-box" [@boxMotion]="{ value: null, params: { animTime: theme.animTime }}">
-        <div class="arwes-frame-children">
+      <div class="na-frame-box" [@boxMotion]="{ value: null, params: { animTime: theme.animTime }}">
+        <div class="na-frame-children">
           <ng-content></ng-content>
         </div>
       </div>
@@ -100,7 +100,7 @@ export interface ArwesFrameInput {
   `,
 })
 export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
-  public name = 'arwes-frame';
+  public name = 'na-frame';
   public id = genInstanceID(this.name);
   public theme: NgArwesTheme | null = null;
   public styleUpdater: ComponentStyleGenerator<ArwesFrameInput>;

@@ -6,7 +6,7 @@ import { NgArwesThemeTypographyHeaderEnum } from '../../types/theme.enums';
 import { ThemeService } from '../../services/theme/theme.service';
 import { NgArwesTheme } from '../../types/theme.interfaces';
 
-const HeadingSelector = 'h1[arwes-heading], h2[arwes-heading], h3[arwes-heading], h4[arwes-heading], h5[arwes-heading], h6[arwes-heading]';
+const HeadingSelector = 'h1[na-heading], h2[na-heading], h3[na-heading], h4[na-heading], h5[na-heading], h6[na-heading]';
 
 @Component({
   selector: HeadingSelector,
@@ -28,7 +28,7 @@ export class HeadingComponent implements OnDestroy {
   public theme: NgArwesTheme | null = null;
   private destroy$ = new Subject<void>();
 
-  @HostBinding('class.arwes-heading') className = true;
+  @HostBinding('class.na-heading') className = true;
 
   constructor(
     private elementRef: ElementRef,

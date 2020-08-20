@@ -9,11 +9,11 @@ import { Subject } from 'rxjs';
 import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
 
 @Component({
-  selector: 'arwes-puff',
+  selector: 'na-puff',
   styleUrls: ['./puff.component.less'],
   template: `
-  <div class="arwes-puff" #root>
-    <div class="arwes-puff-children">
+  <div class="na-puff" #root>
+    <div class="na-puff-children">
       <ng-content></ng-content>
     </div>
   </div>
@@ -21,7 +21,7 @@ import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
 })
 export class PuffComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   public theme: NgArwesTheme | null = null;
-  private name = 'arwes-puff';
+  private name = 'na-puff';
   private destroy$ = new Subject<void>();
   private _quantity = 8;
   private puffTimeout: number | null = null;
@@ -116,7 +116,7 @@ export class PuffComponent implements OnInit, OnDestroy, OnChanges, AfterViewIni
 
     const isLong = Math.round(Math.random());
 
-    puff.setAttribute('class', `arwes-puff-item${isLong ? ' puff-long' : ''}`);
+    puff.setAttribute('class', `na-puff-item${isLong ? ' puff-long' : ''}`);
 
     const duration = 1000 + Math.round(Math.random() * 3000);
     puff.style.animationDuration = duration + 'ms';

@@ -13,7 +13,7 @@ import { codeMotion } from './code.animation';
 import { DEFAULT_THEME } from './../../tools/theme';
 import { StyleService } from 'ng-arwes/services/style/style.service';
 
-const CodeSelector = 'code[arwes-code], pre[arwes-code]';
+const CodeSelector = 'code[na-code], pre[na-code]';
 
 @Component({
   selector: CodeSelector,
@@ -28,7 +28,7 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
   private el: HTMLElement = this.elementRef.nativeElement;
   private _lang = 'javascript';
   private _animate = false;
-  private name = 'arwes-code';
+  private name = 'na-code';
 
   @Input() @InputBoolean()
   set animate(v: boolean) {
@@ -45,10 +45,10 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input()
   set language(v: string) {
     this._lang = v;
-    this.classes = `arwes-code language-${v}`;
+    this.classes = `na-code language-${v}`;
   }
 
-  @HostBinding('class') classes = `arwes-code`;
+  @HostBinding('class') classes = `na-code`;
   @HostBinding('@.disabled') disabled = !this.animate;
   @HostBinding('@codeMotion') motion = {
     value: null,

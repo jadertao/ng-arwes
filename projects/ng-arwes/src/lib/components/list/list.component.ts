@@ -6,7 +6,7 @@ import { genListStyle } from './list.style';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-const ListSelector = 'dl[arwes-list], ol[arwes-list], ul[arwes-list]';
+const ListSelector = 'dl[na-list], ol[na-list], ul[na-list]';
 
 @Component({
   selector: ListSelector,
@@ -15,11 +15,11 @@ const ListSelector = 'dl[arwes-list], ol[arwes-list], ul[arwes-list]';
 })
 export class ListComponent implements OnInit, OnDestroy {
   public theme: NgArwesTheme | null = null;
-  private name = 'arwes-list';
+  private name = 'na-list';
   private destroy$ = new Subject<void>();
 
   @HostBinding('class')
-  classes = 'arwes-list';
+  classes = 'na-list';
 
   constructor(
     public themeSvc: ThemeService,

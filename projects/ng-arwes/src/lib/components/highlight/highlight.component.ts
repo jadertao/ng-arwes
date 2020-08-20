@@ -21,7 +21,7 @@ const ON_ANIMATION_END = [
   'animationend'
 ];
 
-const HightlightSelector = 'arwes-highlight';
+const HightlightSelector = 'na-highlight';
 
 @Component({
   selector: HightlightSelector,
@@ -45,7 +45,7 @@ export class HighlightComponent implements OnInit, OnDestroy {
   @Input()
   layer = NgArwesLayerStatusEnum.Primary;
 
-  @HostBinding('class.arwes-highlight') classes = true;
+  @HostBinding('class.na-highlight') classes = true;
 
   constructor(
     public themeSvc: ThemeService,
@@ -66,9 +66,9 @@ export class HighlightComponent implements OnInit, OnDestroy {
       let cover = this.cover;
       if (!cover) {
         this.cover = this.renderer.createElement('div');
-        this.cover.setAttribute('class', 'arwes-highlight-clicking');
+        this.cover.setAttribute('class', 'na-highlight-clicking');
         this.cover.style.backgroundColor = darken(0.3, this.theme.color[this.layer].base);
-        this.cover.style.animation = `arwes-highlight-click ${this.theme.animTime}ms ease-out 0ms 1`;
+        this.cover.style.animation = `na-highlight-click ${this.theme.animTime}ms ease-out 0ms 1`;
         cover = this.cover;
       }
       ON_ANIMATION_END.forEach(event => {

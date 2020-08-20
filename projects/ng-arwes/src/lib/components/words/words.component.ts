@@ -22,16 +22,16 @@ import '../../polyfills/requestAnimationFrame.js';
 import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
 
 @Component({
-  selector: 'arwes-words',
+  selector: 'na-words',
   styleUrls: ['./words.component.less'],
   template: `
     <span
-      class="arwes-words"
+      class="na-words"
       [@.disabled]="!animate"
       [style.color]="theme.color[layer].base"
       >
       <span
-        class="arwes-words-children"
+        class="na-words-children"
         #children
         [style.opacity]="animating ? 0 : 1"
         >
@@ -39,15 +39,15 @@ import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
       </span>
       <span
         *ngIf="animating"
-        class="arwes-words-text"
+        class="na-words-text"
         [style.opacity]="animating ? 1 : 0"
         >
         {{ text }}
         <span
-          class="arwes-words-blink"
+          class="na-words-blink"
           [innerHTML]="blinkText"
           [style.animation]="
-            'arwes-words-blink ' + theme.animTime + 'ms step-end infinite'
+            'na-words-blink ' + theme.animTime + 'ms step-end infinite'
           "
         ></span>
       </span>

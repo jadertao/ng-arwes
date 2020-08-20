@@ -23,7 +23,7 @@ import { takeUntil } from 'rxjs/operators';
 import { InputBoolean } from '../../tools';
 import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
 
-const FooterSelector = 'arwes-footer';
+const FooterSelector = 'na-footer';
 
 @Component({
   selector: FooterSelector,
@@ -36,11 +36,11 @@ const FooterSelector = 'arwes-footer';
       *ngIf="show"
       [@.disabled]="!animate"
       [style.background-color]="bgColor"
-      class="arwes-footer"
+      class="na-footer"
     >
       <div
         *ngIf="show"
-        class="arwes-footer-separator"
+        class="na-footer-separator"
         [style.border-color]="theme.color.primary.dark"
         [@footerSeparatorMotion]="{
           value: null,
@@ -50,7 +50,7 @@ const FooterSelector = 'arwes-footer';
         }"
       >
       </div>
-      <div *ngIf="show" class="arwes-footer-children">
+      <div *ngIf="show" class="na-footer-children">
         <ng-content></ng-content>
       </div>
     </footer>

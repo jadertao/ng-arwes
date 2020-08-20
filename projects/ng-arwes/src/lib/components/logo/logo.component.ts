@@ -14,70 +14,70 @@ const createArc = arc();
 const radians = (degress: number): number => (degress * Math.PI) / 180;
 
 @Component({
-  selector: 'arwes-logo',
+  selector: 'na-logo',
   styleUrls: ['./logo.component.less'],
   template: `
     <svg
-      class="arwes-logo"
+      class="na-logo"
       attr.width="{{ width }}"
       attr.height="{{ height }}"
       viewBox="0 0 1000 1000"
       version="1.1"
       [style]="root"
     >
-      <filter id="arwes-logo-filter-blur">
+      <filter id="na-logo-filter-blur">
         <feGaussianBlur in="SourceGraphic" stdDeviation="20" />
       </filter>
       <g style="transform: translate(500px,500px)">
-        <circle class="arwes-logo-light arwes-logo-element-filter"
+        <circle class="na-logo-light na-logo-element-filter"
           cx="0"
           cy="0"
           r="85"
         />
         <circle
-          class="arwes-logo-light"
+          class="na-logo-light"
           cx="0"
           cy="0"
           r="85"
           [style.fill]="light"
         />
         <path
-          class="arwes-logo-center"
+          class="na-logo-center"
           attr.d="{{arcs[0]}}"
           [style.fill]="center"
         />
         <path
-          class="arwes-logo-outer"
+          class="na-logo-outer"
           attr.d="{{arcs[1]}}"
           [style.fill]="outer"
         />
         <path
-          class="arwes-logo-light arwes-logo-element-filter"
+          class="na-logo-light na-logo-element-filter"
           attr.d="{{arcs[2]}}"
           [style.fill]="light"
         />
         <path
-          class="arwes-logo-light"
+          class="na-logo-light"
           attr.d="{{arcs[2]}}"
           [style.fill]="light"
         />
         <path
-          class="arwes-logo-light arwes-logo-element-filter"
+          class="na-logo-light na-logo-element-filter"
           attr.d="{{arcs[3]}}"
           [style.fill]="light"
         />
         <path
-          class="arwes-logo-light"
+          class="na-logo-light"
           attr.d="{{arcs[3]}}"
           [style.fill]="light"
         />
         <path
-          class="arwes-logo-light arwes-logo-element-filter"
+          class="na-logo-light na-logo-element-filter"
           attr.d="{{arcs[4]}}"
           [style.fill]="light"
         />
         <path
-          class="arwes-logo-light"
+          class="na-logo-light"
           attr.d="{{arcs[4]}}"
           [style.fill]="light"
         />
@@ -163,7 +163,7 @@ export class LogoComponent implements OnInit, OnDestroy {
     this.root = this.sanitizer.bypassSecurityTrustStyle(styleObject2String({
       transition: `opacity ${theme.animTime}ms ease-out`,
       animation: this.animate
-        ? `arwes-logo-rotate ${theme.animTime * 200}ms infinite linear`
+        ? `na-logo-rotate ${theme.animTime * 200}ms infinite linear`
         : '',
     }));
   }

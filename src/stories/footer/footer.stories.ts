@@ -9,9 +9,9 @@ export default {
 
 export const Text = () => ({
   template: `
-<arwes-footer animate>arwes footer component</arwes-footer>
-<arwes-footer animate>arwes footer component</arwes-footer>
-<arwes-footer animate [show]="false">arwes footer component</arwes-footer>
-<arwes-footer animate>arwes footer component</arwes-footer>
+<na-footer animate>arwes footer component</na-footer>
+<na-footer animate>arwes footer component</na-footer>
+<na-footer animate [show]="false">arwes footer component</na-footer>
+<na-footer animate>arwes footer component</na-footer>
   `
 });

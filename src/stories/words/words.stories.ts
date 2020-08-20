@@ -44,8 +44,8 @@ And lose the name of action.
 `;
 export const Text = () => ({
   template: `
-<arwes-words animate>${artical}</arwes-words>
-<arwes-words animate layer="success">${artical}</arwes-words>
-<arwes-words animate layer="alert">${artical}</arwes-words>
+<na-words animate>${artical}</na-words>
+<na-words animate layer="success">${artical}</na-words>
+<na-words animate layer="alert">${artical}</na-words>
 `
 });

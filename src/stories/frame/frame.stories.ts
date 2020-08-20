@@ -19,7 +19,7 @@ addDecorator(moduleMetadata({
 export const Text = () => ({
   template: `
 <div>
-  <arwes-frame
+  <na-frame
     show animate
     [level]="3"
     [corners]="4"
@@ -29,10 +29,10 @@ export const Text = () => ({
     <div style="height: 100px; width: 200px; line-height: 100px; text-align: center;">
       Cyberpunk
     </div>
-  </arwes-frame>
+  </na-frame>
 </div>
 <div>
-  <arwes-frame
+  <na-frame
     show animate
     [level]="3"
     [corners]="4"
@@ -42,7 +42,7 @@ export const Text = () => ({
     <div style="height: 100px; width: 200px; line-height: 100px; text-align: center;">
       Cyberpunk
     </div>
-  </arwes-frame>
+  </na-frame>
 </div>
   `,
 });

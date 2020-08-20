@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges } from '@angular/core';
-import { nanoid } from 'nanoid';
+import jss from 'jss';
 import { InputBoolean } from 'ng-arwes/tools';
 import { NgArwesLayerStatusEnum } from 'ng-arwes/types/theme.enums';
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
@@ -7,7 +7,7 @@ import { Subject, pipe, combineLatest } from 'rxjs';
 import { ThemeService } from 'ng-arwes/services/public-api';
 import { takeUntil } from 'rxjs/operators';
 import { StyleService } from 'ng-arwes/services/style/style.service';
-import { genButtonClassStyle, genButtonInstanceStyle, genButtonStyle } from './button.style';
+import { genButtonClassStyle, genButtonInstanceStyle, NgArwesButtonStyle } from './button.style';
 import { CollectInput, CollectService } from 'ng-arwes/services/collect/collect.service';
 import { ComponentStyleGenerator, genInstanceID } from 'ng-arwes/tools/style';
 
@@ -21,10 +21,10 @@ export interface ArwesButtonInput {
 }
 
 @Component({
-  selector: 'arwes-button',
+  selector: 'na-button',
   template: `
     <div [class]="name+' '+id" (click)="onClick()">
-      <arwes-frame
+      <na-frame
         [animate]="animate"
         hover
         [disabled]="disabled"
@@ -34,23 +34,23 @@ export interface ArwesButtonInput {
         [active]="active"
         [show]="show"
       >
-        <arwes-highlight [animate]="animate" [layer]="layer">
-          <button [disabled]="disabled" class="arwes-button-body">
+        <na-highlight [animate]="animate" [layer]="layer">
+          <button [disabled]="disabled" class="na-button-body">
             <ng-content></ng-content>
           </button>
-        </arwes-highlight>
-      </arwes-frame>
+        </na-highlight>
+      </na-frame>
     </div>
   `,
 })
 export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
-  public name = 'arwes-button';
+  public name = 'na-button';
   public id = genInstanceID(this.name);
   public theme: NgArwesTheme | null = null;
   public styleUpdater: ComponentStyleGenerator<ArwesButtonInput>;
   private destroy$ = new Subject<void>();
   private change$ = new Subject<ArwesButtonInput>();
-
+  public classes: object;
 
   @CollectInput()
   @Input()
@@ -119,7 +119,10 @@ export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
     this.change$.next(inputs);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    const sheet = jss.createStyleSheet<string>(NgArwesButtonStyle, { link: true }).attach();
+    this.classes = sheet.classes;
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();

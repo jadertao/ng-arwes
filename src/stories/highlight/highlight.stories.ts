@@ -9,17 +9,17 @@ export default {
 
 export const Text = () => ({
   template: `
-<arwes-highlight animate style="display: inline-block;">
+<na-highlight animate style="display: inline-block;">
   <div style="padding: 20px 40px;border: 1px solid #eee; display: inline-block;">Cyberpunk</div>
-</arwes-highlight>
-<arwes-highlight animate layer="success" style="display: inline-block;">
+</na-highlight>
+<na-highlight animate layer="success" style="display: inline-block;">
   <div style="padding: 20px 40px;border: 1px solid #eee; display: inline-block;">Cyberpunk</div>
-</arwes-highlight>
-<arwes-highlight animate layer="disabled" style="display: inline-block;">
+</na-highlight>
+<na-highlight animate layer="disabled" style="display: inline-block;">
   <div style="padding: 20px 40px;border: 1px solid #eee; display: inline-block;">Cyberpunk</div>
-</arwes-highlight>
-<arwes-highlight animate layer="alert" style="display: inline-block;">
+</na-highlight>
+<na-highlight animate layer="alert" style="display: inline-block;">
   <div style="padding: 20px 40px;border: 1px solid #eee; display: inline-block;">Cyberpunk</div>
-</arwes-highlight>
+</na-highlight>
   `
 });

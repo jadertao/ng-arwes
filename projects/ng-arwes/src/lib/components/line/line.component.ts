@@ -8,14 +8,14 @@ import { lineDotMotion, lineBodyMotion } from './line.animations';
 import { InputBoolean } from '../../tools';
 
 @Component({
-  selector: 'arwes-line',
+  selector: 'na-line',
   animations: [lineDotMotion, lineBodyMotion],
   styleUrls: ['./line.component.less'],
   template: `
-    <div *ngIf="show" class="arwes-line" [style.margin-bottom.px]="theme.margin" [@.disabled]="!animate">
+    <div *ngIf="show" class="na-line" [style.margin-bottom.px]="theme.margin" [@.disabled]="!animate">
       <div
         *ngIf="show"
-        class="arwes-line-body"
+        class="na-line-body"
         [style.border-color]="theme.color[layer].dark"
         [@lineBodyMotion]="{
           value: null,
@@ -24,7 +24,7 @@ import { InputBoolean } from '../../tools';
       ></div>
         <div
         *ngIf="show"
-        class="arwes-line-left"
+        class="na-line-left"
         [style.background-color]="theme.color[layer].dark"
         [@lineDotMotion]="{
           value: null,
@@ -36,7 +36,7 @@ import { InputBoolean } from '../../tools';
       ></div>
       <div
         *ngIf="show"
-        class="arwes-line-right"
+        class="na-line-right"
         [style.background-color]="theme.color[layer].dark"
         [@lineDotMotion]="{
           value: null,

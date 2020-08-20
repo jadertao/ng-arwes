@@ -8,7 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { NgArwesTheme } from '../../types/theme.interfaces';
 import { ThemeService } from '../../services/theme/theme.service';
 
-const LinkSelector = 'a[arwes-link]';
+const LinkSelector = 'a[na-link]';
 
 @Component({
   selector: LinkSelector,
@@ -24,7 +24,7 @@ export class LinkComponent implements OnDestroy {
   private theme: NgArwesTheme | null = null;
   private el: HTMLElement = this.elementRef.nativeElement;
 
-  @HostBinding('class.arwes-link') className = true;
+  @HostBinding('class.na-link') className = true;
 
   constructor(
     public themeSvc: ThemeService,

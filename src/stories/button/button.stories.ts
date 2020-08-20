@@ -9,17 +9,17 @@ export default {
 
 export const Text = () => ({
   template: `
-<arwes-button animate disabled>
+<na-button animate disabled>
   <div style="padding: 20px 40px;border: 1px solid #eee; display: inline-block;">Cyberpunk</div>
-</arwes-button>
-<arwes-button animate>
+</na-button>
+<na-button animate>
   <div style="padding: 20px 40px;border: 1px solid #eee; display: inline-block;">Cyberpunk</div>
-</arwes-button>
-<arwes-button animate layer="success">
+</na-button>
+<na-button animate layer="success">
   <div style="padding: 20px 40px;border: 1px solid #eee; display: inline-block;">Cyberpunk</div>
-</arwes-button>
-<arwes-button animate layer="alert">
+</na-button>
+<na-button animate layer="alert">
   <div style="padding: 20px 40px;border: 1px solid #eee; display: inline-block;">Cyberpunk</div>
-</arwes-button>
+</na-button>
   `
 });

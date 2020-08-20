@@ -7,49 +7,48 @@ interface NgArwesButtonStyleParams {
   input: ArwesButtonInput;
 }
 
-export const genButtonStyle = () => {
-  return {
-    root: {
-      display: 'inline-block',
-      position: 'relative',
-      lineHeight: 1,
-      verticalAlign: 'middle'
+export const NgArwesButtonStyle = {
+
+  root: {
+    display: 'inline-block',
+    position: 'relative',
+    lineHeight: 1,
+    verticalAlign: 'middle'
+  },
+  button: {
+    position: 'relative',
+    zIndex: 2,
+    display: 'inline-block',
+    margin: 0,
+    border: 'none',
+    padding: ({ theme }) => [theme.padding / 2, theme.padding],
+    background: 'transparent',
+
+    color: ({ input, theme }: NgArwesButtonStyleParams) =>
+      theme.color[input.disabled ? 'disabled' : input.layer].base,
+    fontSize: ({ theme }: NgArwesButtonStyleParams) => theme.typography.fontSize * 0.75,
+    lineHeight: 1,
+    verticalAlign: 'middle',
+
+    transition: ({ theme }: NgArwesButtonStyleParams) => `all ${theme.animTime}ms ease-out`,
+    userSelect: 'none',
+    outline: 'none',
+    cursor: ({ input, theme }: NgArwesButtonStyleParams) => (input.disabled ? 'auto' : 'pointer'),
+
+    '&:focus': {
+      outline: 'none'
     },
-    button: {
-      position: 'relative',
-      zIndex: 2,
-      display: 'inline-block',
-      margin: 0,
-      border: 'none',
-      padding: ({ theme }) => [theme.padding / 2, theme.padding],
-      background: 'transparent',
 
-      color: ({ input, theme }: NgArwesButtonStyleParams) =>
-        theme.color[input.disabled ? 'disabled' : input.layer].base,
-      fontSize: ({ theme }: NgArwesButtonStyleParams) => theme.typography.fontSize * 0.75,
-      lineHeight: 1,
-      verticalAlign: 'middle',
+    '&::-moz-focus-inner': {
+      border: 'none'
+    },
 
-      transition: ({ theme }: NgArwesButtonStyleParams) => `all ${theme.animTime}ms ease-out`,
-      userSelect: 'none',
-      outline: 'none',
-      cursor: ({ input, theme }: NgArwesButtonStyleParams) => (input.disabled ? 'auto' : 'pointer'),
-
-      '&:focus': {
-        outline: 'none'
-      },
-
-      '&::-moz-focus-inner': {
-        border: 'none'
-      },
-
-      '& .mdi, & .icon': {
-        lineHeight: 0,
-        fontSize: '140%',
-        verticalAlign: 'middle'
-      }
+    '& .mdi, & .icon': {
+      lineHeight: 0,
+      fontSize: '140%',
+      verticalAlign: 'middle'
     }
-  };
+  }
 };
 
 export const genButtonClassStyle: ComponentClassFn = ({ name, theme }) => `

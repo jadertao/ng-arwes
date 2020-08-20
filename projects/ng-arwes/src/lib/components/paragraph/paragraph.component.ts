@@ -4,7 +4,7 @@ import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
 import { ThemeService } from 'ng-arwes/services/public-api';
 import { takeUntil } from 'rxjs/operators';
 
-const ParagraphSelector = 'p[arwes-paragraph]';
+const ParagraphSelector = 'p[na-paragraph]';
 
 @Component({
   selector: ParagraphSelector,
