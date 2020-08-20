@@ -2,8 +2,12 @@ import { ArwesButtonInput } from './button.component';
 import { ComponentClassFn, ComponentInstanceFn } from 'ng-arwes/tools/style';
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
 
+interface NgArwesButtonStyleParams {
+  theme: NgArwesTheme;
+  input: ArwesButtonInput;
+}
 
-export const genButtonStyle = (theme: NgArwesTheme) => {
+export const genButtonStyle = () => {
   return {
     root: {
       display: 'inline-block',
@@ -17,19 +21,19 @@ export const genButtonStyle = (theme: NgArwesTheme) => {
       display: 'inline-block',
       margin: 0,
       border: 'none',
-      padding: [theme.padding / 2, theme.padding],
+      padding: ({ theme }) => [theme.padding / 2, theme.padding],
       background: 'transparent',
 
-      color: (input: ArwesButtonInput) =>
+      color: ({ input, theme }: NgArwesButtonStyleParams) =>
         theme.color[input.disabled ? 'disabled' : input.layer].base,
-      fontSize: theme.typography.fontSize * 0.75,
+      fontSize: ({ theme }: NgArwesButtonStyleParams) => theme.typography.fontSize * 0.75,
       lineHeight: 1,
       verticalAlign: 'middle',
 
-      transition: `all ${theme.animTime}ms ease-out`,
+      transition: ({ theme }: NgArwesButtonStyleParams) => `all ${theme.animTime}ms ease-out`,
       userSelect: 'none',
       outline: 'none',
-      cursor: (input: ArwesButtonInput) => (input.disabled ? 'auto' : 'pointer'),
+      cursor: ({ input, theme }: NgArwesButtonStyleParams) => (input.disabled ? 'auto' : 'pointer'),
 
       '&:focus': {
         outline: 'none'
