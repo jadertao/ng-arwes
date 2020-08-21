@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges } from '@angular/core';
-import jss from 'jss';
+import jss, { StyleSheet } from 'jss';
 import { InputBoolean } from 'ng-arwes/tools';
 import { NgArwesLayerStatusEnum } from 'ng-arwes/types/theme.enums';
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
@@ -23,7 +23,7 @@ export interface ArwesButtonInput {
 @Component({
   selector: 'na-button',
   template: `
-    <div [class]="name+' '+id" (click)="onClick()">
+    <div class="" (click)="onClick()">
       <na-frame
         [animate]="animate"
         hover
@@ -44,13 +44,11 @@ export interface ArwesButtonInput {
   `,
 })
 export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
-  public name = 'na-button';
-  public id = genInstanceID(this.name);
   public theme: NgArwesTheme | null = null;
-  public styleUpdater: ComponentStyleGenerator<ArwesButtonInput>;
-  private destroy$ = new Subject<void>();
-  private change$ = new Subject<ArwesButtonInput>();
   public classes: object;
+
+  private destroy$ = new Subject<void>();
+  private sheet: StyleSheet<string>;
 
   @CollectInput()
   @Input()
@@ -88,26 +86,6 @@ export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
     private style: StyleService,
     private collect: CollectService
   ) {
-    this.styleUpdater = new ComponentStyleGenerator<ArwesButtonInput>(style)
-      .info({ name: this.name, id: this.id })
-      .forClass(genButtonClassStyle)
-      .forInstance(genButtonInstanceStyle);
-
-    const pipe$ = this.themeSvc.theme$.pipe(
-      takeUntil(this.destroy$)
-    );
-    pipe$.subscribe((theme) => {
-      this.theme = theme;
-      this.styleUpdater.updateClass({ theme });
-    });
-
-    combineLatest(
-      this.change$,
-      pipe$
-    ).subscribe(([input, theme]) => {
-      this.styleUpdater.updateInstance({ input, theme });
-    });
-
   }
 
   public onClick() {
@@ -115,13 +93,24 @@ export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
-    const inputs = this.collect.gather<ArwesButtonInput>(this);
-    this.change$.next(inputs);
+    this.update();
   }
 
   ngOnInit() {
-    const sheet = jss.createStyleSheet<string>(NgArwesButtonStyle, { link: true }).attach();
-    this.classes = sheet.classes;
+    this.themeSvc.theme$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((theme) => {
+      this.theme = theme;
+    });
+    this.sheet = jss.createStyleSheet<string>(NgArwesButtonStyle, { link: true }).attach();
+    this.classes = this.sheet.classes;
+  }
+
+  update() {
+    this.sheet.update({
+      input: this.collect.gather<ArwesButtonInput>(this),
+      theme: this.theme
+    });
   }
 
   ngOnDestroy(): void {
