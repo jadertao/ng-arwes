@@ -23,7 +23,7 @@ export interface ArwesButtonInput {
 @Component({
   selector: 'na-button',
   template: `
-    <div class="" (click)="onClick()">
+    <div [class]="classes.root" (click)="onClick()">
       <na-frame
         [animate]="animate"
         hover
@@ -35,7 +35,7 @@ export interface ArwesButtonInput {
         [show]="show"
       >
         <na-highlight [animate]="animate" [layer]="layer">
-          <button [disabled]="disabled" class="na-button-body">
+          <button [disabled]="disabled" [class]="classes.button">
             <ng-content></ng-content>
           </button>
         </na-highlight>
@@ -45,7 +45,7 @@ export interface ArwesButtonInput {
 })
 export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
   public theme: NgArwesTheme | null = null;
-  public classes: object;
+  public classes: Record<string, string>;
 
   private destroy$ = new Subject<void>();
   private sheet: StyleSheet<string>;

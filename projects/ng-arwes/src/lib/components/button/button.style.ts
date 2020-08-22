@@ -8,7 +8,6 @@ interface NgArwesButtonStyleParams {
 }
 
 export const NgArwesButtonStyle = {
-
   root: {
     display: 'inline-block',
     position: 'relative',
