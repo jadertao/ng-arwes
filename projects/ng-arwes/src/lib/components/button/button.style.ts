@@ -38,10 +38,6 @@ export const NgArwesButtonStyle = {
       outline: 'none'
     },
 
-    '&::-moz-focus-inner': {
-      border: 'none'
-    },
-
     '& .mdi, & .icon': {
       lineHeight: 0,
       fontSize: '140%',
