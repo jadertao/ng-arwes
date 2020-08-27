@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import jss, { StyleSheet } from 'jss';
 import { InputBoolean } from 'ng-arwes/tools';
 import { NgArwesLayerStatusEnum } from 'ng-arwes/types/theme.enums';
@@ -10,6 +10,7 @@ import { StyleService } from 'ng-arwes/services/style/style.service';
 import { genButtonClassStyle, genButtonInstanceStyle, NgArwesButtonStyle } from './button.style';
 import { CollectInput, CollectService } from 'ng-arwes/services/collect/collect.service';
 import { ComponentStyleGenerator, genInstanceID } from 'ng-arwes/tools/style';
+import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
 
 export interface ArwesButtonInput {
   show: boolean;
@@ -92,7 +93,10 @@ export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
     this.arwesClick.emit();
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
+    if (isFirstChange(changes)) {
+      return;
+    }
     this.update();
   }
 
@@ -107,10 +111,12 @@ export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   update() {
-    this.sheet.update({
-      input: this.collect.gather<ArwesButtonInput>(this),
-      theme: this.theme
-    });
+    if (this.sheet) {
+      this.sheet.update({
+        input: this.collect.gather<ArwesButtonInput>(this),
+        theme: this.theme
+      });
+    }
   }
 
   ngOnDestroy(): void {
