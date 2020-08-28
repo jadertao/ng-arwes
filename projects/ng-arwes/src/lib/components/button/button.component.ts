@@ -45,7 +45,14 @@ export interface ArwesButtonInput {
   `,
 })
 export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
-  public theme: NgArwesTheme | null = null;
+  public _theme: NgArwesTheme | null = null;
+  get theme() {
+    return this._theme;
+  }
+  set theme(v) {
+    this._theme = v;
+    this.update();
+  }
   public classes: Record<string, string>;
 
   private destroy$ = new Subject<void>();
