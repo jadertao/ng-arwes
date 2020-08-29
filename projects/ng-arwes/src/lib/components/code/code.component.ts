@@ -3,15 +3,14 @@ import { Subject } from 'rxjs';
 import { InputBoolean } from './../../tools';
 import { NgArwesTheme } from './../../types/theme.interfaces';
 import { ThemeService } from './../../services/public-api';
-import { NG_ARWES_SOUND_TOKEN } from './../../tools/sound';
-import type { NgArwesSound } from './../../tools/sound';
 import { takeUntil } from 'rxjs/operators';
 import * as Prism from 'prismjs';
 import { DOCUMENT } from '@angular/common';
-import { genCodeStyle } from './code.style';
+import { NgArwesCodeStyle } from './code.style';
 import { codeMotion } from './code.animation';
 import { DEFAULT_THEME } from './../../tools/theme';
 import { StyleService } from 'ng-arwes/services/style/style.service';
+import jss, { StyleSheet } from 'jss';
 
 const CodeSelector = 'code[na-code], pre[na-code]';
 
@@ -19,16 +18,20 @@ const CodeSelector = 'code[na-code], pre[na-code]';
   selector: CodeSelector,
   animations: [codeMotion],
   template: `
+
 <ng-content></ng-content>
+
 `,
 })
 export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
   public theme: NgArwesTheme | null = null;
+  private sheet: StyleSheet<string>;
+  public classes: Record<string, string>;
+
   private destroy$ = new Subject<void>();
   private el: HTMLElement = this.elementRef.nativeElement;
-  private _lang = 'javascript';
   private _animate = false;
-  private name = 'na-code';
+  private _language = 'javascript';
 
   @Input() @InputBoolean()
   set animate(v: boolean) {
@@ -44,11 +47,15 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   @Input()
   set language(v: string) {
-    this._lang = v;
-    this.classes = `na-code language-${v}`;
+    this._language = v;
+    this.updateHostClasses();
+  }
+  get language() {
+    return this._language;
   }
 
-  @HostBinding('class') classes = `na-code`;
+  @HostBinding('class') class = 'na-code';
+
   @HostBinding('@.disabled') disabled = !this.animate;
   @HostBinding('@codeMotion') motion = {
     value: null,
@@ -60,7 +67,6 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     public themeSvc: ThemeService,
     private elementRef: ElementRef,
-    private style: StyleService,
     @Inject(DOCUMENT) private doc: Document,
   ) {
     this.themeSvc.theme$
@@ -68,17 +74,21 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
         takeUntil(this.destroy$)
       ).subscribe(theme => {
         this.theme = theme;
-        this.applyTheme(theme);
         this.motion = {
           value: null,
           params: {
             animTime: theme?.animTime
           }
         };
+        this.update();
       });
   }
 
   ngOnInit() {
+    this.sheet = jss.createStyleSheet<string>(NgArwesCodeStyle, { link: true }).attach();
+    this.classes = this.sheet.classes;
+    this.updateHostClasses();
+    console.log(this);
   }
   ngAfterViewInit() {
     this.highlight();
@@ -87,15 +97,26 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  highlight() {
-    if (this.el) {
-      Prism.highlightElement(this.el, false, () => this.applyTheme()); // eslint-disable-line no-undef
+  update() {
+    if (this.sheet) {
+      this.sheet.update({
+        theme: this.theme
+      });
     }
   }
-  applyTheme(theme: NgArwesTheme = this.theme) {
-    if (!theme || !this.style) {
-      return;
+  updateHostClasses() {
+    const classes = [];
+    if (this.language) {
+      classes.push(`language-${this.language}`);
     }
-    this.style.updateContent(this.name, genCodeStyle(theme));
+    if (this.classes) {
+      classes.push(this.classes.root);
+    }
+    this.class = classes.join(' ');
+  }
+  highlight() {
+    if (this.el) {
+      Prism.highlightElement(this.el, false, () => this.update()); // eslint-disable-line no-undef
+    }
   }
 }
