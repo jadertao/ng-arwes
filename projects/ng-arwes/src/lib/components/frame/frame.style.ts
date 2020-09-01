@@ -44,7 +44,12 @@ const getColor = (theme: NgArwesTheme, input: ArwesFrameInput, level: keyof NgAr
 const getBg = (theme: NgArwesTheme, input: ArwesFrameInput) =>
   theme.background[input.disabled ? 'disabled' : input.layer]['level' + input.level];
 
-export const genFrameStyle = (theme: NgArwesTheme) => ({
+interface NgArwesFrameStyleParams {
+  theme: NgArwesTheme;
+  input: ArwesFrameInput;
+}
+
+export const NgArwesFrameStyle = {
   root: {
     display: 'block',
     position: 'relative',
@@ -70,14 +75,14 @@ export const genFrameStyle = (theme: NgArwesTheme) => ({
     // TODO: The hover rule is not being referenced by JSS.
     '&$hover:hover': {
       '& $border': {
-        borderColor: (input: ArwesFrameInput) => getColor(theme, input, 'base'),
-        boxShadow: (input: ArwesFrameInput) =>
+        borderColor: ({ input, theme }: NgArwesFrameStyleParams) => getColor(theme, input, 'base'),
+        boxShadow: ({ input, theme }: NgArwesFrameStyleParams) =>
           `0 0 ${theme.shadowLength}px ` +
           rgba(getColor(theme, input, 'base'), theme.alpha)
       },
       '& $corner': {
-        borderColor: (input: ArwesFrameInput) => getColor(theme, input, 'light'),
-        boxShadow: (input: ArwesFrameInput) =>
+        borderColor: ({ input, theme }: NgArwesFrameStyleParams) => getColor(theme, input, 'light'),
+        boxShadow: ({ input, theme }: NgArwesFrameStyleParams) =>
           `0 0 ${theme.shadowLength}px -${theme.shadowLength / 2}px ` +
           rgba(getColor(theme, input, 'light'), theme.alpha)
       }
@@ -88,8 +93,8 @@ export const genFrameStyle = (theme: NgArwesTheme) => ({
     position: 'relative',
     overflow: 'hidden',
     display: 'block',
-    transition: `background-color ${theme.animTime}ms ease-in`,
-    backgroundColor: (input: ArwesFrameInput) =>
+    transition: ({ input, theme }: NgArwesFrameStyleParams) => `background-color ${theme.animTime}ms ease-in`,
+    backgroundColor: ({ input, theme }: NgArwesFrameStyleParams) =>
       input.noBackground
         ? 'transparent'
         : input.active
@@ -106,9 +111,9 @@ export const genFrameStyle = (theme: NgArwesTheme) => ({
     zIndex: 1,
     position: 'absolute',
     borderStyle: 'solid',
-    transition: `all ${theme.animTime}ms ease-in`,
-    borderColor: (input: ArwesFrameInput) => getColor(theme, input, 'dark'),
-    boxShadow: (input: ArwesFrameInput) =>
+    transition: ({ input, theme }: NgArwesFrameStyleParams) => `all ${theme.animTime}ms ease-in`,
+    borderColor: ({ input, theme }: NgArwesFrameStyleParams) => getColor(theme, input, 'dark'),
+    boxShadow: ({ input, theme }: NgArwesFrameStyleParams) =>
       `0 0 ${theme.shadowLength}px ` +
       rgba(getColor(theme, input, 'dark'), theme.alpha),
     opacity: 1
@@ -147,18 +152,18 @@ export const genFrameStyle = (theme: NgArwesTheme) => ({
   corner: {
     zIndex: 2,
     position: 'absolute',
-    width: (input: ArwesFrameInput) => cornerLength(input.corners),
-    height: (input: ArwesFrameInput) => cornerLength(input.corners),
-    transition: `all ${theme.animTime}ms ease-in`,
+    width: ({ input, theme }: NgArwesFrameStyleParams) => cornerLength(input.corners),
+    height: ({ input, theme }: NgArwesFrameStyleParams) => cornerLength(input.corners),
+    transition: ({ input, theme }: NgArwesFrameStyleParams) => `all ${theme.animTime}ms ease-in`,
     borderStyle: 'solid',
-    borderColor: (input: ArwesFrameInput) => getColor(theme, input, 'base'),
-    boxShadow: (input: ArwesFrameInput) =>
+    borderColor: ({ input, theme }: NgArwesFrameStyleParams) => getColor(theme, input, 'base'),
+    boxShadow: ({ input, theme }: NgArwesFrameStyleParams) =>
       `0 0 ${theme.shadowLength}px -${theme.shadowLength / 2}px ` +
       rgba(getColor(theme, input, 'base'), theme.alpha),
     opacity: 1
   },
   cornerLT: {
-    left: (input: ArwesFrameInput) => -cornerWidth(input.corners),
+    left: ({ input }) => -cornerWidth(input.corners),
     top: (input: ArwesFrameInput) => -cornerWidth(input.corners),
     borderWidth: (input: ArwesFrameInput) => `${cornerWidth(input.corners)}px 0 0 ${cornerWidth(input.corners)}px`
   },
@@ -177,8 +182,7 @@ export const genFrameStyle = (theme: NgArwesTheme) => ({
     bottom: (input: ArwesFrameInput) => -cornerWidth(input.corners),
     borderWidth: (input: ArwesFrameInput) => `0 ${cornerWidth(input.corners)}px ${cornerWidth(input.corners)}px 0`
   },
-
-});
+};
 
 export const genFrameClassStyle: ComponentClassFn = ({ name, theme }) => {
   return `
