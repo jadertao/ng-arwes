@@ -91,10 +91,8 @@ export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private themeSvc: ThemeService,
-    private style: StyleService,
     private collect: CollectService
-  ) {
-  }
+  ) { }
 
   public onClick() {
     this.arwesClick.emit();
