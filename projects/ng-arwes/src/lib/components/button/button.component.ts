@@ -106,13 +106,13 @@ export class ButtonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
+    this.sheet = jss.createStyleSheet<string>(NgArwesButtonStyle, { link: true }).attach();
+    this.classes = this.sheet.classes;
     this.themeSvc.theme$.pipe(
       takeUntil(this.destroy$)
     ).subscribe((theme) => {
       this.theme = theme;
     });
-    this.sheet = jss.createStyleSheet<string>(NgArwesButtonStyle, { link: true }).attach();
-    this.classes = this.sheet.classes;
   }
 
   update() {
