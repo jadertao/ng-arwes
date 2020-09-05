@@ -55,25 +55,8 @@ export const NgArwesFrameStyle = {
     position: 'relative',
     padding: '1px',
 
-    '&$exiting, &$exited': {
-      '& $borderLeft, & $borderRight': {
-        height: '0%'
-      },
-      '& $borderTop, & $borderBottom': {
-        width: '0%'
-      },
-      '& $corner': {
-        width: 0,
-        height: 0,
-        opacity: 0
-      },
-      '& $box': {
-        backgroundColor: 'transparent'
-      }
-    },
-
     // TODO: The hover rule is not being referenced by JSS.
-    '&$hover:hover': {
+    '&:hover': {
       '& $border': {
         borderColor: ({ input, theme }: NgArwesFrameStyleParams) => getColor(theme, input, 'base'),
         boxShadow: ({ input, theme }: NgArwesFrameStyleParams) =>
@@ -93,7 +76,7 @@ export const NgArwesFrameStyle = {
     position: 'relative',
     overflow: 'hidden',
     display: 'block',
-    transition: ({ input, theme }: NgArwesFrameStyleParams) => `background-color ${theme.animTime}ms ease-in`,
+    transition: ({ theme }: NgArwesFrameStyleParams) => `background-color ${theme.animTime}ms ease-in`,
     backgroundColor: ({ input, theme }: NgArwesFrameStyleParams) =>
       input.noBackground
         ? 'transparent'
@@ -111,7 +94,7 @@ export const NgArwesFrameStyle = {
     zIndex: 1,
     position: 'absolute',
     borderStyle: 'solid',
-    transition: ({ input, theme }: NgArwesFrameStyleParams) => `all ${theme.animTime}ms ease-in`,
+    transition: ({ theme }: NgArwesFrameStyleParams) => `all ${theme.animTime}ms ease-in`,
     borderColor: ({ input, theme }: NgArwesFrameStyleParams) => getColor(theme, input, 'dark'),
     boxShadow: ({ input, theme }: NgArwesFrameStyleParams) =>
       `0 0 ${theme.shadowLength}px ` +
@@ -152,9 +135,9 @@ export const NgArwesFrameStyle = {
   corner: {
     zIndex: 2,
     position: 'absolute',
-    width: ({ input, theme }: NgArwesFrameStyleParams) => cornerLength(input.corners),
-    height: ({ input, theme }: NgArwesFrameStyleParams) => cornerLength(input.corners),
-    transition: ({ input, theme }: NgArwesFrameStyleParams) => `all ${theme.animTime}ms ease-in`,
+    width: ({ input }: NgArwesFrameStyleParams) => cornerLength(input.corners),
+    height: ({ input }: NgArwesFrameStyleParams) => cornerLength(input.corners),
+    transition: ({ theme }: NgArwesFrameStyleParams) => `all ${theme.animTime}ms ease-in`,
     borderStyle: 'solid',
     borderColor: ({ input, theme }: NgArwesFrameStyleParams) => getColor(theme, input, 'base'),
     boxShadow: ({ input, theme }: NgArwesFrameStyleParams) =>

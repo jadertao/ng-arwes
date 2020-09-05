@@ -19,7 +19,7 @@ import { takeUntil } from 'rxjs/operators';
 import { NG_ARWES_SOUND_TOKEN } from 'ng-arwes/tools/sound';
 import type { NgArwesSound } from 'ng-arwes/tools/sound';
 import { DOCUMENT } from '@angular/common';
-import { genFrameClassStyle, genFrameInstanceStyle } from './frame.style';
+import { NgArwesFrameStyle } from './frame.style';
 import {
   borderHeightMotion,
   borderWidthMotion,
@@ -28,7 +28,8 @@ import {
 } from './frame.animation';
 import { StyleService } from 'ng-arwes/services/style/style.service';
 import { CollectInput, CollectService } from 'ng-arwes/services/collect/collect.service';
-import { genInstanceID, ComponentStyleGenerator } from 'ng-arwes/tools/style';
+import jss, { StyleSheet } from 'jss';
+import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
 
 const FrameSelector = 'na-frame';
 
@@ -50,49 +51,49 @@ export interface ArwesFrameInput {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div [class]="name+' '+id"  [@.disabled]="!animate" *ngIf="show">
+    <div [class]="classes.root"  [@.disabled]="!animate" *ngIf="show">
       <div
         *ngIf="border"
         [@borderHeightMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="na-frame-border na-frame-border-left"
+        [class]="classes.border + ' ' + classes.borderLeft"
       ></div>
       <div
         *ngIf="border"
         [@borderHeightMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="na-frame-border na-frame-border-right"
+        [class]="classes.border + ' ' + classes.borderRight"
       ></div>
       <div
         *ngIf="border"
         [@borderWidthMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="na-frame-border na-frame-border-top"
+        [class]="classes.border + ' ' + classes.borderTop"
       ></div>
       <div
         *ngIf="border"
         [@borderWidthMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="na-frame-border na-frame-border-bottom"
+        [class]="classes.border + ' ' + classes.borderBottom"
       ></div>
       <div
         *ngIf="corners"
         [@cornerMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="na-frame-corner na-frame-cornerLT"
+        [class]="classes.corner + ' ' + classes.cornerLT"
       ></div>
       <div
         *ngIf="corners"
         [@cornerMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="na-frame-corner na-frame-cornerLB"
+        [class]="classes.corner + ' ' + classes.cornerLB"
       ></div>
       <div
         *ngIf="corners"
         [@cornerMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="na-frame-corner na-frame-cornerRT"
+        [class]="classes.corner + ' ' + classes.cornerRT"
       ></div>
       <div
         *ngIf="corners"
         [@cornerMotion]="{ value: null, params: { animTime: theme.animTime }}"
-        class="na-frame-corner na-frame-cornerRB"
+        [class]="classes.corner + ' ' + classes.cornerRB"
       ></div>
-      <div class="na-frame-box" [@boxMotion]="{ value: null, params: { animTime: theme.animTime }}">
-        <div class="na-frame-children">
+      <div [class]="classes.box" [@boxMotion]="{ value: null, params: { animTime: theme.animTime }}">
+        <div [class]="classes.children">
           <ng-content></ng-content>
         </div>
       </div>
@@ -100,15 +101,21 @@ export interface ArwesFrameInput {
   `,
 })
 export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
-  public name = 'na-frame';
-  public id = genInstanceID(this.name);
-  public theme: NgArwesTheme | null = null;
-  public styleUpdater: ComponentStyleGenerator<ArwesFrameInput>;
 
+  public _theme: NgArwesTheme | null = null;
+  get theme() {
+    return this._theme;
+  }
+  set theme(v) {
+    this._theme = v;
+    this.update();
+  }
+
+
+  public classes: Record<string, string>;
 
   private destroy$ = new Subject<void>();
-  private change$ = new Subject<ArwesFrameInput>();
-  private changed = false;
+  private sheet: StyleSheet<string>;
 
 
   @CollectInput()
@@ -159,28 +166,20 @@ export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
 
   constructor(
     private themeSvc: ThemeService,
-    private style: StyleService,
     private collect: CollectService,
     @Inject(NG_ARWES_SOUND_TOKEN) private sounds: NgArwesSound,
     @Inject(DOCUMENT) private doc: Document
-  ) {
-    this.styleUpdater = new ComponentStyleGenerator<ArwesFrameInput>(style)
-      .info({ name: this.name, id: this.id })
-      .forClass(genFrameClassStyle)
-      .forInstance(genFrameInstanceStyle);
+  ) { }
 
-    const pipe$ = this.themeSvc.theme$.pipe(takeUntil(this.destroy$));
-    pipe$.subscribe((theme) => {
+  ngOnInit() {
+    this.sheet = jss.createStyleSheet<string>(NgArwesFrameStyle, { link: true }).attach();
+    this.classes = this.sheet.classes;
+    this.themeSvc.theme$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((theme) => {
       this.theme = theme;
-      this.styleUpdater.updateClass({ theme });
     });
-
-    combineLatest(this.change$, pipe$).subscribe(
-      ([input, theme]) => { this.styleUpdater.updateInstance({ input, theme }); }
-    );
   }
-
-  ngOnInit() {  }
 
 
   ngAfterViewInit() {
@@ -190,21 +189,31 @@ export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const inputs = this.collect.gather<ArwesFrameInput>(this);
-    this.change$.next(inputs);
-
-    if (!this.changed) {
-      this.changed = true;
-      return;
-    }
     if (this.animate && changes.show && changes.show.previousValue !== this.show && this.sounds.deploy) {
       this.sounds.deploy.play();
+    }
+    if (!isFirstChange(changes)) {
+      this.update();
     }
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  update() {
+    console.log('call update', this.sheet);
+    if (this.sheet) {
+      console.log({
+        input: this.collect.gather<ArwesFrameInput>(this),
+        theme: this.theme
+      });
+      this.sheet.update({
+        input: this.collect.gather<ArwesFrameInput>(this),
+        theme: this.theme
+      });
+    }
   }
 
 }
