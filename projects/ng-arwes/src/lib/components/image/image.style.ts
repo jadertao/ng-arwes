@@ -2,6 +2,10 @@ import { rgba } from 'polished';
 import { ArwesImageInput } from './image.component';
 import { ComponentClassFn, ComponentInstanceFn } from 'ng-arwes/tools/style';
 
+export const NgArwesImageStyle = {
+
+};
+
 export const genImageStyle = () => { };
 
 export const genImageClassStyle: ComponentClassFn = ({ name, theme }) => `
