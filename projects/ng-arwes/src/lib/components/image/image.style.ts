@@ -13,7 +13,7 @@ export const NgArwesImageStyle = {
   root: {
     position: 'relative',
     display: 'block',
-    margin: ({ input, theme }: NgArwesImageStyleParams) => [0, 0, theme.margin],
+    margin: ({ theme }: NgArwesImageStyleParams) => [0, 0, theme.margin],
     width: '100%',
     minHeight: 1,
     verticalAlign: 'middle',
@@ -23,7 +23,7 @@ export const NgArwesImageStyle = {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    transition: ({ input, theme }: NgArwesImageStyleParams) => `all ${theme.animTime}ms ease-out`,
+    transition: ({ theme }: NgArwesImageStyleParams) => `all ${theme.animTime}ms ease-out`,
     minHeight: 200
   },
   img: {
@@ -35,14 +35,14 @@ export const NgArwesImageStyle = {
     height: 'auto',
     verticalAlign: 'top',
     boxShadow: 'none',
-    transition: ({ input, theme }: NgArwesImageStyleParams) => `all ${theme.animTime}ms ease-in`,
+    transition: ({ theme }: NgArwesImageStyleParams) => `all ${theme.animTime}ms ease-in`,
     opacity: 0
   },
   error: {
     display: 'block',
     margin: 'auto',
     textAlign: 'center',
-    color: ({ input, theme }: NgArwesImageStyleParams) => theme.color.alert.base
+    color: ({ theme }: NgArwesImageStyleParams) => theme.color.alert.base
   },
   separator: {
     position: 'absolute',
@@ -55,16 +55,16 @@ export const NgArwesImageStyle = {
     borderColor: ({ input, theme }: NgArwesImageStyleParams) =>
       rgba(theme.color[input.layer].dark, theme.alpha / 2),
     borderWidth: '0 0 1px',
-    transition: ({ input, theme }: NgArwesImageStyleParams) => `all ${theme.animTime}ms ease-in`
+    transition: ({ theme }: NgArwesImageStyleParams) => `all ${theme.animTime}ms ease-in`
   },
   children: {
     display: 'block',
     margin: 0,
-    padding: ({ input, theme }: NgArwesImageStyleParams) => theme.padding / 2,
+    padding: ({ theme }: NgArwesImageStyleParams) => theme.padding / 2,
     textAlign: 'center',
     backgroundColor: ({ input, theme }: NgArwesImageStyleParams) => theme.background[input.layer].level1,
     color: ({ input, theme }: NgArwesImageStyleParams) => theme.color[input.layer].dark,
-    transition: ({ input, theme }: NgArwesImageStyleParams) => `opacity ${theme.animTime}ms ease-in`,
+    transition: ({ theme }: NgArwesImageStyleParams) => `opacity ${theme.animTime}ms ease-in`,
     opacity: 1
   },
 
