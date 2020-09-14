@@ -11,7 +11,7 @@ import {
   OnChanges,
 } from '@angular/core';
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
-import { Subject, combineLatest } from 'rxjs';
+import { Subject } from 'rxjs';
 import { InputBoolean } from 'ng-arwes/tools';
 import { NgArwesLayerStatusEnum } from 'ng-arwes/types/theme.enums';
 import { ThemeService } from 'ng-arwes/services/public-api';
@@ -26,7 +26,6 @@ import {
   cornerMotion,
   boxMotion,
 } from './frame.animation';
-import { StyleService } from 'ng-arwes/services/style/style.service';
 import { CollectInput, CollectService } from 'ng-arwes/services/collect/collect.service';
 import jss, { StyleSheet } from 'jss';
 import { isFirstChange } from 'ng-arwes/tools/isFirstChange';
@@ -203,12 +202,7 @@ export class FrameComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   }
 
   update() {
-    console.log('call update', this.sheet);
     if (this.sheet) {
-      console.log({
-        input: this.collect.gather<ArwesFrameInput>(this),
-        theme: this.theme
-      });
       this.sheet.update({
         input: this.collect.gather<ArwesFrameInput>(this),
         theme: this.theme
