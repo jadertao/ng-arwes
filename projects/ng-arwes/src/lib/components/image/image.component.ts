@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { genInstanceID, ComponentStyleGenerator } from 'ng-arwes/tools/style';
+import jss, { StyleSheet } from 'jss';
 import { NgArwesTheme } from 'ng-arwes/types/theme.interfaces';
 import { takeUntil } from 'rxjs/operators';
-import { combineLatest, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
   CollectInput,
   CollectService,
@@ -10,8 +10,7 @@ import {
 import { InputBoolean } from 'ng-arwes/tools';
 import { NgArwesLayerStatusEnum } from 'ng-arwes/types/theme.enums';
 import { ThemeService } from 'ng-arwes/services/public-api';
-import { StyleService } from 'ng-arwes/services/style/style.service';
-import { genImageClassStyle, genImageInstanceStyle } from './image.style';
+import { NgArwesImageStyle } from './image.style';
 import { LoadService } from 'ng-arwes/services/load/load.service';
 import { ResponsiveService } from 'ng-arwes/services/responsive/responsive.service';
 import { getResponsiveResource } from 'ng-arwes/tools/resource';
@@ -50,15 +49,15 @@ const ArwesImageDefaultState = {
   selector: 'na-image',
   styleUrls: ['./image.style.less'],
   template: `
-    <figure [class]="name + ' ' + id" [class.ready]="state.ready">
+    <figure [class]="classes.root" [class.ready]="state.ready">
       <na-frame [animate]="animate" [show]="show" [layer]="layer">
-        <div [class]="name + '-holder'">
+        <div [class]="classes.holder">
           <img
             *ngIf="state.resource"
             [src]="state.resource"
-            [class]="name + '-img'"
+            [class]="classes.img"
           />
-          <div *ngIf="state.error" [class]="name + '-error'">
+          <div *ngIf="state.error" [class]="classes.error">
             {{ i18n.error }}
           </div>
           <na-loading
@@ -73,12 +72,12 @@ const ArwesImageDefaultState = {
 
         <div
           [hidden]="!hasChild"
-          [class]="name + '-separator'"
+          [class]="classes.separator"
           *ngIf="true"
         ></div>
         <figcaption
           [hidden]="!hasChild"
-          [class]="name + '-children'"
+          [class]="classes.children"
           *ngIf="true"
         >
           <small #children class="description">
@@ -91,15 +90,21 @@ const ArwesImageDefaultState = {
 })
 export class ImageComponent
   implements OnInit, OnDestroy, OnChanges, AfterViewInit {
-  public name = 'na-image';
-  public id = genInstanceID(this.name);
-  public theme: NgArwesTheme | null = null;
-  public styleUpdater: ComponentStyleGenerator<ArwesImageInput>;
 
   public state = this.getDefaultState();
+  public _theme: NgArwesTheme | null = null;
+  get theme() {
+    return this._theme;
+  }
+  set theme(v) {
+    this._theme = v;
+    this.update();
+  }
+
+  public classes: Record<string, string>;
 
   private destroy$ = new Subject<void>();
-  private change$ = new Subject<ArwesImageInput>();
+  private sheet: StyleSheet<string>;
 
   @CollectInput()
   @Input()
@@ -138,27 +143,10 @@ export class ImageComponent
 
   constructor(
     private themeSvc: ThemeService,
-    private style: StyleService,
     private collect: CollectService,
     private loader: LoadService,
     private responsive: ResponsiveService
-  ) {
-    console.log(this);
-    this.styleUpdater = new ComponentStyleGenerator<ArwesImageInput>(style)
-      .info({ name: this.name, id: this.id })
-      .forClass(genImageClassStyle)
-      .forInstance(genImageInstanceStyle);
-
-    const pipe$ = this.themeSvc.theme$.pipe(takeUntil(this.destroy$));
-    pipe$.subscribe((theme) => {
-      this.theme = theme;
-      this.styleUpdater.updateClass({ theme });
-    });
-
-    combineLatest(this.change$, pipe$).subscribe(([input, theme]) => {
-      this.styleUpdater.updateInstance({ input, theme });
-    });
-  }
+  ) { }
 
   private getDefaultState(): ArwesImageState {
     return ArwesImageDefaultState;
@@ -194,16 +182,15 @@ export class ImageComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const inputs = this.collect.gather<ArwesImageInput>(this);
-    this.change$.next(inputs);
-    if (isFirstChange(changes)) {
-      return;
-    }
-    if (
-      changes.resources &&
-      changes.resources.previousValue !== changes.resources.currentValue
-    ) {
-      this.loadResource();
+    if (!isFirstChange(changes)) {
+      this.update();
+
+      if (
+        changes.resources &&
+        changes.resources.previousValue !== changes.resources.currentValue
+      ) {
+        this.loadResource();
+      }
     }
   }
 
@@ -211,10 +198,28 @@ export class ImageComponent
     this.loadResource();
   }
 
-  ngOnInit() {}
+
+  ngOnInit() {
+    this.sheet = jss.createStyleSheet<string>(NgArwesImageStyle, { link: true }).attach();
+    this.classes = this.sheet.classes;
+    this.themeSvc.theme$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((theme) => {
+      this.theme = theme;
+    });
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  update() {
+    if (this.sheet) {
+      this.sheet.update({
+        input: this.collect.gather<ArwesImageInput>(this),
+        theme: this.theme
+      });
+    }
   }
 }
