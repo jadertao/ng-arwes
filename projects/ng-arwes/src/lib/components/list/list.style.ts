@@ -1,6 +1,8 @@
 import { rgba } from 'polished';
 import { NgArwesTheme } from '../../types/theme.interfaces';
 
+export const NgArwesListStyle = { };
+
 export const genListStyle = (theme: NgArwesTheme) => `
 .na-list {
   display: block;
