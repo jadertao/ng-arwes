@@ -1,55 +1,63 @@
-import { rgba } from 'polished';
 import { NgArwesTheme } from '../../types/theme.interfaces';
 
-export const NgArwesListStyle = { };
-
-export const genListStyle = (theme: NgArwesTheme) => `
-.na-list {
-  display: block;
-  margin: 0 0 ${theme.margin}px ${theme.margin}px;
-  padding: 0;
+interface NgArwesImageStyleParams {
+  theme: NgArwesTheme;
 }
 
-dl.na-list,
-ul.na-list,
-ol.na-list {
-  margin-bottom: 0;
-}
+export const NgArwesULStyles = {
+  marginLeft: ({ theme }: NgArwesImageStyleParams) => theme.margin + theme.padding / 2,
 
-ul.na-list {
-  margin-left: ${theme.margin + theme.padding / 2}px;
-}
+  '& li': {
+    display: 'block',
+    listStyle: 'none',
+    paddingLeft: ({ theme }: NgArwesImageStyleParams) => theme.padding
+  },
+  '& li:before': {
+    position: 'relative',
+    left: ({ theme }: NgArwesImageStyleParams) => -(theme.padding / 2),
+    display: 'inline-block',
+    marginLeft: ({ theme }: NgArwesImageStyleParams) => -theme.padding,
+    content: '">>"',
+    color: ({ theme }: NgArwesImageStyleParams) => theme.color.primary.light
+  }
+};
 
-ul.na-list li {
-  display: block;
-  list-style: none;
-  padding-left: ${theme.padding}px;
-}
+export const NgArwesOLStyles = {
+  marginLeft: ({ theme }: NgArwesImageStyleParams) => theme.padding,
+  paddingLeft: ({ theme }: NgArwesImageStyleParams) => theme.typography.fontSize,
 
-ul.na-list li::before {
-  position: relative;
-  left: -${theme.padding / 2}px;
-  display: inline-block;
-  margin-left: -${theme.padding}px;
-  content: ">>";
-  color: ${theme.color.primary.light};
-}
+  '& ol': {
+    marginLeft: 0
+  }
+};
 
-ol.na-list {
-  margin-left: ${theme.padding}px;
-  padding-left: ${theme.typography.fontSize}px;
-}
+export const NgArwesDLStyles = {
+  '& dt': {
+    fontStyle: 'italic',
+    fontWeight: 'bold'
+  },
+  '& dd': {
+    marginLeft: ({ theme }: NgArwesImageStyleParams) => theme.typography.fontSize
+  }
+};
 
-ol.na-list {
-  margin-left: 0;
-}
+export const NgArwesListSelfStyles = {
+  display: 'block',
+  margin: ({ theme }: NgArwesImageStyleParams) => [0, 0, theme.margin, theme.margin],
+  padding: 0,
 
-dl.na-list dt {
-  font-style: italic;
-  font-weight: bold;
-}
+  '& dl, & ul, & ol': {
+    marginBottom: 0
+  }
+};
 
-dl.na-list dd {
-  margin-left: ${theme.typography.fontSize}px;
-}
-`;
+
+
+export const NgArwesListStyles = {
+  root: {
+    ...NgArwesListSelfStyles,
+    'ul&': NgArwesULStyles,
+    'ol&': NgArwesOLStyles,
+    'dl&': NgArwesDLStyles
+  }
+};
