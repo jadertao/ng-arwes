@@ -9,7 +9,6 @@ import { DOCUMENT } from '@angular/common';
 import { NgArwesCodeStyle } from './code.style';
 import { codeMotion } from './code.animation';
 import { DEFAULT_THEME } from './../../tools/theme';
-import { StyleService } from 'ng-arwes/services/style/style.service';
 import jss, { StyleSheet } from 'jss';
 
 const CodeSelector = 'code[na-code], pre[na-code]';
@@ -68,7 +67,13 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
     public themeSvc: ThemeService,
     private elementRef: ElementRef,
     @Inject(DOCUMENT) private doc: Document,
-  ) {
+  ) { }
+
+  ngOnInit() {
+
+    this.sheet = jss.createStyleSheet<string>(NgArwesCodeStyle, { link: true }).attach();
+    this.classes = this.sheet.classes;
+    this.updateHostClasses();
     this.themeSvc.theme$
       .pipe(
         takeUntil(this.destroy$)
@@ -82,13 +87,6 @@ export class CodeComponent implements OnInit, OnDestroy, AfterViewInit {
         };
         this.update();
       });
-  }
-
-  ngOnInit() {
-    this.sheet = jss.createStyleSheet<string>(NgArwesCodeStyle, { link: true }).attach();
-    this.classes = this.sheet.classes;
-    this.updateHostClasses();
-    console.log(this);
   }
   ngAfterViewInit() {
     this.highlight();
